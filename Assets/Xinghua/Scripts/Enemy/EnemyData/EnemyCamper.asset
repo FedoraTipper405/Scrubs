@@ -16,6 +16,6 @@ MonoBehaviour:
   damage: 1
   maxHealth: 1
   moveSpeed: 1
-  attackRange: 1
+  attackRange: 10
   pacingRange: 1
   enemyPrefab: {fileID: 6966470631647450342, guid: 4f5a84dc22408424faddcc3ffed51066, type: 3}
