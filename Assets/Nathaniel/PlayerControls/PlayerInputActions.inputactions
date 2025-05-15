@@ -72,6 +72,54 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Attack",
+            "id": "f9d4fcd9-a5d3-4183-866d-3e43506ca292",
+            "actions": [
+                {
+                    "name": "Punch",
+                    "type": "Button",
+                    "id": "c685b301-3fd2-4cd4-b102-eb8f7ba39d10",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Kick",
+                    "type": "Button",
+                    "id": "a9199e40-6931-431a-b0ce-3bd607418799",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1829cedf-de1b-41db-9904-8405e2afe3b7",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb8fa089-9564-4f0b-80e4-2611a37b7408",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Kick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

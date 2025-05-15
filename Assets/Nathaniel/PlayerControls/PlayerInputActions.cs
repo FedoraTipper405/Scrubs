@@ -94,6 +94,54 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Attack"",
+            ""id"": ""f9d4fcd9-a5d3-4183-866d-3e43506ca292"",
+            ""actions"": [
+                {
+                    ""name"": ""Punch"",
+                    ""type"": ""Button"",
+                    ""id"": ""c685b301-3fd2-4cd4-b102-eb8f7ba39d10"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Kick"",
+                    ""type"": ""Button"",
+                    ""id"": ""a9199e40-6931-431a-b0ce-3bd607418799"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1829cedf-de1b-41db-9904-8405e2afe3b7"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb8fa089-9564-4f0b-80e4-2611a37b7408"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Kick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -101,11 +149,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Movement
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_MoveInput = m_Movement.FindAction("MoveInput", throwIfNotFound: true);
+        // Attack
+        m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
+        m_Attack_Punch = m_Attack.FindAction("Punch", throwIfNotFound: true);
+        m_Attack_Kick = m_Attack.FindAction("Kick", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
     {
         UnityEngine.Debug.Assert(!m_Movement.enabled, "This will cause a leak and performance issues, PlayerInputActions.Movement.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Attack.enabled, "This will cause a leak and performance issues, PlayerInputActions.Attack.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -209,8 +262,67 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Attack
+    private readonly InputActionMap m_Attack;
+    private List<IAttackActions> m_AttackActionsCallbackInterfaces = new List<IAttackActions>();
+    private readonly InputAction m_Attack_Punch;
+    private readonly InputAction m_Attack_Kick;
+    public struct AttackActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public AttackActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Punch => m_Wrapper.m_Attack_Punch;
+        public InputAction @Kick => m_Wrapper.m_Attack_Kick;
+        public InputActionMap Get() { return m_Wrapper.m_Attack; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AttackActions set) { return set.Get(); }
+        public void AddCallbacks(IAttackActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AttackActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AttackActionsCallbackInterfaces.Add(instance);
+            @Punch.started += instance.OnPunch;
+            @Punch.performed += instance.OnPunch;
+            @Punch.canceled += instance.OnPunch;
+            @Kick.started += instance.OnKick;
+            @Kick.performed += instance.OnKick;
+            @Kick.canceled += instance.OnKick;
+        }
+
+        private void UnregisterCallbacks(IAttackActions instance)
+        {
+            @Punch.started -= instance.OnPunch;
+            @Punch.performed -= instance.OnPunch;
+            @Punch.canceled -= instance.OnPunch;
+            @Kick.started -= instance.OnKick;
+            @Kick.performed -= instance.OnKick;
+            @Kick.canceled -= instance.OnKick;
+        }
+
+        public void RemoveCallbacks(IAttackActions instance)
+        {
+            if (m_Wrapper.m_AttackActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAttackActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AttackActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AttackActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AttackActions @Attack => new AttackActions(this);
     public interface IMovementActions
     {
         void OnMoveInput(InputAction.CallbackContext context);
+    }
+    public interface IAttackActions
+    {
+        void OnPunch(InputAction.CallbackContext context);
+        void OnKick(InputAction.CallbackContext context);
     }
 }
