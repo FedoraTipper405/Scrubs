@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
         pacingTargetPos = pacingStartPos + Vector3.right * enemyData.pacingRange;
 
 
-        player = FindAnyObjectByType<Target>().transform;
+        player = FindAnyObjectByType<PlayerMovement>().transform;
 
         patrolOffsets = new Vector3[]
  {
