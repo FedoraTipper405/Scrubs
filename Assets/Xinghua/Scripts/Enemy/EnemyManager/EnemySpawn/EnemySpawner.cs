@@ -30,6 +30,7 @@ public class EnemySpawner : MonoBehaviour
         float randomOffsetY = Random.Range(-0.5f, 0.5f);
         Vector3 spawnOffset = new Vector3(12 + randomOffsetX, randomOffsetY, 0);
         GameObject enemy = Instantiate(data.enemyPrefab, position + spawnOffset, Quaternion.identity);
+        enemy.transform.SetParent(enemyParent);
 
         if (triggerController != null)
         {

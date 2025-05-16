@@ -57,6 +57,7 @@ public class EnemyBaseController : MonoBehaviour
                 AttackPlayer();
                 break;
         }
+        FlipTowardsPlayer();
     }
     
     protected Vector3 GetStopPosition()
@@ -106,7 +107,7 @@ public class EnemyBaseController : MonoBehaviour
 
     protected void Peacing()
     {
-        FlipTowardsPlayer();
+       
         if (player == null) return;
         Vector3 targetPoint = GetStopPosition() + patrolOffsets[currentPatrolIndex];
 
@@ -120,7 +121,7 @@ public class EnemyBaseController : MonoBehaviour
 
     protected void MoveToPlayer()
     {
-        FlipTowardsPlayer();
+     
         float dist = Vector3.Distance(transform.position,GetStopPosition());
         Vector3 dir = (GetStopPosition() - transform.position).normalized;
         transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
@@ -128,7 +129,7 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void AttackPlayer()
     {
-        FlipTowardsPlayer();
+       
     }
 
     private void OnDisableAttack()
@@ -150,6 +151,7 @@ public class EnemyBaseController : MonoBehaviour
     {
         Destroy(gameObject);
         EnemySpawnManager.Instance.enemiesInTheScene.Remove(gameObject);
+        EnemyAttackManager.Instance.currentAttackers.Remove(gameObject);    
         EnemySpawnManager.Instance.CheckEnemyNumberInTheScene();
     }
 }
