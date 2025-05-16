@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3408446125626536986}
   - component: {fileID: -6721693257245124271}
   - component: {fileID: 8630839800071817376}
+  - component: {fileID: 7625632046200576521}
   m_Layer: 0
   m_Name: Camper
   m_TagString: Untagged
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2124876785
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -118,13 +119,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 74503e56826956e47b0f4b3675bdb7b3, type: 2}
   patrolRadius: 3
-  avoidPlayerRadius: 1
   detectRange: 1
   dropChance: 0.1
   dropPerfab: {fileID: 0}
   bulletPerfab: {fileID: 403691674074021551, guid: 3b9bfb0d56288054ca267c4495467be8, type: 3}
   shootCooldown: 1.5
   bulletStartPoint: {fileID: 9142053342132202314}
+--- !u!70 &7625632046200576521
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966470631647450342}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.76282454}
+  m_Size: {x: 0.5, y: 1.4743509}
+  m_Direction: 0
 --- !u!1 &8810877009691951217
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +236,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2124876785
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 5457012916531874059, guid: 72d41f195ed0edd429c5ffd4af94f85d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

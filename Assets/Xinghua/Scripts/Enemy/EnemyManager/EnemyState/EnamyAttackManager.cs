@@ -1,50 +1,60 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyAttackManager : MonoBehaviour
 {
     public static EnemyAttackManager Instance;
     public int maxAttackers = 3;
-    private List<GameObject> currentAttackers = new List<GameObject>();
-    [SerializeField] private List<EnemyBaseController> enemyList;
-    private TriggerController triggerController;
+    [HideInInspector]
+    public List<GameObject> currentAttackers = new List<GameObject>();
+    private EnemySpawnManager triggerController;
     void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        triggerController = GetComponentInParent<TriggerController>();
+        triggerController = GetComponentInParent<EnemySpawnManager>();
 
     }
-  
+    private void FixedUpdate()
+    {
+        if(currentAttackers.Count <= 1 && EnemySpawnManager.Instance.enemiesInTheScene.Count >=1)
+        {
+            SetCurrentAttacker();
+        }
+    }
     public void SetCurrentAttacker()
     {
-        int numberToAttack = Random.Range(1, maxAttackers); 
-
-        int availableCount = Mathf.Min(numberToAttack, enemyList.Count);
-
-        for (int i = 0; i < availableCount; i++)
+        var result = GetRandonAttackerIndex(EnemySpawnManager.Instance.enemiesInTheScene.Count, maxAttackers);
+        foreach (var index in result)
         {
-            int randomIndex = Random.Range(0, enemyList.Count);
-            EnemyBaseController chosenEnemy = enemyList[randomIndex];
-
-            if (chosenEnemy != null && chosenEnemy.GetComponent<EnemyAI>() != null)
-            {
-                chosenEnemy.GetComponent<EnemyAI>().SetEnemyState(EnemyAI.EnemyState.Attack);
-            }
+            var enemy = EnemySpawnManager.Instance.enemiesInTheScene[index].gameObject;
+            if (currentAttackers.Contains(enemy)) continue;
+            currentAttackers.Add(enemy.gameObject);
+            var enemyAI = enemy.gameObject.GetComponent<EnemyAI>();
+            enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
         }
     }
-    public bool TryRequestAttack(GameObject enemy)
-    {
-        if (currentAttackers.Contains(enemy)) return true;
 
-        if (currentAttackers.Count < maxAttackers)
+    public List<int> GetRandonAttackerIndex(int length, int number)
+    {
+        List<int> result = new List<int>();
+        for (int i = 0; i < length; i++)
         {
-            currentAttackers.Add(enemy);
-            return true;
+            int numberToAttack = UnityEngine.Random.Range(0, length);
+            if (result.Contains(numberToAttack))
+            {
+                continue;
+            }
+            result.Add(numberToAttack);
+            if (result.Count == number)
+            {
+                break;
+            }
         }
-        Debug.Log($"{enemy.name} is refused attack");
-        return false;
+        return result;
     }
 
     public void StopAttack(GameObject enemy)

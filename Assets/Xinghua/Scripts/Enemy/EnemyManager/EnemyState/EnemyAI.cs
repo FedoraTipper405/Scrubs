@@ -6,17 +6,13 @@ public class EnemyAI : MonoBehaviour
     {
         Idle,
         Pacing,
-        MovingToPlayer,
         Attack,
     }
     public EnemyState currentState;
     public void SetEnemyState(EnemyState newState)
     {
+        if (currentState == newState) return;
         currentState = newState;
     }
-
-
-
-
 
 }

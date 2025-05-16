@@ -13,26 +13,18 @@ public class EnemyCamper : EnemyBaseController
     [SerializeField] GameObject bulletStartPoint;
     protected override void Start()
     {
+        base.Start();
         enemyAI = GetComponent<EnemyAI>();
         enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
 
         transform.position = player.position + new Vector3(4f, 0, 0);
     }
-
     protected override void Update()
     {
-        switch (enemyAI.currentState)
-        {
-            case EnemyState.Idle:
-                break;
-            case EnemyState.Attack:
-                AttackPlayer();
-                break;
-
-        }
+        base.Update();
         shootTimer -= Time.deltaTime;
     }
-
+   
     protected override void AttackPlayer()
     {
         base.AttackPlayer();
@@ -44,6 +36,10 @@ public class EnemyCamper : EnemyBaseController
         Vector3 direction = (player.position + new Vector3(0, 1, 0) - bulletStartPoint.transform.position).normalized;
         bullet.Shoot(direction);
     }
- 
 
+    protected override void Die()
+    {
+        base.Die();
+        
+    }
 }

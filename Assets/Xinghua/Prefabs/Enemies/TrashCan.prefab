@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5674834388538568135}
   - component: {fileID: -8693651266302127660}
   - component: {fileID: 395335770193498873}
+  - component: {fileID: 4634892760496595583}
   m_Layer: 0
   m_Name: TrashCan
   m_TagString: Untagged
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2124876785
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 6845853277440461498, guid: 5a6ee64380c291d43a757926debe30bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,8 +116,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
-  patrolRadius: 3
-  avoidPlayerRadius: 1
+  patrolRadius: 1
   detectRange: 1
   dropChance: 0.1
   dropPerfab: {fileID: 0}
+--- !u!70 &4634892760496595583
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8834637972409278391}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.01562506, y: 0.921875}
+  m_Size: {x: 1.09375, y: 1.78125}
+  m_Direction: 0

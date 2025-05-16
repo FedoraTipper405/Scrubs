@@ -543,6 +543,22 @@ PrefabInstance:
       propertyPath: enemyParent
       value: 
       objectReference: {fileID: 2018866163}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: enemyDatas.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1197,6 +1213,14 @@ PrefabInstance:
       propertyPath: enemyParent
       value: 
       objectReference: {fileID: 2018866163}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: enemyDatas.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1627,7 +1651,7 @@ MonoBehaviour:
   - {fileID: 828979023}
   - {fileID: 655102262}
   currentIndex: 0
-  enemiesLeft: []
+  enemiesInTheScene: []
   enemyAttackManager: {fileID: 2018866162}
 --- !u!1 &655102262 stripped
 GameObject:
@@ -2939,6 +2963,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1779982778}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1779982781}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
 --- !u!4 &1400380426 stripped
 Transform:
@@ -3544,6 +3571,26 @@ PrefabInstance:
       propertyPath: enemyParent
       value: 
       objectReference: {fileID: 2018866163}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: enemyDatas.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+    - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
+      propertyPath: 'enemyDatas.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3752,6 +3799,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1.09375}
   m_Size: {x: 1.125, y: 2.1875}
   m_Direction: 0
+--- !u!114 &1779982781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779982769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b571a9c858f544146adf39d3b332b10f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 635352899}
 --- !u!4 &1796238763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: 18e38a646fe42524cbe2e42839062764, type: 3}
@@ -4169,7 +4229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAttackers: 3
-  enemyList: []
+  currentAttackers: []
 --- !u!4 &2018866163
 Transform:
   m_ObjectHideFlags: 0

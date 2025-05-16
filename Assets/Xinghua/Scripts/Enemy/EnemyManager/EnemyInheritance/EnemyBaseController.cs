@@ -9,22 +9,24 @@ public class EnemyBaseController : MonoBehaviour
 
     [HideInInspector]
     protected Transform player;
-    /*  [Header("position")]
-      [SerializeField] protected Vector3 spawnOffset;*/
+
     [Header("Attack")]
     protected float lastAttackTime;
     protected float attackCooldown;
-    protected float stopDistance;
+    protected float attackRange = 0.2f;
+
     [Header("Pacing")]
-    [SerializeField] private float patrolRadius = 3f;
-    [SerializeField] private float detectRange = 1.0f;
+    [SerializeField] private float patrolRadius = 1f;
     private Vector3[] patrolOffsets;
-    // private int currentPatrolIndex = 0;
-    private Vector3 pacingStartPos;
-    private Vector3 pacingTargetPos;
+    private int currentPatrolIndex = 0;
+    protected float stopDistance = 2f;
+    Vector3 stopOffset;
+
     [Header("Die")]
     [SerializeField] protected float dropChance = 0.1f;
     [SerializeField] protected GameObject dropPerfab;
+
+
     private void Awake()
     {
         enemyAI = GetComponent<EnemyAI>();
@@ -33,8 +35,6 @@ public class EnemyBaseController : MonoBehaviour
     protected virtual void Start()
     {
         SetEnemyValue();
-        pacingStartPos = transform.position;
-        pacingTargetPos = pacingStartPos + Vector3.right * enemyData.pacingRange;
         SetPacingLocation();
 
     }
@@ -50,49 +50,44 @@ public class EnemyBaseController : MonoBehaviour
         {
             case EnemyState.Idle:
                 break;
-
             case EnemyState.Pacing:
-                Patrol();
-                DetectPlayer();
+                Peacing();
                 break;
-
-            case EnemyState.MovingToPlayer:
-                MoveToPlayer();
-                break;
-
             case EnemyState.Attack:
                 AttackPlayer();
                 break;
-
         }
     }
-    protected Vector3 GetTargetPosition()
+    
+    protected Vector3 GetStopPosition()
     {
-        Vector3 StopPosition;
+        if (enemyAI.currentState == EnemyAI.EnemyState.Attack)
+        {
+            stopDistance = attackRange;
+        }
         if (player.position.x < transform.position.x)
         {
-            StopPosition = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
+            stopOffset = new Vector3(stopDistance, 1, 1);
         }
         else if (player.position.x >= transform.position.x)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
+            stopOffset = new Vector3(-stopDistance, 1, 1);
         }
-        StopPosition = player.position + new Vector3(2, 0, 0);
-        return StopPosition;
+
+        return player.position + stopOffset;
     }
 
     private void SetPacingLocation()
     {
         patrolOffsets = new Vector3[]
             {
-                Vector3.left * patrolRadius,
-                Vector3.right * patrolRadius,
-                (Vector3.left + Vector3.up).normalized * patrolRadius,
-                (Vector3.right + Vector3.up).normalized * patrolRadius,
-                (Vector3.left + Vector3.down).normalized * patrolRadius,
-                (Vector3.right + Vector3.down).normalized * patrolRadius
+                Vector3.up * patrolRadius,
+                Vector3.down * patrolRadius,
             };
     }
+
     void FlipTowardsPlayer()
     {
         if (player == null) return;
@@ -108,43 +103,41 @@ public class EnemyBaseController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
     }
-    void Patrol()
+
+    protected void Peacing()
     {
+        FlipTowardsPlayer();
         if (player == null) return;
-        // Vector3 targetPoint = player.position + patrolOffsets[currentPatrolIndex];
-        Vector3 targetPoint = player.position;
+        Vector3 targetPoint = GetStopPosition() + patrolOffsets[currentPatrolIndex];
+
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, enemyData.moveSpeed * Time.deltaTime);
 
-        /*   if (Vector3.Distance(transform.position, targetPoint) < 0.1f)
-           {
-               currentPatrolIndex = (currentPatrolIndex + 1) % patrolOffsets.Length;
-           }*/
-    }
-    void DetectPlayer()
-    {
-        float dist = Vector3.Distance(transform.position, player.position);
-
-        if (dist < detectRange) // detection range
+        if (Vector3.Distance(transform.position, targetPoint) < 0.1f)
         {
-            enemyAI.currentState = EnemyState.MovingToPlayer;
+            currentPatrolIndex = (currentPatrolIndex + 1) % patrolOffsets.Length;
         }
     }
 
-    protected virtual void MoveToPlayer()
+    protected void MoveToPlayer()
     {
         FlipTowardsPlayer();
+        float dist = Vector3.Distance(transform.position,GetStopPosition());
+        Vector3 dir = (GetStopPosition() - transform.position).normalized;
+        transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
     }
+
     protected virtual void AttackPlayer()
     {
         FlipTowardsPlayer();
     }
+
     private void OnDisableAttack()
     {
         if (EnemyAttackManager.Instance != null)
             EnemyAttackManager.Instance.StopAttack(this.gameObject);
     }
 
-    protected virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
         currentHealth -= amount;
         if (currentHealth <= 0)
@@ -156,5 +149,7 @@ public class EnemyBaseController : MonoBehaviour
     protected virtual void Die()
     {
         Destroy(gameObject);
+        EnemySpawnManager.Instance.enemiesInTheScene.Remove(gameObject);
+        EnemySpawnManager.Instance.CheckEnemyNumberInTheScene();
     }
 }

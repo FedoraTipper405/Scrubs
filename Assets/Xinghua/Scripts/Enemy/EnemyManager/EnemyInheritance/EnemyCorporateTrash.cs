@@ -7,11 +7,11 @@ public class EnemyCorporateTrash : EnemyBaseController
     {
         enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing);
         transform.position += new Vector3(-1, 1, 0);
-        Debug.Log("base state" + enemyAI.currentState);
     }
+
     protected override void AttackPlayer()
     {
-        base.AttackPlayer();
+        base.MoveToPlayer();
         if (player == null) return;
 
         float dist = Vector3.Distance(transform.position, player.position);
@@ -24,7 +24,7 @@ public class EnemyCorporateTrash : EnemyBaseController
         }
 
         //even within the range still move to player if player location changed
-        Vector3 dir = (GetTargetPosition()  - transform.position).normalized;
+        Vector3 dir = (GetStopPosition() - transform.position).normalized;
         transform.position += dir * (enemyData.moveSpeed * 0.5f) * Time.deltaTime;
 
         // keep attack
@@ -34,35 +34,7 @@ public class EnemyCorporateTrash : EnemyBaseController
             lastAttackTime = Time.time;
         }
     }
-    protected override void MoveToPlayer()
-    {
-        base.MoveToPlayer();
-        float dist = Vector3.Distance(transform.position, player.position);
 
-
-        if (dist > enemyData.attackRange)
-        {
-            Vector3 dir = (GetTargetPosition() - transform.position).normalized;
-            transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
-        }
-
-        else
-        {
-            bool canAttack = EnemyAttackManager.Instance.TryRequestAttack(this.gameObject);
-            if (canAttack)
-            {
-                enemyAI.currentState = EnemyState.Attack;
-                lastAttackTime = Time.time;
-            }
-            else
-            {
-
-                enemyAI.currentState = EnemyState.Pacing;
-            }
-        }
-
-
-    }
     protected override void Die()
     {
         base.Die();
