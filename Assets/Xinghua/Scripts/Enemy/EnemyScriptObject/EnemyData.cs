@@ -10,5 +10,7 @@ public class EnemyData : ScriptableObject
     public float attackRange;
     public float pacingRange;
     public GameObject enemyPrefab;
-   
+    public float attackCooldown;
+    public bool canDrop;
+
 }

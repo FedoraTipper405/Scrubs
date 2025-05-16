@@ -15,7 +15,9 @@ MonoBehaviour:
   enemyName: TrashCan
   damage: 2
   maxHealth: 2
-  moveSpeed: 0.8
-  attackRange: 0.3
+  moveSpeed: 1
+  attackRange: 2
   pacingRange: 3
   enemyPrefab: {fileID: 8834637972409278391, guid: 6a1bb0d7448109d4aacd7afe3ea0729a, type: 3}
+  attackCooldown: 2
+  canDrop: 1

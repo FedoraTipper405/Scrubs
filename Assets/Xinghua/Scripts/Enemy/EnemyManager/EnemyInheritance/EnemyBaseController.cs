@@ -12,7 +12,7 @@ public class EnemyBaseController : MonoBehaviour
 
     [Header("Attack")]
     protected float lastAttackTime;
-    protected float attackCooldown;
+
     protected float attackRange = 0.2f;
 
     [Header("Pacing")]
@@ -26,14 +26,15 @@ public class EnemyBaseController : MonoBehaviour
     [SerializeField] protected float dropChance = 0.1f;
     [SerializeField] protected GameObject dropPerfab;
 
+    protected Animator animator;
 
-    private void Awake()
-    {
-        enemyAI = GetComponent<EnemyAI>();
-        player = FindAnyObjectByType<PlayerMovement>().transform;
-    }
+
+
     protected virtual void Start()
     {
+        enemyAI = GetComponent<EnemyAI>();
+        animator = GetComponent<Animator>();
+
         SetEnemyValue();
         SetPacingLocation();
 
@@ -58,23 +59,28 @@ public class EnemyBaseController : MonoBehaviour
                 break;
         }
         FlipTowardsPlayer();
+        EnemySpawnManager.Instance.CheckEnemyNumberInTheScene();
     }
-    
+
     protected Vector3 GetStopPosition()
     {
         if (enemyAI.currentState == EnemyAI.EnemyState.Attack)
         {
-            stopDistance = attackRange;
+            stopDistance = 1f;//this make para
+        }
+        else
+        {
+            stopDistance = 2f;
         }
         if (player.position.x < transform.position.x)
         {
             transform.localScale = new Vector3(1, 1, 1);
-            stopOffset = new Vector3(stopDistance, 1, 1);
+            stopOffset = new Vector3(stopDistance, 0, 0);
         }
         else if (player.position.x >= transform.position.x)
         {
             transform.localScale = new Vector3(1, 1, 1);
-            stopOffset = new Vector3(-stopDistance, 1, 1);
+            stopOffset = new Vector3(-stopDistance, 0, 0);
         }
 
         return player.position + stopOffset;
@@ -107,7 +113,8 @@ public class EnemyBaseController : MonoBehaviour
 
     protected void Peacing()
     {
-       
+        animator.SetBool("isMoving", true);
+
         if (player == null) return;
         Vector3 targetPoint = GetStopPosition() + patrolOffsets[currentPatrolIndex];
 
@@ -119,17 +126,18 @@ public class EnemyBaseController : MonoBehaviour
         }
     }
 
+    protected float distToPlayer;
     protected void MoveToPlayer()
     {
-     
-        float dist = Vector3.Distance(transform.position,GetStopPosition());
+        animator.SetBool("isMoving", true);
+        distToPlayer = Vector3.Distance(transform.position, GetStopPosition());
         Vector3 dir = (GetStopPosition() - transform.position).normalized;
         transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
     }
 
     protected virtual void AttackPlayer()
     {
-       
+
     }
 
     private void OnDisableAttack()
@@ -137,21 +145,47 @@ public class EnemyBaseController : MonoBehaviour
         if (EnemyAttackManager.Instance != null)
             EnemyAttackManager.Instance.StopAttack(this.gameObject);
     }
-
+    protected bool isDead = false;
     public virtual void TakeDamage(int amount)
     {
+        if (currentHealth <= 0) return;
+
         currentHealth -= amount;
-        if (currentHealth <= 0)
+
+        if (currentHealth > 0)
         {
+            // animation get hit
+        }
+        else
+        {
+            if (isDead) return;
             Die();
         }
     }
 
     protected virtual void Die()
     {
+        animator.SetTrigger("isDeath");
+        isDead = true;
+        if (enemyData.canDrop) return;
+
+    }
+
+    public void OnDeath()
+    {
+        if (enemyData.canDrop && Random.value < 1f)
+        {
+            GameObject item = Instantiate(dropPerfab, transform.position, Quaternion.identity);
+            item.SetActive(true);
+            if (item != null)
+            {
+                Destroy(item, 8f);
+                    };
+        }
+
+
         Destroy(gameObject);
         EnemySpawnManager.Instance.enemiesInTheScene.Remove(gameObject);
-        EnemyAttackManager.Instance.currentAttackers.Remove(gameObject);    
-        EnemySpawnManager.Instance.CheckEnemyNumberInTheScene();
+        EnemyAttackManager.Instance.currentAttackers.Remove(gameObject);
     }
 }

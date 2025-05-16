@@ -7,6 +7,7 @@ public class EnemyCorporateTrash : EnemyBaseController
     {
         enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing);
         transform.position += new Vector3(-1, 1, 0);
+        enemyData.canDrop = true;
     }
 
     protected override void AttackPlayer()
@@ -28,7 +29,7 @@ public class EnemyCorporateTrash : EnemyBaseController
         transform.position += dir * (enemyData.moveSpeed * 0.5f) * Time.deltaTime;
 
         // keep attack
-        if (Time.time - lastAttackTime >= attackCooldown)
+        if (Time.time - lastAttackTime >= enemyData.attackCooldown)
         {
             //player process the damage
             lastAttackTime = Time.time;
