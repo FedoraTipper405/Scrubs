@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAttacks : MonoBehaviour
@@ -10,8 +11,13 @@ public class PlayerAttacks : MonoBehaviour
     float timeWithoutInput;
     [SerializeField] int currentComboIndex = 0;
     [SerializeField] SOCombo[] soComboArray;
+
     [SerializeField]
-    GameObject[] colliderArray;
+    GameObject[] leftColliderArray;
+    [SerializeField]
+    GameObject[] rightColliderArray;
+
+    bool isAttackingRight = true;
 
     [SerializeField] int[] spartanKickArray = new int[3];
     [SerializeField] int[] HammerPunchArray = new int[3];
@@ -113,6 +119,10 @@ public class PlayerAttacks : MonoBehaviour
     public void SpartanKick(int colliderIndex, int comboIndex)
     {
         Debug.Log("spart");
+    }
+    IEnumerator SpartanSequence(int colliderIndex, int comboIndex)
+    {
+        yield return new WaitForSeconds(.3f);
     }
     public void HammerPunch(int colliderIndex, int comboIndex)
     {

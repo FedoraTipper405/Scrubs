@@ -27,11 +27,7 @@ PlayerInputActions playerInput;
     }
     private void HandleMovement(Vector2 input)
     {
-        
-        if (input.x != 0 || input.y != 0)
-        {
-            Debug.Log(input);
-        }
+
         Vector2 move = new Vector2(input.x,input.y);
         if (move.sqrMagnitude > 1) move.Normalize();
 
