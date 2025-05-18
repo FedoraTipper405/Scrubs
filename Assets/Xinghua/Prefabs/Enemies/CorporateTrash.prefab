@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5194520279620712728}
   - component: {fileID: -4468961594611943070}
   - component: {fileID: -2674651157588606334}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CorporateTrash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2124876785
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -117,8 +117,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 058c68492092fc54d9dfb8a45b466c44, type: 2}
   patrolRadius: 3
-  avoidPlayerRadius: 1
-  detectRange: 1
   dropChance: 0.1
   dropPerfab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
 --- !u!1 &4597917779817572445
@@ -283,7 +281,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2124876785
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

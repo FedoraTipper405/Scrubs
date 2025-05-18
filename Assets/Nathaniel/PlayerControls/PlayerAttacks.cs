@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,6 +16,9 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField]
     GameObject[] rightColliderArray;
 
+    BaseAtkCollider[] leftColScript = new BaseAtkCollider[4];
+    BaseAtkCollider[] rightColScript = new BaseAtkCollider[4];
+
     bool isAttackingRight = true;
 
     [SerializeField] int[] spartanKickArray = new int[3];
@@ -32,6 +34,33 @@ public class PlayerAttacks : MonoBehaviour
         comboArray[0] = 10;
         comboArray[1] = 10;
         comboArray[2] = 10;
+        for (int i = 0; i < leftColliderArray.Length; i++)
+        {
+            leftColScript[i] = leftColliderArray[i].GetComponent<BaseAtkCollider>();
+        }
+        for (int i = 0; i < rightColliderArray.Length; i++)
+        {
+            rightColScript[i] = rightColliderArray[i].GetComponent<BaseAtkCollider>();
+        }
+        for (int i = 0; i < leftColliderArray.Length; i++)
+        {
+            leftColliderArray[i].SetActive(false);
+        }
+        for (int i = 0; i < rightColliderArray.Length; i++)
+        {
+            rightColliderArray[i].SetActive(false);
+        }
+    }
+    public void DirectionToHit(Vector2 input)
+    {
+        if(input.x > 0)
+        {
+            isAttackingRight = false;
+        }
+        else if(input.x < 0)
+        {
+            isAttackingRight = true;
+        }
     }
     void ClearComboArray()
     {
@@ -58,30 +87,30 @@ public class PlayerAttacks : MonoBehaviour
         {
             if (comboArray[0] == 0)
             {
-                //basic punch
+                BasicPunch();
             }
             else if(comboArray[0] == 1)
             {
-                //basic kick
+                BasicKick();
             }
         }
         if (currentComboIndex == 2)
         {
             if (comboArray[0] == 0 && comboArray[1] == 0)
             {
-                //kick 1
+                SecondKick();
             }
             if (comboArray[1] == 0 && comboArray[1] == 0)
             {
-                //kick 2
+                SecondKick();
             }
             if (comboArray[0] == 0 && comboArray[0] == 0)
             {
-                //upper cut
+                SecondPunch();
             }
             if (comboArray[1] == 0 && comboArray[0] == 0)
             {
-                //hook
+                SecondPunch();
             }
         }
             if(currentComboIndex == 3)
@@ -116,13 +145,119 @@ public class PlayerAttacks : MonoBehaviour
             }
         
     }
+    public void BasicPunch()
+    {
+        StartCoroutine(BPunchSequence());
+    }
+    IEnumerator BPunchSequence()
+    {
+        yield return new WaitForSeconds(.25f);
+        if(isAttackingRight)
+        {
+            rightColliderArray[0].SetActive(true);
+            rightColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            rightColliderArray[0].SetActive(false);
+        }
+        else
+        {
+            leftColliderArray[0].SetActive(true);
+            leftColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            leftColliderArray[0].SetActive(false);
+        }
+        
+
+    }
+    public void BasicKick()
+    {
+        StartCoroutine(BKickSequence());
+    }
+    IEnumerator BKickSequence()
+    {
+        yield return new WaitForSeconds(.25f);
+        if (isAttackingRight)
+        {
+            rightColliderArray[0].SetActive(true);
+            rightColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            rightColliderArray[0].SetActive(false);
+        }
+        else
+        {
+            leftColliderArray[0].SetActive(true);
+            leftColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            leftColliderArray[0].SetActive(false);
+        }
+    }
+    public void SecondPunch()
+    {
+        StartCoroutine(SPunchSequence());
+    }
+    IEnumerator SPunchSequence()
+    {
+        yield return new WaitForSeconds(.25f);
+        if (isAttackingRight)
+        {
+            rightColliderArray[0].SetActive(true);
+            rightColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            rightColliderArray[0].SetActive(false);
+        }
+        else
+        {
+            leftColliderArray[0].SetActive(true);
+            leftColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            leftColliderArray[0].SetActive(false);
+        }
+    }
+    public void SecondKick()
+    {
+        StartCoroutine(SKickSequence());
+    }
+    IEnumerator SKickSequence()
+    {
+        yield return new WaitForSeconds(.25f);
+        if (isAttackingRight)
+        {
+            rightColliderArray[0].SetActive(true);
+            rightColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            rightColliderArray[0].SetActive(false);
+        }
+        else
+        {
+            leftColliderArray[0].SetActive(true);
+            leftColScript[0].PrepareForAttack(5, 0);
+            yield return new WaitForSeconds(.1f);
+            leftColliderArray[0].SetActive(false);
+        }
+    }
     public void SpartanKick(int colliderIndex, int comboIndex)
     {
         Debug.Log("spart");
+        StartCoroutine(SpartanSequence(colliderIndex, comboIndex));
     }
     IEnumerator SpartanSequence(int colliderIndex, int comboIndex)
     {
         yield return new WaitForSeconds(.3f);
+        if (isAttackingRight)
+        {
+            rightColliderArray[colliderIndex].SetActive(true);
+            rightColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
+            yield return new WaitForSeconds(.1f);
+            rightColliderArray[colliderIndex].SetActive(false);
+        }
+        else
+        {
+            leftColliderArray[colliderIndex].SetActive(true);
+            leftColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
+            yield return new WaitForSeconds(.1f);
+            leftColliderArray[colliderIndex].SetActive(false);
+        }
+        
     }
     public void HammerPunch(int colliderIndex, int comboIndex)
     {

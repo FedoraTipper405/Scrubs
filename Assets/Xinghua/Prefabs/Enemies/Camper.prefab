@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8630839800071817376}
   - component: {fileID: 7625632046200576521}
   - component: {fileID: 4779558687144428608}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2124876785
-  m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
