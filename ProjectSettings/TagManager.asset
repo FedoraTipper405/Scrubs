@@ -53,5 +53,11 @@ TagManager:
   - name: Player Layer
     uniqueID: 665437233
     locked: 0
+  - name: Prop Layer
+    uniqueID: 3996315629
+    locked: 0
+  - name: Prop Layer 2
+    uniqueID: 2873815927
+    locked: 0
   m_RenderingLayers:
   - Default
