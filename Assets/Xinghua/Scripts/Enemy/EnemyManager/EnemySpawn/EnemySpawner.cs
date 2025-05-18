@@ -5,11 +5,11 @@ public class EnemySpawner : MonoBehaviour
 {
     public EnemyData[] enemyDatas;
     private bool isTrigger = false;
-    private EnemySpawnManager triggerController;
+    private EnemySpawnManager enemySpawner;
     [SerializeField] private Transform enemyParent;
     private void Awake()
     {
-        triggerController = GetComponentInParent<EnemySpawnManager>();
+        enemySpawner = GetComponentInParent<EnemySpawnManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -32,9 +32,9 @@ public class EnemySpawner : MonoBehaviour
         GameObject enemy = Instantiate(data.enemyPrefab, position + spawnOffset, Quaternion.identity);
         enemy.transform.SetParent(enemyParent);
 
-        if (triggerController != null)
+        if (enemySpawner != null)
         {
-            triggerController.enemiesInTheScene.Add(enemy);
+            enemySpawner.enemiesInTheScene.Add(enemy);
         }
                           
         EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();

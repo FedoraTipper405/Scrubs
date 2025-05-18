@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.Events;
 using static EnemyAI;
 
@@ -6,28 +7,28 @@ public class EnemyBaseController : MonoBehaviour
 {
     public EnemyData enemyData;
     private float currentHealth;
+    private Vector3 patrolCenter;
     protected EnemyAI enemyAI;
 
     [HideInInspector]
     protected Transform player;
     [Header("general")]
     protected float distToPlayer;
-    protected float stopDistance = 2f;
+    protected float stopDistance;
     [Header("Attack")]
     protected float lastAttackTime;
  
 
     [Header("Pacing")]
-    [SerializeField] private float patrolRadius = 1f;
     private Vector3[] patrolOffsets;
     private int currentPatrolIndex = 0;
-    [SerializeField] protected float pacingDistance = 2f;
+
     Vector3 stopOffset;
 
     [Header("Die")]
     [SerializeField] protected float dropChance = 0.1f;
     [SerializeField] protected GameObject dropPerfab;
-
+    protected bool isDead;
     protected Animator animator;
     private KnockBack knockBack;
 
@@ -35,26 +36,28 @@ public class EnemyBaseController : MonoBehaviour
     {
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
-        knockBack = GetComponent<KnockBack>();
+        knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
         SetPacingLocation();
+        isDead = false;
     }
 
     protected virtual void SetEnemyValue()
     {
         currentHealth = enemyData.maxHealth;
         //other value need been set too if during the play been changed......
+        patrolCenter = GetStopPosition();
     }
 
     protected virtual void Update()
     {
-        CheckDistance();
+     
         switch (enemyAI.currentState)
         {
             case EnemyState.Idle:
                 break;
             case EnemyState.Pacing:
-                Peacing();
+                Pacing();
                 break;
             case EnemyState.Attack:
                 AttackPlayer();
@@ -68,8 +71,9 @@ public class EnemyBaseController : MonoBehaviour
     {
         patrolOffsets = new Vector3[]
             {
-                Vector3.up * patrolRadius,
-                Vector3.down * patrolRadius,
+                Vector3.up * enemyData.pacingRadius,
+                Vector3.down *enemyData.pacingRadius,
+            
             };
     }
 
@@ -96,8 +100,9 @@ public class EnemyBaseController : MonoBehaviour
         }
         else
         {
-            stopDistance = pacingDistance;
+            stopDistance = enemyData.pacingRadius;
         }
+
         if (player.position.x < transform.position.x)
         {
 
@@ -110,41 +115,44 @@ public class EnemyBaseController : MonoBehaviour
 
         return player.position + stopOffset;
     }
-    private void CheckDistance()
+
+
+    protected virtual void Pacing()
     {
-     
-        var currentDistance = Vector3.Distance(transform.position, player.transform.position);
-       // Debug.Log("check distance:"+ currentDistance +"arrange:"+  enemyData.attackRange);
-        if (currentDistance <= enemyData.attackRange)
-        {
-            enemyAI.SetEnemyState(EnemyState.Attack);
-        }
+      
     }
-
-    protected void Peacing()
+    protected void PatrolAround()
     {
-        animator.SetBool("isMoving", true);
-
-        if (player == null) return;
-        Vector3 targetPoint = GetStopPosition() + patrolOffsets[currentPatrolIndex];
-
+        Vector3 targetPoint =patrolCenter + patrolOffsets[currentPatrolIndex];
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, enemyData.moveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, targetPoint) < 0.1f)
+        if (Vector3.Distance(transform.position, targetPoint) <= 0.3f)
         {
             currentPatrolIndex = (currentPatrolIndex + 1) % patrolOffsets.Length;
+
         }
     }
 
-    
     protected void MoveToPlayer()
     {
         animator.SetBool("isMoving", true);
-        distToPlayer = Vector3.Distance(transform.position, GetStopPosition());
-        Vector3 dir = (GetStopPosition() - transform.position).normalized;
-        transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
+        Vector3 dir = (player.position - transform.position).normalized;
+
+        if (IsArrivedTargetPosition() == false)
+        {
+            transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
+        }
+
     }
 
+    protected bool IsArrivedTargetPosition()
+    {
+        distToPlayer = Vector3.Distance(transform.position, GetStopPosition());
+        if (distToPlayer > stopDistance)
+        {
+          return false;
+        }
+       return true;
+    }
     protected virtual void AttackPlayer()
     {
 
@@ -155,29 +163,33 @@ public class EnemyBaseController : MonoBehaviour
         if (EnemyAttackManager.Instance != null)
             EnemyAttackManager.Instance.StopAttack(this.gameObject);
     }
-    protected bool isDead = false;
+    
     public virtual void TakeDamage(int amount,GameObject sender)
     {
+       
         if(knockBack !=null)
         {
             knockBack.PlayKnockBackFeedBack(sender);
 
         }
-        if (currentHealth <= 0) return;
 
-        currentHealth -= amount;
-        currentHealth = Mathf.Max(currentHealth, 0);
-        if (currentHealth > 0)
+        if (currentHealth >= amount)
         {
-
             //play hit animation
-           
+            currentHealth -= amount;
+            Debug.Log("enemy health change" + currentHealth);
+            if (currentHealth == 0)
+            {
+
+                if (isDead) return;
+                Die();
+            }
         }
-        else
+        else 
         {
-            if (isDead) return;
             Die();
         }
+     
     }
 
     protected virtual void Die()
@@ -190,7 +202,7 @@ public class EnemyBaseController : MonoBehaviour
 
     public void OnDeath()
     {
-        if (enemyData.canDrop && Random.value < 0.6f)//this can be 0.1f； 0.6 is for test
+        if (enemyData.canDrop && Random.value < dropChance)
         {
             GameObject item = Instantiate(dropPerfab, transform.position, Quaternion.identity);
             item.SetActive(true);

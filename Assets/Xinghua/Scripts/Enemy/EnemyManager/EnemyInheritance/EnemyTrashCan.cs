@@ -6,7 +6,6 @@ public class EnemyTrashCan : EnemyBaseController
     protected void Awake()
     {
         player = FindAnyObjectByType<PlayerMovement>().transform;
-
     }
 
     protected override void Start()
@@ -14,14 +13,25 @@ public class EnemyTrashCan : EnemyBaseController
         base.Start();
         enemyAI.SetEnemyState(EnemyState.Pacing);
         enemyData.canDrop = true;
+       
     }
 
+    protected override void Pacing()
+    {
+        if (player == null) return;
+        animator.SetBool("isMoving", true);
+        MoveToPlayer();
+        if (IsArrivedTargetPosition() == true)
+        {
+            PatrolAround();
+        }
+    }
     protected override void AttackPlayer()
     {
         if (player == null) return;
         base.AttackPlayer();
-        MoveToPlayer();
-        if (Time.time - lastAttackTime >= enemyData.attackCooldown)
+
+        if (Time.time - lastAttackTime >= enemyData.attackCooldown && IsArrivedTargetPosition() == true && enemyAI.currentState == EnemyState.Attack)
         {
 
             animator.SetBool("isAttack", true);

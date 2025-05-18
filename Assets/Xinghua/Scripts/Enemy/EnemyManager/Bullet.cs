@@ -22,8 +22,8 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerMovement>() != null)
         {
-            //decrease the player health
-
+           // Debug.Log("bullet shoot the player");
+            //take damage of the player
             Destroy(gameObject);
         }
     }
