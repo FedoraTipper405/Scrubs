@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using static EnemyAI;
 
 public class EnemyBaseController : MonoBehaviour
@@ -17,7 +15,7 @@ public class EnemyBaseController : MonoBehaviour
     protected float stopDistance;
     [Header("Attack")]
     protected float lastAttackTime;
- 
+
 
     [Header("Pacing")]
     private Vector3[] patrolOffsets;
@@ -51,17 +49,20 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void Update()
     {
-     
-        switch (enemyAI.currentState)
+        if (enemyAI != null)
         {
-            case EnemyState.Idle:
-                break;
-            case EnemyState.Pacing:
-                Pacing();
-                break;
-            case EnemyState.Attack:
-                AttackPlayer();
-                break;
+           // Debug.Log("enemyAI" + enemyAI);
+            switch (enemyAI.currentState)
+            {
+                case EnemyState.Idle:
+                    break;
+                case EnemyState.Pacing:
+                    Pacing();
+                    break;
+                case EnemyState.Attack:
+                    AttackPlayer();
+                    break;
+            }
         }
         FlipTowardsPlayer();
         EnemySpawnManager.Instance.CheckEnemyNumberInTheScene();
@@ -73,7 +74,7 @@ public class EnemyBaseController : MonoBehaviour
             {
                 Vector3.up * enemyData.pacingRadius,
                 Vector3.down *enemyData.pacingRadius,
-            
+
             };
     }
 
@@ -119,11 +120,11 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void Pacing()
     {
-      
+
     }
     protected void PatrolAround()
     {
-        Vector3 targetPoint =patrolCenter + patrolOffsets[currentPatrolIndex];
+        Vector3 targetPoint = patrolCenter + patrolOffsets[currentPatrolIndex];
         transform.position = Vector3.MoveTowards(transform.position, targetPoint, enemyData.moveSpeed * Time.deltaTime);
         if (Vector3.Distance(transform.position, targetPoint) <= 0.3f)
         {
@@ -134,7 +135,11 @@ public class EnemyBaseController : MonoBehaviour
 
     protected void MoveToPlayer()
     {
-        animator.SetBool("isMoving", true);
+        if (animator !=null)
+        {
+            animator.SetBool("isMoving", true);
+        }
+      
         Vector3 dir = (player.position - transform.position).normalized;
 
         if (IsArrivedTargetPosition() == false)
@@ -149,9 +154,9 @@ public class EnemyBaseController : MonoBehaviour
         distToPlayer = Vector3.Distance(transform.position, GetStopPosition());
         if (distToPlayer > stopDistance)
         {
-          return false;
+            return false;
         }
-       return true;
+        return true;
     }
     protected virtual void AttackPlayer()
     {
@@ -163,11 +168,11 @@ public class EnemyBaseController : MonoBehaviour
         if (EnemyAttackManager.Instance != null)
             EnemyAttackManager.Instance.StopAttack(this.gameObject);
     }
-    
-    public virtual void TakeDamage(int amount,GameObject sender)
+
+    public virtual void TakeDamage(int amount, GameObject sender)
     {
-       
-        if(knockBack !=null)
+
+        if (knockBack != null)
         {
             knockBack.PlayKnockBackFeedBack(sender);
 
@@ -185,11 +190,11 @@ public class EnemyBaseController : MonoBehaviour
                 Die();
             }
         }
-        else 
+        else
         {
             Die();
         }
-     
+
     }
 
     protected virtual void Die()
