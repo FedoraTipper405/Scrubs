@@ -17,6 +17,7 @@ MonoBehaviour:
   maxHealth: 3
   moveSpeed: 3
   attackRange: 2
+  stopDistance: 1
   pacingRange: 2
   enemyPrefab: {fileID: 277788722177717595, guid: d716909d5ab88394b9c4a506d916d370, type: 3}
   attackCooldown: 5

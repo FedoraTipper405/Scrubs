@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(EnemyData data, Vector3 position)
     {
         float randomOffsetX = Random.Range(-20f, 0);
-        float randomOffsetY = Random.Range(-0.5f, 0.5f);
+        float randomOffsetY = Random.Range(-0.5f,0);
         Vector3 spawnOffset = new Vector3(12 + randomOffsetX, randomOffsetY, 0);
         GameObject enemy = Instantiate(data.enemyPrefab, position + spawnOffset, Quaternion.identity);
         enemy.transform.SetParent(enemyParent);

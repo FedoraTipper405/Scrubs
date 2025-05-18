@@ -1642,9 +1642,7 @@ MonoBehaviour:
   - {fileID: 1040443576}
   - {fileID: 828979023}
   - {fileID: 655102262}
-  currentIndex: 0
   enemiesInTheScene: []
-  enemyAttackManager: {fileID: 2018866162}
 --- !u!1 &655102262 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3853088219961775836, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
@@ -2076,7 +2074,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021099636}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2957,7 +2955,7 @@ PrefabInstance:
       addedObject: {fileID: 1779982778}
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1779982781}
+      addedObject: {fileID: 1779982784}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
 --- !u!4 &1400380426 stripped
 Transform:
@@ -3710,7 +3708,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.007863998, y: 0.15675437}
+  m_Offset: {x: 0.079194784, y: 0.15675437}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -3720,7 +3718,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.75696373, y: 0.39105296}
+  m_Size: {x: 0.53821707, y: 0.39105296}
   m_EdgeRadius: 0
 --- !u!114 &1779982774
 MonoBehaviour:
@@ -3799,7 +3797,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1.09375}
   m_Size: {x: 1.125, y: 2.1875}
   m_Direction: 0
---- !u!114 &1779982781
+--- !u!114 &1779982784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4199,17 +4197,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 3f973d2b0511f4d48826e3b32c5f79a6, type: 3}
---- !u!114 &2018866162 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2886089136133262962, guid: 7c8aa7a45659a4b48a07d6a5611a6d41, type: 3}
-  m_PrefabInstance: {fileID: 1192862780735779218}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f1a832e052fc894c86d3093f6db0875, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2032166186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: 18e38a646fe42524cbe2e42839062764, type: 3}

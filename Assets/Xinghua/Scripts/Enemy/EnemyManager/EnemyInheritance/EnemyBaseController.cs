@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 using static EnemyAI;
 
 public class EnemyBaseController : MonoBehaviour
@@ -9,17 +10,18 @@ public class EnemyBaseController : MonoBehaviour
 
     [HideInInspector]
     protected Transform player;
-
+    [Header("general")]
+    protected float distToPlayer;
+    protected float stopDistance = 2f;
     [Header("Attack")]
     protected float lastAttackTime;
-
-    protected float attackRange = 0.2f;
+ 
 
     [Header("Pacing")]
     [SerializeField] private float patrolRadius = 1f;
     private Vector3[] patrolOffsets;
     private int currentPatrolIndex = 0;
-    protected float stopDistance = 2f;
+    [SerializeField] protected float pacingDistance = 2f;
     Vector3 stopOffset;
 
     [Header("Die")]
@@ -27,18 +29,17 @@ public class EnemyBaseController : MonoBehaviour
     [SerializeField] protected GameObject dropPerfab;
 
     protected Animator animator;
-
-
+    private KnockBack knockBack;
 
     protected virtual void Start()
     {
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
-
+        knockBack = GetComponent<KnockBack>();
         SetEnemyValue();
         SetPacingLocation();
-
     }
+
     protected virtual void SetEnemyValue()
     {
         currentHealth = enemyData.maxHealth;
@@ -47,6 +48,7 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void Update()
     {
+        CheckDistance();
         switch (enemyAI.currentState)
         {
             case EnemyState.Idle:
@@ -60,30 +62,6 @@ public class EnemyBaseController : MonoBehaviour
         }
         FlipTowardsPlayer();
         EnemySpawnManager.Instance.CheckEnemyNumberInTheScene();
-    }
-
-    protected Vector3 GetStopPosition()
-    {
-        if (enemyAI.currentState == EnemyAI.EnemyState.Attack)
-        {
-            stopDistance = 1f;//this make para
-        }
-        else
-        {
-            stopDistance = 2f;
-        }
-        if (player.position.x < transform.position.x)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-            stopOffset = new Vector3(stopDistance, 0, 0);
-        }
-        else if (player.position.x >= transform.position.x)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-            stopOffset = new Vector3(-stopDistance, 0, 0);
-        }
-
-        return player.position + stopOffset;
     }
 
     private void SetPacingLocation()
@@ -110,6 +88,38 @@ public class EnemyBaseController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
     }
+    protected Vector3 GetStopPosition()//if attack stopDistance 1f;pacing 2f for test
+    {
+        if (enemyAI.currentState == EnemyAI.EnemyState.Attack)
+        {
+            stopDistance = enemyData.attackRange;//1f need been made para
+        }
+        else
+        {
+            stopDistance = pacingDistance;
+        }
+        if (player.position.x < transform.position.x)
+        {
+
+            stopOffset = new Vector3(stopDistance, 0, 0);
+        }
+        else if (player.position.x >= transform.position.x)
+        {
+            stopOffset = new Vector3(-stopDistance, 0, 0);
+        }
+
+        return player.position + stopOffset;
+    }
+    private void CheckDistance()
+    {
+     
+        var currentDistance = Vector3.Distance(transform.position, player.transform.position);
+       // Debug.Log("check distance:"+ currentDistance +"arrange:"+  enemyData.attackRange);
+        if (currentDistance <= enemyData.attackRange)
+        {
+            enemyAI.SetEnemyState(EnemyState.Attack);
+        }
+    }
 
     protected void Peacing()
     {
@@ -126,7 +136,7 @@ public class EnemyBaseController : MonoBehaviour
         }
     }
 
-    protected float distToPlayer;
+    
     protected void MoveToPlayer()
     {
         animator.SetBool("isMoving", true);
@@ -146,15 +156,22 @@ public class EnemyBaseController : MonoBehaviour
             EnemyAttackManager.Instance.StopAttack(this.gameObject);
     }
     protected bool isDead = false;
-    public virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount,GameObject sender)
     {
+        if(knockBack !=null)
+        {
+            knockBack.PlayKnockBackFeedBack(sender);
+
+        }
         if (currentHealth <= 0) return;
 
         currentHealth -= amount;
-
+        currentHealth = Mathf.Max(currentHealth, 0);
         if (currentHealth > 0)
         {
-            // animation get hit
+
+            //play hit animation
+           
         }
         else
         {
@@ -173,14 +190,14 @@ public class EnemyBaseController : MonoBehaviour
 
     public void OnDeath()
     {
-        if (enemyData.canDrop && Random.value < 1f)
+        if (enemyData.canDrop && Random.value < 0.6f)//this can be 0.1f； 0.6 is for test
         {
             GameObject item = Instantiate(dropPerfab, transform.position, Quaternion.identity);
             item.SetActive(true);
             if (item != null)
             {
                 Destroy(item, 8f);
-                    };
+            };
         }
 
 
@@ -188,4 +205,6 @@ public class EnemyBaseController : MonoBehaviour
         EnemySpawnManager.Instance.enemiesInTheScene.Remove(gameObject);
         EnemyAttackManager.Instance.currentAttackers.Remove(gameObject);
     }
+
+
 }
