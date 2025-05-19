@@ -5,11 +5,10 @@ public class EnemySpawnManager : MonoBehaviour
 {
     //manage the enemy in the scene and the trigger for spawn enemy
     public static EnemySpawnManager Instance;
-    public List<GameObject> triggerColliders;
-    public int currentIndex = 0;
+    [SerializeField]private List<GameObject> triggerColliders;
+    private int currentIndex = 0;
     [HideInInspector]
     public List<GameObject> enemiesInTheScene;
-    [SerializeField] EnemyAttackManager enemyAttackManager;
     private void Awake()
     {
         if (Instance == null)

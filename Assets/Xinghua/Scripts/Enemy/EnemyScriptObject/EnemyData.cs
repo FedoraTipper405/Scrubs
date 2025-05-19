@@ -8,9 +8,9 @@ public class EnemyData : ScriptableObject
     public int maxHealth;
     public float moveSpeed;
     public float attackRange;
-    public float pacingRange;
+    public float pacingRadius;
+    public float stopDistance;
     public GameObject enemyPrefab;
     public float attackCooldown;
     public bool canDrop;
-
 }

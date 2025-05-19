@@ -1,11 +1,24 @@
 using UnityEngine;
-using static EnemyAI;
 
 public class EnemyCorporateTrash : EnemyBaseController
 {
+    protected void Awake()
+    {
+        player = FindAnyObjectByType<PlayerMovement>().transform;
+    }
     protected override void Start()
     {
-        enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing);
+
+        if (enemyAI != null)
+        { enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing); }
+        else
+        {
+          
+            enemyAI = GetComponent<EnemyAI>();
+            enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing);
+        }
+
+
         transform.position += new Vector3(-1, 1, 0);
         enemyData.canDrop = true;
     }
@@ -20,7 +33,7 @@ public class EnemyCorporateTrash : EnemyBaseController
         // if player run move to the player again
         if (dist > enemyData.attackRange)
         {
-            enemyAI.currentState = EnemyState.Pacing;
+            //  enemyAI.currentState = EnemyState.Pacing;
             return;
         }
 
