@@ -119,26 +119,26 @@ public class PlayerAttacks : MonoBehaviour
                 {
                 SpartanKick(0,0);
                 }
-                else if (comboArray[0] == HammerPunchArray[0] && comboArray[1] == HammerPunchArray[1] && comboArray[2] == HammerPunchArray[2])
-                {
-                HammerPunch(1,1);
-                }
-                else if (comboArray[0] == RoundHouseArray[0] && comboArray[1] == RoundHouseArray[1] && comboArray[2] == RoundHouseArray[2])
-                {
-                RoundHouse(2,2);
-                }
-                else if (comboArray[0] == SanjiArray[0] && comboArray[1] == SanjiArray[1] && comboArray[2] == SanjiArray[2])
-                {
-                SanjiTableTop(3,3);
-                }
+                //else if (comboArray[0] == HammerPunchArray[0] && comboArray[1] == HammerPunchArray[1] && comboArray[2] == HammerPunchArray[2])
+                //{
+                //HammerPunch(1,1);
+                //}
+                //else if (comboArray[0] == RoundHouseArray[0] && comboArray[1] == RoundHouseArray[1] && comboArray[2] == RoundHouseArray[2])
+                //{
+                //RoundHouse(2,2);
+                //}
+                //else if (comboArray[0] == SanjiArray[0] && comboArray[1] == SanjiArray[1] && comboArray[2] == SanjiArray[2])
+                //{
+                //SanjiTableTop(3,3);
+                //}
                 else if (comboArray[0] == JabArray[0] && comboArray[1] == JabArray[1] && comboArray[2] == JabArray[2])
                 {
                 StraightJab(0,4);
                 }
-                else if( comboArray[0] == ChargedPunchArray[0] && comboArray[1] == ChargedPunchArray[1] && comboArray[2] == ChargedPunchArray[2])
-                {
-                ChargedPunch(0,5);
-            }
+            //    else if( comboArray[0] == ChargedPunchArray[0] && comboArray[1] == ChargedPunchArray[1] && comboArray[2] == ChargedPunchArray[2])
+            //    {
+            //    ChargedPunch(0,5);
+            //}
             else
             {
                 canInput = true;
@@ -281,6 +281,26 @@ public class PlayerAttacks : MonoBehaviour
     public void StraightJab(int colliderIndex, int comboIndex)
     {
         Debug.Log("jab");
+        StartCoroutine(JabSequence(colliderIndex, comboIndex)); 
+    }
+    IEnumerator JabSequence(int colliderIndex, int comboIndex)
+    {
+        yield return new WaitForSeconds(.3f);
+        if (isAttackingRight)
+        {
+            rightColliderArray[colliderIndex].SetActive(true);
+            rightColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
+            yield return new WaitForSeconds(.15f);
+            rightColliderArray[colliderIndex].SetActive(false);
+        }
+        else
+        {
+            leftColliderArray[colliderIndex].SetActive(true);
+            leftColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
+            yield return new WaitForSeconds(.15f);
+            leftColliderArray[colliderIndex].SetActive(false);
+        }
+        canInput = true;
     }
     public void ChargedPunch(int colliderIndex, int comboIndex)
     {
