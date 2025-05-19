@@ -104,49 +104,56 @@ public class PlayerAttacks : MonoBehaviour
         }
         if (currentComboIndex == 2)
         {
+            if (comboArray[0] == 1 && comboArray[1] == 1)
+            {
+                SecondKick();
+            }
+            if (comboArray[0] == 0 && comboArray[1] == 1)
+            {
+                SecondKick();
+            }
             if (comboArray[0] == 0 && comboArray[1] == 0)
-            {
-                SecondKick();
-            }
-            if (comboArray[1] == 0 && comboArray[1] == 0)
-            {
-                SecondKick();
-            }
-            if (comboArray[0] == 0 && comboArray[0] == 0)
             {
                 SecondPunch();
             }
-            if (comboArray[1] == 0 && comboArray[0] == 0)
+            if (comboArray[0] == 1 && comboArray[1] == 0)
             {
                 SecondPunch();
             }
         }
             if(currentComboIndex == 3)
             {
-            if (comboArray[0] == spartanKickArray[0] && comboArray[1] == spartanKickArray[1] && comboArray[2] == spartanKickArray[2] )
-                {
-                SpartanKick(0,0);
-                }
-                //else if (comboArray[0] == HammerPunchArray[0] && comboArray[1] == HammerPunchArray[1] && comboArray[2] == HammerPunchArray[2])
-                //{
-                //HammerPunch(1,1);
-                //}
-                //else if (comboArray[0] == RoundHouseArray[0] && comboArray[1] == RoundHouseArray[1] && comboArray[2] == RoundHouseArray[2])
-                //{
-                //RoundHouse(2,2);
-                //}
-                //else if (comboArray[0] == SanjiArray[0] && comboArray[1] == SanjiArray[1] && comboArray[2] == SanjiArray[2])
-                //{
-                //SanjiTableTop(3,3);
-                //}
-                else if (comboArray[0] == JabArray[0] && comboArray[1] == JabArray[1] && comboArray[2] == JabArray[2])
-                {
-                StraightJab(0,4);
-                }
+            if (comboArray[0] == spartanKickArray[0] && comboArray[1] == spartanKickArray[1] && comboArray[2] == spartanKickArray[2])
+            {
+                SpartanKick(0, 0);
+            }
+            //else if (comboArray[0] == HammerPunchArray[0] && comboArray[1] == HammerPunchArray[1] && comboArray[2] == HammerPunchArray[2])
+            //{
+            //HammerPunch(1,1);
+            //}
+            //else if (comboArray[0] == RoundHouseArray[0] && comboArray[1] == RoundHouseArray[1] && comboArray[2] == RoundHouseArray[2])
+            //{
+            //RoundHouse(2,2);
+            //}
+            //else if (comboArray[0] == SanjiArray[0] && comboArray[1] == SanjiArray[1] && comboArray[2] == SanjiArray[2])
+            //{
+            //SanjiTableTop(3,3);
+            //}
+            else if (comboArray[0] == JabArray[0] && comboArray[1] == JabArray[1] && comboArray[2] == JabArray[2])
+            {
+                StraightJab(0, 4);
+            }
             //    else if( comboArray[0] == ChargedPunchArray[0] && comboArray[1] == ChargedPunchArray[1] && comboArray[2] == ChargedPunchArray[2])
             //    {
             //    ChargedPunch(0,5);
             //}
+            else if (comboArray[2] == 0)
+            {
+                BasicPunch();
+            }else if (comboArray[2] == 1)
+            {
+                BasicKick();
+            }
             else
             {
                 canInput = true;
@@ -311,6 +318,7 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator JabSequence(int colliderIndex, int comboIndex)
     {
         //play jab combo finisher animation
+        animator.SetTrigger("isPunch");
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
