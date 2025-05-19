@@ -32,6 +32,10 @@ public class PlayerAttacks : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();//xh add
+    }
     void Start()
     {
 
@@ -160,6 +164,8 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator BPunchSequence()
     {
         //play basic punch animation
+        animator.SetTrigger("isPunch");
+
         yield return new WaitForSeconds(.25f);
         if(isAttackingRight)
         {
@@ -184,8 +190,10 @@ public class PlayerAttacks : MonoBehaviour
     }
     IEnumerator BKickSequence()
     {
-        
+
         //player basic kick animation
+        animator.SetTrigger("isKick");
+
         yield return new WaitForSeconds(.25f);
         if (isAttackingRight)
         {
@@ -210,6 +218,8 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator SPunchSequence()
     {
         //play special punch animation
+        animator.SetTrigger("isPunch");//for now just have punch
+
         yield return new WaitForSeconds(.25f);
         if (isAttackingRight)
         {
@@ -234,6 +244,8 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator SKickSequence()
     {
         //play special kick animation
+        animator.SetTrigger("isKick");
+
         yield return new WaitForSeconds(.25f);
         if (isAttackingRight)
         {
@@ -260,6 +272,8 @@ public class PlayerAttacks : MonoBehaviour
     {
 
         //Play spartan Kick Animation
+        animator.SetTrigger("isKick");
+
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {

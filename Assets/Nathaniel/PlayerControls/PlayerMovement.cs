@@ -1,19 +1,21 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.Windows;
 
 public class PlayerMovement : MonoBehaviour
 {
-  InputAction moveAction;
-PlayerInputActions playerInput;
+    InputAction moveAction;
+    PlayerInputActions playerInput;
     [SerializeField] float moveSpeed;
     Vector2 inputMovement;
     Rigidbody2D rb;
+
+    private Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
-    { 
-        rb = GetComponent<Rigidbody2D>();   
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -23,14 +25,24 @@ PlayerInputActions playerInput;
     }
     public void MovementInput(Vector2 input)
     {
-        inputMovement = input; 
+        inputMovement = input;
     }
     private void HandleMovement(Vector2 input)
     {
+        //xh add anima
+        if (input.x == 0)
+        {
+            animator.SetBool("isMoving", false);
+        }
+        else
+        {
+            animator.SetBool("isMoving", true);
+        }
+       // xh code end
 
-        Vector2 move = new Vector2(input.x,input.y);
+        Vector2 move = new Vector2(input.x, input.y);
         if (move.sqrMagnitude > 1) move.Normalize();
 
-        this.transform.position += ((transform.right * move.x + transform.up * move.y ) * moveSpeed * Time.deltaTime);
+        this.transform.position += ((transform.right * move.x + transform.up * move.y) * moveSpeed * Time.deltaTime);
     }
 }
