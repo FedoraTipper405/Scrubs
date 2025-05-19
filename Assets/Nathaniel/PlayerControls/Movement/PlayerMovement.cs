@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float moveSpeed;
     Vector2 inputMovement;
     Rigidbody2D rb;
-
+    [SerializeField]Transform PlayerTransform;
     private Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -26,6 +26,15 @@ public class PlayerMovement : MonoBehaviour
     public void MovementInput(Vector2 input)
     {
         inputMovement = input;
+        if(input.x > 0)
+        {
+            PlayerTransform.localScale = new Vector3(1,1, 1);
+        }
+        else if(input.x < 0)
+        {
+            PlayerTransform.localScale = new Vector3(-1, 1, 1);
+        } 
+        
     }
     private void HandleMovement(Vector2 input)
     {

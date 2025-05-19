@@ -30,7 +30,7 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] int[] JabArray = new int[3];
     [SerializeField] int[] ChargedPunchArray = new int[3];
 
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -67,7 +67,7 @@ public class PlayerAttacks : MonoBehaviour
         }
         else if(input.x < 0)
         {
-            isAttackingRight = true;
+            isAttackingRight = false;
         }
     }
     void ClearComboArray()
