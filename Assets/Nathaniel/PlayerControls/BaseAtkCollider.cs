@@ -5,6 +5,7 @@ public class BaseAtkCollider : MonoBehaviour
     float currentDamage;
     float currentKnockback;
     bool canHit = false;
+    [SerializeField] GameObject playerGameobject;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,7 +34,7 @@ public class BaseAtkCollider : MonoBehaviour
                 if (collision.gameObject.GetComponent<EnemyBaseController>() != null){
 
                     Debug.Log("3");
-                    collision.gameObject.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage));
+                    collision.gameObject.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage),playerGameobject);
                 }
             }
             canHit = false;

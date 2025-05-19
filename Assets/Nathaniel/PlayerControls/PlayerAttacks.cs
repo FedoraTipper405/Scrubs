@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerAttacks : MonoBehaviour
 {
+    [SerializeField]  Animator animator;
+
     [SerializeField]
     int[] comboArray = new int[3];
 
@@ -27,6 +29,8 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] int[] SanjiArray = new int[3];
     [SerializeField] int[] JabArray = new int[3];
     [SerializeField] int[] ChargedPunchArray = new int[3];
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -155,6 +159,7 @@ public class PlayerAttacks : MonoBehaviour
     }
     IEnumerator BPunchSequence()
     {
+        //play basic punch animation
         yield return new WaitForSeconds(.25f);
         if(isAttackingRight)
         {
@@ -179,6 +184,8 @@ public class PlayerAttacks : MonoBehaviour
     }
     IEnumerator BKickSequence()
     {
+        
+        //player basic kick animation
         yield return new WaitForSeconds(.25f);
         if (isAttackingRight)
         {
@@ -202,6 +209,7 @@ public class PlayerAttacks : MonoBehaviour
     }
     IEnumerator SPunchSequence()
     {
+        //play special punch animation
         yield return new WaitForSeconds(.25f);
         if (isAttackingRight)
         {
@@ -225,6 +233,7 @@ public class PlayerAttacks : MonoBehaviour
     }
     IEnumerator SKickSequence()
     {
+        //play special kick animation
         yield return new WaitForSeconds(.25f);
         if (isAttackingRight)
         {
@@ -249,6 +258,8 @@ public class PlayerAttacks : MonoBehaviour
     }
     IEnumerator SpartanSequence(int colliderIndex, int comboIndex)
     {
+
+        //Play spartan Kick Animation
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
@@ -285,6 +296,7 @@ public class PlayerAttacks : MonoBehaviour
     }
     IEnumerator JabSequence(int colliderIndex, int comboIndex)
     {
+        //play jab combo finisher animation
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
