@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    private TargetTest player;
+    private PlayerHealth player;
     private EnemyBaseController enemy;
     private float faceToFaceDistance = 0.2f;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        player = other.gameObject.GetComponent<TargetTest>();
+        player = other.gameObject.GetComponent<PlayerHealth>();
         enemy = gameObject.GetComponentInParent<EnemyBaseController>();
         if (player != null)
         {

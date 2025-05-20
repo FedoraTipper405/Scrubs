@@ -177,8 +177,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2124876785
-  m_SortingLayer: 0
+  m_SortingLayerID: -1789173841
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 6845853277440461498, guid: 5a6ee64380c291d43a757926debe30bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -219,6 +219,21 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
   dropChance: 0.8
   dropPerfab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
+  OnWaveEnemyDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!70 &4634892760496595583
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

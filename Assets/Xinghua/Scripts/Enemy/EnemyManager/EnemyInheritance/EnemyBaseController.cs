@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Events;
 using static EnemyAI;
 
 public class EnemyBaseController : MonoBehaviour
@@ -30,6 +32,7 @@ public class EnemyBaseController : MonoBehaviour
     protected Animator animator;
     private KnockBack knockBack;
 
+ 
     protected virtual void Start()
     {
         enemyAI = GetComponent<EnemyAI>();
@@ -65,7 +68,7 @@ public class EnemyBaseController : MonoBehaviour
             }
         }
         FlipTowardsPlayer();
-        EnemySpawnManager.Instance.CheckEnemyNumberInTheScene();
+       // EnemySpawnTrigger.Instance.CheckEnemyNumberInTheScene();
     }
 
     private void SetPacingLocation()
@@ -163,51 +166,36 @@ public class EnemyBaseController : MonoBehaviour
 
     }
 
-    private void OnDisableAttack()
-    {
-        if (EnemyAttackManager.Instance != null)
-            EnemyAttackManager.Instance.StopAttack(this.gameObject);
-    }
-
     public virtual void TakeDamage(int amount, GameObject sender)
     {
-
+        if(currentHealth < 0)return;
+        currentHealth -= amount;
         if (knockBack != null)
         {
             knockBack.PlayKnockBackFeedBack(sender);
-
         }
-
-        if (currentHealth >= amount)
-        {
-            //play hit animation
-            currentHealth -= amount;
-            Debug.Log("enemy health change" + currentHealth);
-            if (currentHealth == 0)
-            {
-
-                if (isDead) return;
-                Die();
-            }
-        }
-        else
+        //Debug.Log("enemy currentHealth" + currentHealth + "amount" +amount);
+        if (currentHealth <= 0)
         {
             Die();
         }
-
     }
 
     protected virtual void Die()
     {
         animator.SetTrigger("isDeath");
         isDead = true;
-        if (enemyData.canDrop) return;
+        Destroy(gameObject);
 
+        EnemyTriggerManager.Instance.enemiesInTheScene.Remove(gameObject);
+        EnemyTriggerManager.Instance.enemyWaveLeft--;
+        Debug.Log(EnemyTriggerManager.Instance.enemyWaveLeft + "base enemy sc enemy need been killed");
+        EnemyTriggerManager.Instance.CheckEnemyNumberInTheScene();
     }
 
     public void OnDeath()
     {
-        if (enemyData.canDrop && Random.value < dropChance)
+        if (enemyData.canDrop && UnityEngine.Random.value < dropChance)
         {
             GameObject item = Instantiate(dropPerfab, transform.position, Quaternion.identity);
             item.SetActive(true);
@@ -216,11 +204,6 @@ public class EnemyBaseController : MonoBehaviour
                 Destroy(item, 8f);
             };
         }
-
-
-        Destroy(gameObject);
-        EnemySpawnManager.Instance.enemiesInTheScene.Remove(gameObject);
-        EnemyAttackManager.Instance.currentAttackers.Remove(gameObject);
     }
 
 

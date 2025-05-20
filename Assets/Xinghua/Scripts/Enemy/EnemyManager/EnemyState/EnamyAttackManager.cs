@@ -1,39 +1,32 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyAttackManager : MonoBehaviour
 {
-    public static EnemyAttackManager Instance;
+
     public int maxAttackers = 3;
     [HideInInspector]
     public List<GameObject> currentAttackers = new List<GameObject>();
     private EnemySpawner triggerController;
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-
         triggerController = GetComponentInParent<EnemySpawner>();
-      
-
     }
-    private void FixedUpdate()
+
+    private void Update()
     {
-        if(currentAttackers.Count <= 1 && EnemySpawnManager.Instance.enemiesInTheScene.Count >= 1)
+        if (currentAttackers.Count <= 1 && EnemyTriggerManager.Instance.enemiesInTheScene.Count >= 1)
         {
             SetCurrentAttacker();
         }
-
     }
     public void SetCurrentAttacker()
     {
-        var result = GetRandonAttackerIndex(EnemySpawnManager.Instance.enemiesInTheScene.Count, maxAttackers);
-      
+        var result = GetRandonAttackerIndex(EnemyTriggerManager.Instance.enemiesInTheScene.Count, maxAttackers);
+
         foreach (var index in result)
         {
-            var enemy = EnemySpawnManager.Instance.enemiesInTheScene[index].gameObject;
+            var enemy = EnemyTriggerManager.Instance.enemiesInTheScene[index].gameObject;
             if (currentAttackers.Contains(enemy)) continue;
             currentAttackers.Add(enemy.gameObject);
             var enemyAI = enemy.gameObject.GetComponent<EnemyAI>();

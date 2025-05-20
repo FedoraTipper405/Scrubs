@@ -1,55 +1,42 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemySpawnManager : MonoBehaviour
+public class EnemySpawnTrigger : MonoBehaviour
 {
     //manage the enemy in the scene and the trigger for spawn enemy
-    public static EnemySpawnManager Instance;
-    [SerializeField]private List<GameObject> triggerColliders;
-    private int currentIndex = 0;
-    [HideInInspector]
-    public List<GameObject> enemiesInTheScene;
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else Destroy(gameObject);
-
-    }
-    private void Start()
-    {
-        for (int i = 0; i < triggerColliders.Count; i++)
-        {
-            if (i == 0)
-            {
-                triggerColliders[i].SetActive(true);
-            }
-            else
-            {
-                triggerColliders[i].SetActive(false);
-            }
-        }
-        enemiesInTheScene = new List<GameObject>();
-    }
 
  
-    public void CheckEnemyNumberInTheScene()
+    public List<EnemyData> allEnemies = new List<EnemyData>();
+    //private int currentIndex = 0;
+    private int enemyCount;
+    //[SerializeField] private List<GameObject> expectedEnemies;
+    private List<GameObject> triggeredList = new List<GameObject>();
+    private int enemyWaveDeathCount = 0;
+    private void Start()
     {
-        if (enemiesInTheScene.Count <= 1)
+        GetAllEnemyCurrentWave();
+       
+    }
+    private void GetAllEnemyCurrentWave()
+    {
+        allEnemies.Clear();
+        foreach (Transform enemy in transform)
         {
-            EnableNextTrigger();
+            EnemySpawner enemySpawner = enemy.GetComponentInChildren<EnemySpawner>();
+            foreach (var enemyData in enemySpawner.enemyDatas)
+            {
+                allEnemies.Add(enemyData);
+            }
         }
     }
-
-    private void EnableNextTrigger()
+ 
+    public void HandleWaveEnemyCount()
     {
-        currentIndex++;
-        if (currentIndex < triggerColliders.Count)
-        {
-            triggerColliders[currentIndex].SetActive(true);
-        }
-
+        enemyWaveDeathCount++;
+        Debug.Log("enemyWaveLeft: " + enemyWaveDeathCount);
     }
+
+
 }

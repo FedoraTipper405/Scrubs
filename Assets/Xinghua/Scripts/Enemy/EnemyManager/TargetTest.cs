@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TargetTest : MonoBehaviour
 {
-    [SerializeField] EnemySpawnManager trigger;
+    [SerializeField] EnemySpawnTrigger trigger;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -10,7 +10,7 @@ public class TargetTest : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(2,gameObject);
-            trigger.enemiesInTheScene.Remove(other.gameObject);
+           // trigger.enemiesInTheScene.Remove(other.gameObject);
         }
     }
 

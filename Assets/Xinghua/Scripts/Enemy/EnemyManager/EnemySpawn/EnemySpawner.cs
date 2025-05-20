@@ -1,15 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
-using static EnemyAI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public EnemyData[] enemyDatas;
+    public List<EnemyData> enemyDatas = new List<EnemyData>();
     private bool isTrigger = false;
-    private EnemySpawnManager enemySpawner;
+
     [SerializeField] private Transform enemyParent;
+    private EnemySpawnTrigger currentActiveTrigger;
+    private float enemyNeedBeenClear;
     private void Awake()
     {
-        enemySpawner = GetComponentInParent<EnemySpawnManager>();
+        currentActiveTrigger = GetComponentInParent<EnemySpawnTrigger>();
+       
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -19,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
             foreach (var enemyPrefab in enemyDatas)
             {
                 SpawnEnemy(enemyPrefab, transform.position);//the position shoule related to the camera size,now just for temp
+                currentActiveTrigger.gameObject.SetActive(true);
             }
             isTrigger = true;
         }
@@ -27,16 +31,18 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(EnemyData data, Vector3 position)
     {
         float randomOffsetX = Random.Range(-20f, 0);
-        float randomOffsetY = Random.Range(-0.5f,0);
+        float randomOffsetY = Random.Range(-0.5f, 0);
         Vector3 spawnOffset = new Vector3(12 + randomOffsetX, randomOffsetY, 0);
         GameObject enemy = Instantiate(data.enemyPrefab, position + spawnOffset, Quaternion.identity);
         enemy.transform.SetParent(enemyParent);
 
-        if (enemySpawner != null)
+        if (EnemyTriggerManager.Instance != null)
         {
-            enemySpawner.enemiesInTheScene.Add(enemy);
+            EnemyTriggerManager.Instance.enemiesInTheScene.Add(enemy);
+           // Debug.Log("enemy count:" + EnemyTriggerManager.Instance.enemiesInTheScene.Count);
+            EnemyTriggerManager.Instance.CheckEnemyNumberInTheScene();
         }
-                          
+
         EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();
         controller.enemyData = data;
 
@@ -46,6 +52,17 @@ public class EnemySpawner : MonoBehaviour
         if (other != null && other.GetComponent<PlayerMovement>() != null)
         {
             isTrigger = true;
+            this.gameObject.SetActive(false);
+
+           
+            
+         /*   if (currentActiveTrigger != null)
+            {
+                {
+                    currentActiveTrigger.AddTrigger(gameObject);
+                }
+
+            }*/
         }
     }
 }

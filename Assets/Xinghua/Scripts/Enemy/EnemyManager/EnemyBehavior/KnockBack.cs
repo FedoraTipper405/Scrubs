@@ -22,10 +22,11 @@ public class KnockBack : MonoBehaviour
 
     public void PlayKnockBackFeedBack(GameObject obj)
     {
-        Debug.Log("PlayKnockBackFeedBack");
+        //Debug.Log("PlayKnockBackFeedBack");
         StopAllCoroutines();
         OnBegin?.Invoke();
         //play the anima ：get hit
+
         Vector2 dir = (transform.position - obj.transform.position);
         dir.y = 0f; 
         dir = dir.normalized;
