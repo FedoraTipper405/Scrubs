@@ -429,7 +429,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c53001b9bcbaf42a46a4b250fed845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allEnemies: []
 --- !u!1001 &149228863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -719,7 +718,7 @@ PrefabInstance:
       objectReference: {fileID: 494048088}
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: enemyDatas.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[0]'
@@ -728,7 +727,7 @@ PrefabInstance:
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 74503e56826956e47b0f4b3675bdb7b3, type: 2}
+      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[2]'
       value: 
@@ -1758,8 +1757,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  enemyWaveLeft: 0
-  enemiesInTheScene: []
+  taskEnemieCount: 0
+  taskEnemies: []
+  enemiesClear: []
 --- !u!4 &494048088 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3857216486206961897, guid: 7c8aa7a45659a4b48a07d6a5611a6d41, type: 3}
@@ -2164,7 +2164,7 @@ PrefabInstance:
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+      objectReference: {fileID: 11400000, guid: 74503e56826956e47b0f4b3675bdb7b3, type: 2}
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[1]'
       value: 
@@ -3193,7 +3193,7 @@ PrefabInstance:
       objectReference: {fileID: 494048088}
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: enemyDatas.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[0]'
@@ -4224,7 +4224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c53001b9bcbaf42a46a4b250fed845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allEnemies: []
 --- !u!4 &1510317642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: 3f973d2b0511f4d48826e3b32c5f79a6, type: 3}

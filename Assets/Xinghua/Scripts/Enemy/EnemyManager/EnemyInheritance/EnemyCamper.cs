@@ -42,6 +42,6 @@ public class EnemyCamper : EnemyBaseController
         bulletPool.Add(newBullet);
         bullet = newBullet.GetComponentInChildren<Bullet>();
         Vector3 direction = (player.position + new Vector3(0, 1, 0) - bulletStartPoint.transform.position).normalized;
-        bullet.Shoot(direction);
+        bullet.Shoot(direction,gameObject);
     }
 }

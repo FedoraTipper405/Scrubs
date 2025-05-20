@@ -4,6 +4,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public List<EnemyData> enemyDatas = new List<EnemyData>();
+    [HideInInspector]
+    public List<GameObject> enemies = new List<GameObject>();
     private bool isTrigger = false;
 
     [SerializeField] private Transform enemyParent;
@@ -19,9 +21,9 @@ public class EnemySpawner : MonoBehaviour
     {
         if (other != null && other.GetComponent<PlayerMovement>() != null && isTrigger == false)
         {
-            foreach (var enemyPrefab in enemyDatas)
+            foreach (var data in enemyDatas)
             {
-                SpawnEnemy(enemyPrefab, transform.position);//the position shoule related to the camera size,now just for temp
+                SpawnEnemy(data, transform.position);//the position shoule related to the camera size,now just for temp
                 currentActiveTrigger.gameObject.SetActive(true);
             }
             isTrigger = true;
@@ -35,14 +37,8 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnOffset = new Vector3(12 + randomOffsetX, randomOffsetY, 0);
         GameObject enemy = Instantiate(data.enemyPrefab, position + spawnOffset, Quaternion.identity);
         enemy.transform.SetParent(enemyParent);
-
-        if (EnemyTriggerManager.Instance != null)
-        {
-            EnemyTriggerManager.Instance.enemiesInTheScene.Add(enemy);
-           // Debug.Log("enemy count:" + EnemyTriggerManager.Instance.enemiesInTheScene.Count);
-            EnemyTriggerManager.Instance.CheckEnemyNumberInTheScene();
-        }
-
+        EnemyTriggerManager.Instance.taskEnemies.Add(enemy);
+        EnemyAttackManager.Instance.SetCurrentAttacker(enemy);
         EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();
         controller.enemyData = data;
 
@@ -53,16 +49,6 @@ public class EnemySpawner : MonoBehaviour
         {
             isTrigger = true;
             this.gameObject.SetActive(false);
-
-           
-            
-         /*   if (currentActiveTrigger != null)
-            {
-                {
-                    currentActiveTrigger.AddTrigger(gameObject);
-                }
-
-            }*/
         }
     }
 }

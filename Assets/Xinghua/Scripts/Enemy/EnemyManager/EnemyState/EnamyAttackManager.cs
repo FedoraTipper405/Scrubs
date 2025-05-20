@@ -1,35 +1,57 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAttackManager : MonoBehaviour
 {
-
+    public static EnemyAttackManager Instance;
     public int maxAttackers = 3;
     [HideInInspector]
-    public List<GameObject> currentAttackers = new List<GameObject>();
+    public List<GameObject>currentAttackers = new List<GameObject>();
     private EnemySpawner triggerController;
     void Awake()
     {
         triggerController = GetComponentInParent<EnemySpawner>();
     }
-
-    private void Update()
+    private void Start()
     {
-        if (currentAttackers.Count <= 1 && EnemyTriggerManager.Instance.enemiesInTheScene.Count >= 1)
+        if (Instance == null)
         {
-            SetCurrentAttacker();
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
         }
     }
-    public void SetCurrentAttacker()
+
+    public void SetAttacker()
     {
-        var result = GetRandonAttackerIndex(EnemyTriggerManager.Instance.enemiesInTheScene.Count, maxAttackers);
+        var result = GetRandonAttackerIndex(EnemyTriggerManager.Instance.taskEnemies.Count, maxAttackers);
 
         foreach (var index in result)
         {
-            var enemy = EnemyTriggerManager.Instance.enemiesInTheScene[index].gameObject;
-            if (currentAttackers.Contains(enemy)) continue;
-            currentAttackers.Add(enemy.gameObject);
-            var enemyAI = enemy.gameObject.GetComponent<EnemyAI>();
+            if (EnemyTriggerManager.Instance != null)
+            {
+                var enemy = EnemyTriggerManager.Instance.enemiesClear[index];
+                var obj = enemy.GameObject();
+                if (currentAttackers.Contains(obj)) continue;
+                currentAttackers.Add(obj);
+              /*  var enemyAI = enemy.GameObject().GetComponent<EnemyAI>();
+               
+                if (enemyAI != null)
+                {
+                    enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+                }*/
+            }
+        }
+    }
+    public void SetCurrentAttacker(GameObject obj)
+    {
+        var enemyAI = obj.GetComponent<EnemyAI>();
+
+        if (enemyAI != null)
+        {
             enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
         }
     }
@@ -39,7 +61,7 @@ public class EnemyAttackManager : MonoBehaviour
         List<int> result = new List<int>();
         for (int i = 0; i < length; i++)
         {
-            int numberToAttack = UnityEngine.Random.Range(0, length);
+            int numberToAttack = Random.Range(0, length);
             if (result.Contains(numberToAttack))
             {
                 continue;

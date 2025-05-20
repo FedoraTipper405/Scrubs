@@ -1,42 +1,32 @@
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawnTrigger : MonoBehaviour
 {
-    //manage the enemy in the scene and the trigger for spawn enemy
-
- 
-    public List<EnemyData> allEnemies = new List<EnemyData>();
-    //private int currentIndex = 0;
-    private int enemyCount;
-    //[SerializeField] private List<GameObject> expectedEnemies;
-    private List<GameObject> triggeredList = new List<GameObject>();
-    private int enemyWaveDeathCount = 0;
     private void Start()
     {
         GetAllEnemyCurrentWave();
-       
+        if (EnemyTriggerManager.Instance != null)
+        { EnemyTriggerManager.Instance.taskEnemies.Clear(); }
     }
-    private void GetAllEnemyCurrentWave()
+
+    public void GetAllEnemyCurrentWave()
     {
-        allEnemies.Clear();
-        foreach (Transform enemy in transform)
+        int total = 0;
+        EnemySpawner[] spawners = GetComponentsInChildren<EnemySpawner>(true);
+        foreach (var spawner in spawners)
         {
-            EnemySpawner enemySpawner = enemy.GetComponentInChildren<EnemySpawner>();
-            foreach (var enemyData in enemySpawner.enemyDatas)
+            if (spawner.enemyDatas != null)
             {
-                allEnemies.Add(enemyData);
+                total += spawner.enemyDatas.Count;
             }
+
         }
-    }
- 
-    public void HandleWaveEnemyCount()
-    {
-        enemyWaveDeathCount++;
-        Debug.Log("enemyWaveLeft: " + enemyWaveDeathCount);
-    }
+        if (total > 0 && EnemyTriggerManager.Instance != null)
+        {
+            EnemyTriggerManager.Instance.taskEnemieCount = total;
+        }
 
-
+    }
 }
+
+

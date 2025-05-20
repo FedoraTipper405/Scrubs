@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,9 +11,13 @@ public class EnemyTriggerManager : MonoBehaviour
     public UnityEvent OnMove;
     public UnityEvent OnLock;
 
-    public int enemyWaveLeft;
-    public List<GameObject> enemiesInTheScene;
-    private bool hasTriggeredNext = false;
+
+    [HideInInspector]
+    public int taskEnemieCount;
+    public List<GameObject> taskEnemies = new List<GameObject>();
+    public List<GameObject> enemiesClear;
+    // public List<EnemyData> enemiesInTheScene;
+
     private int currentIndex = 0;
     private void Start()
     {
@@ -40,47 +45,72 @@ public class EnemyTriggerManager : MonoBehaviour
             }
         }
     }
-
-    
-
-    private void Update()
+    public List<GameObject> GetObjectsNotInList(List<GameObject> bigList, List<GameObject> smallList)
     {
-        Debug.Log("left" + enemyWaveLeft);
-        if (enemyWaveLeft <= 0 && !hasTriggeredNext)
+        List<GameObject> result = new List<GameObject>();
+
+        foreach (GameObject obj in enemiesClear)
         {
-            hasTriggeredNext = true;
-            EnableNextTrigger();
-            Debug.Log("cam can move true");
+            if (!bigList.Contains(obj))
+            {
+                result.Add(obj);
+            }
+        }
+
+        return result;
+    }
+    public void HandleEnemyChange(GameObject obj)
+    {
+
+        enemiesClear.Add(obj);
+        GetObjectsNotInList(taskEnemies, enemiesClear);
+        {
+            //Debug.Log( enemiesClear.Count+ "/" +taskEnemieCount );
+            if (enemiesClear.Count >= taskEnemieCount)
+            {
+                //Debug.Log("cam can move true");
+                OnMove?.Invoke();
+                EnableNextTrigger();
+            }
+            StartCoroutine(LockCamera());
+        }
+    }
+    private IEnumerator LockCamera()
+    {
+        if (enemiesClear.Count >0) 
+        {
             OnLock?.Invoke();
+           // Debug.Log("cam move false");
+            yield return new WaitForSeconds(12f);
         }
-        else if (enemyWaveLeft > 0)
+        else
         {
-            hasTriggeredNext = false; 
-            Debug.Log("cam move false");
-            OnMove?.Invoke();
+            yield return null;
         }
     }
-    public void CheckEnemyNumberInTheScene()
+    public void RemoveTrigger(GameObject obj)
     {
-        if (enemiesInTheScene.Count <= 1)
-        {
-            EnableNextTrigger();
-        }
-
+        enemyTriggers.Remove(obj.transform);
     }
+
+
     public void AddTrigger(GameObject obj)
     {
         enemyTriggers.Add(obj.transform);
-        Debug.Log("triggerCollider :" + enemyTriggers.Count);
     }
+
     private void EnableNextTrigger()
     {
-        hasTriggeredNext = true;
+        enemiesClear.Clear();
         currentIndex++;
         if (currentIndex < enemyTriggers.Count)
         {
-
             enemyTriggers[currentIndex].gameObject.SetActive(true);
+            EnemySpawnTrigger spawnTrigger = enemyTriggers[currentIndex].GetComponent<EnemySpawnTrigger>();
+            if (spawnTrigger != null)
+            {
+                spawnTrigger.GetAllEnemyCurrentWave();
+            }
         }
     }
 

@@ -2,16 +2,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField]private float speed = 10f;
+    [SerializeField] private float speed = 10f;
     private Vector3 moveDirection;
-
-
-    public void Shoot(Vector3 direction)
+    private EnemyBaseController enemyOwner;
+    public void Shoot(Vector3 direction, GameObject owner)
     {
         direction.z = 0;
         moveDirection = direction;
-      
-        Destroy(gameObject,3f);
+        enemyOwner = owner.GetComponent<EnemyBaseController>();
+        Destroy(gameObject, 3f);
     }
     private void FixedUpdate()
     {
@@ -20,11 +19,13 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<PlayerMovement>() != null)
+        PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
+
+        if (player != null && enemyOwner != null)
         {
-           // Debug.Log("bullet shoot the player");
-            //take damage of the player
+            player.TakeDamage(enemyOwner.enemyData.damage);
             Destroy(gameObject);
         }
+
     }
 }

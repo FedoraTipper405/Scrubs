@@ -30,7 +30,7 @@ public class EnemyTrashCan : EnemyBaseController
     {
         if (player == null) return;
         base.AttackPlayer();
-
+       // animator.SetBool("isMoving", true);
         if (Time.time - lastAttackTime >= enemyData.attackCooldown && IsArrivedTargetPosition() == true && enemyAI.currentState == EnemyState.Attack)
         {
 
