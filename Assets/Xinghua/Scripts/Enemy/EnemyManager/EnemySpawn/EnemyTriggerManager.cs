@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,8 +15,9 @@ public class EnemyTriggerManager : MonoBehaviour
     public int taskEnemieCount;
     public List<GameObject> taskEnemies = new List<GameObject>();
     public List<GameObject> enemiesClear;
-    // public List<EnemyData> enemiesInTheScene;
 
+
+    bool isAllSpawnerEnable = true;
     private int currentIndex = 0;
     private void Start()
     {
@@ -38,12 +38,18 @@ public class EnemyTriggerManager : MonoBehaviour
             if (i == 0)
             {
                 childGameObject.SetActive(true);
+                EnemySpawnTrigger spawnTrigger = enemyTriggers[0].GetComponent<EnemySpawnTrigger>();
+                if (spawnTrigger != null)
+                {
+                    spawnTrigger.GetAllEnemyCurrentWave();
+                }
             }
             else
             {
                 childGameObject.SetActive(false);
             }
         }
+
     }
     public List<GameObject> GetObjectsNotInList(List<GameObject> bigList, List<GameObject> smallList)
     {
@@ -59,40 +65,42 @@ public class EnemyTriggerManager : MonoBehaviour
 
         return result;
     }
+
     public void HandleEnemyChange(GameObject obj)
     {
-
         enemiesClear.Add(obj);
+        Debug.Log(enemiesClear.Count + "/" + taskEnemieCount);
         GetObjectsNotInList(taskEnemies, enemiesClear);
+
+
+        if (enemiesClear.Count == taskEnemieCount && isAllSpawnerEnable == true)
         {
-            //Debug.Log( enemiesClear.Count+ "/" +taskEnemieCount );
-            if (enemiesClear.Count >= taskEnemieCount)
-            {
-                //Debug.Log("cam can move true");
-                OnMove?.Invoke();
-                EnableNextTrigger();
-            }
-            StartCoroutine(LockCamera());
+
+            OnMove?.Invoke();
+            EnableNextTrigger();
+        }
+
+    }
+    public void CheckTriggerState(int value, int total)
+    {
+
+        if (value == total)
+        {
+
+            LockCamera();
         }
     }
-    private IEnumerator LockCamera()
+
+    private void LockCamera()
     {
-        if (enemiesClear.Count >0) 
-        {
-            OnLock?.Invoke();
-           // Debug.Log("cam move false");
-            yield return new WaitForSeconds(12f);
-        }
-        else
-        {
-            yield return null;
-        }
+        OnLock?.Invoke();
+        Debug.Log("cam move false");
+
     }
     public void RemoveTrigger(GameObject obj)
     {
         enemyTriggers.Remove(obj.transform);
     }
-
 
     public void AddTrigger(GameObject obj)
     {
@@ -101,11 +109,14 @@ public class EnemyTriggerManager : MonoBehaviour
 
     private void EnableNextTrigger()
     {
+        //Debug.Log("EnableNextTrigger");
+        taskEnemieCount = 0;
         enemiesClear.Clear();
         currentIndex++;
         if (currentIndex < enemyTriggers.Count)
         {
             enemyTriggers[currentIndex].gameObject.SetActive(true);
+
             EnemySpawnTrigger spawnTrigger = enemyTriggers[currentIndex].GetComponent<EnemySpawnTrigger>();
             if (spawnTrigger != null)
             {

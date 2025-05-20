@@ -48,6 +48,8 @@ public class EnemySpawner : MonoBehaviour
         if (other != null && other.GetComponent<PlayerMovement>() != null)
         {
             isTrigger = true;
+            currentActiveTrigger.activeTriggersCount++;
+            EnemyTriggerManager.Instance.CheckTriggerState(currentActiveTrigger.activeTriggersCount, currentActiveTrigger.transform.childCount);
             this.gameObject.SetActive(false);
         }
     }
