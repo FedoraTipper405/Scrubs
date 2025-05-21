@@ -42,8 +42,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackGround
+    uniqueID: 704893305
+    locked: 0
+  - name: Building
+    uniqueID: 1340910175
+    locked: 0
+  - name: MiddleGround
+    uniqueID: 2405920837
+    locked: 0
   - name: Enemy
     uniqueID: 346211767
+    locked: 0
+  - name: Props
+    uniqueID: 4275125701
     locked: 0
   m_RenderingLayers:
   - Default
