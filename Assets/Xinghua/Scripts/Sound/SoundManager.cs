@@ -1,24 +1,19 @@
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public class SoundManager: MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
     [SerializeField] private string bgmName;
     [SerializeField] private Sound[] bgm, sfx;
     [SerializeField] private AudioSource bgmSource, sfxSource;
-    [Range(0f, 1f)][SerializeField] private float bgmVolume = 1.0f;  
+    [Range(0f, 1f)][SerializeField] private float bgmVolume = 1.0f;
     [Range(0f, 1f)][SerializeField] private float sfxVolume = 1.0f;
 
-    private void Start()
-    { 
-        PlayBGM("BGM", 0.1f);
-    }
+ 
     private void Awake()
     {
-       
+
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -27,19 +22,25 @@ public class SoundManager: MonoBehaviour
 
         Instance = this;
 
-        
+
         //DontDestroyOnLoad(gameObject);
     }
+    private void Start()
+    {
 
+        PlayBGM("BGM",0.1f);
+    }
     public void PlayBGM(string name, float vol)
     {
+        Debug.Log("play bgm vol in "+ vol);
         Sound s = Array.Find(bgm, x => x.name == name);
 
-        if ( s != null)
+        if (s != null)
         {
             bgmSource.clip = s.clip;
             bgmVolume = vol;
-            bgmSource.volume = bgmVolume;  
+            bgmSource.volume = bgmVolume;
+            Debug.Log("play bgm" + bgmSource.volume);
             bgmSource.Play();
             bgmSource.loop = true;
         }

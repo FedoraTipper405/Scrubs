@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     private EnemyBaseController enemyOwner;
     public void Shoot(Vector3 direction, GameObject owner)
     {
+        SoundManager.Instance.PlaySFX("Shoot",0.6f);
         direction.z = 0;
         moveDirection = direction;
         enemyOwner = owner.GetComponent<EnemyBaseController>();
