@@ -14,14 +14,10 @@ public class EnemySpawnTrigger : MonoBehaviour
         {
             if (spawner.enemyDatas != null)
             {
-               // Debug.Log("single enemy count start" + spawner.name+ spawner.enemyDatas.Count);
-                Debug.Log("total before" + total);
                 total += spawner.enemyDatas.Count;
-                Debug.Log("total after" + total);
             }
 
         }
-        Debug.Log("###final enemy count"+total);
         if (total > 0 && EnemyTriggerManager.Instance != null)
         {
             EnemyTriggerManager.Instance.taskEnemieCount = total;

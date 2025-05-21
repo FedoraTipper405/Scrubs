@@ -171,6 +171,7 @@ public class EnemyBaseController : MonoBehaviour
         if (currentHealth > amount)
         {
             currentHealth -= amount;
+            enemyAI.SetEnemyState(EnemyState.Pacing);
         }
         else
         {
@@ -181,9 +182,6 @@ public class EnemyBaseController : MonoBehaviour
         {
             knockBack.PlayKnockBackFeedBack(sender);
         }
-
-    
-       
     }
 
     protected virtual void Die()

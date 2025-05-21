@@ -3,6 +3,8 @@ using static EnemyAI;
 
 public class EnemyTrashCan : EnemyBaseController
 {
+    private float pacingTimer = 0f;
+    private float maxPacingTime = 8f;
     protected void Awake()
     {
         player = FindAnyObjectByType<PlayerMovement>().transform;
@@ -24,6 +26,13 @@ public class EnemyTrashCan : EnemyBaseController
         if (IsArrivedTargetPosition() == true)
         {
             PatrolAround();
+        }
+        pacingTimer += Time.deltaTime;
+      // Debug.Log("pacingTimer"+ pacingTimer + "maxPacingTime" + maxPacingTime);
+        if (pacingTimer >= maxPacingTime)
+        {
+            pacingTimer = 0f;
+            enemyAI.SetEnemyState(EnemyState.Attack);
         }
     }
     protected override void AttackPlayer()
