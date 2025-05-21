@@ -1,11 +1,8 @@
 using UnityEngine;
 
-public class BaseAtkCollider : MonoBehaviour
+public class RifleFistCollider : BaseAtkCollider
 {
-    protected float currentDamage;
-    protected float currentKnockback;
-    protected bool canHit = false;
-    [SerializeField] protected GameObject playerGameobject;
+    bool hasHit = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,16 +14,19 @@ public class BaseAtkCollider : MonoBehaviour
     {
         
     }
-    public void PrepareForAttack(float damage, float knockback)
+    private void LateUpdate()
     {
-        currentDamage = damage;
-        currentKnockback = knockback;
-        canHit = true;
+        if (hasHit)
+        {
+            canHit = false;
+            hasHit = false;
+        }
     }
-    protected virtual void AttackHandler(GameObject hitEnemy)
+    protected override void AttackHandler(GameObject hitEnemy)
     {
         if (canHit)
         {
+            hasHit = false;
             Debug.Log("1");
             if (hitEnemy.layer == 6)
             {
@@ -36,13 +36,11 @@ public class BaseAtkCollider : MonoBehaviour
 
                     Debug.Log("3");
                     hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
+                    hasHit = true;
                 }
             }
-            canHit = false;
+            
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        AttackHandler(collision.gameObject);
-    }
 }
+
