@@ -11,7 +11,7 @@ public class EnemyTrashCan : EnemyBaseController
     protected override void Start()
     {
         base.Start();
-        enemyAI.SetEnemyState(EnemyState.Pacing);
+        enemyAI.SetEnemyState(EnemyState.Attack);
         enemyData.canDrop = true;
        
     }
@@ -30,7 +30,7 @@ public class EnemyTrashCan : EnemyBaseController
     {
         if (player == null) return;
         base.AttackPlayer();
-       // animator.SetBool("isMoving", true);
+        animator.SetBool("isMoving", true);
         if (Time.time - lastAttackTime >= enemyData.attackCooldown && IsArrivedTargetPosition() == true && enemyAI.currentState == EnemyState.Attack)
         {
 
@@ -53,5 +53,9 @@ public class EnemyTrashCan : EnemyBaseController
     {
         animator.SetBool("isAttack", false);
     }
-
+    protected override void Die()
+    {
+        base.Die();
+        SoundManager.Instance.PlaySFX("TrashcanDeath", 0.8f);
+    }
 }

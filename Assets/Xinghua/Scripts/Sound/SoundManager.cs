@@ -32,7 +32,6 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayBGM(string name, float vol)
     {
-        Debug.Log("play bgm vol in "+ vol);
         Sound s = Array.Find(bgm, x => x.name == name);
 
         if (s != null)
@@ -40,7 +39,6 @@ public class SoundManager : MonoBehaviour
             bgmSource.clip = s.clip;
             bgmVolume = vol;
             bgmSource.volume = bgmVolume;
-            Debug.Log("play bgm" + bgmSource.volume);
             bgmSource.Play();
             bgmSource.loop = true;
         }
@@ -53,6 +51,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySFX(string name, float volume)
     {
+        Debug.Log("play SFX " + name);
         Sound s = Array.Find(sfx, x => x.name == name);
 
         if (s != null)

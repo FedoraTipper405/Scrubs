@@ -8,11 +8,11 @@ public class EnemyAttackManager : MonoBehaviour
     public int maxAttackers = 3;
     [HideInInspector]
     public List<GameObject>currentAttackers = new List<GameObject>();
-    private EnemySpawner triggerController;
-    void Awake()
+   // private EnemySpawner triggerController;
+  /*  void Awake()
     {
         triggerController = GetComponentInParent<EnemySpawner>();
-    }
+    }*/
     private void Start()
     {
         if (Instance == null)
@@ -27,7 +27,7 @@ public class EnemyAttackManager : MonoBehaviour
 
     public void SetAttacker()
     {
-        var result = GetRandonAttackerIndex(EnemyTriggerManager.Instance.taskEnemies.Count, maxAttackers);
+        var result = GetRandonAttackerIndex(EnemyTriggerManager.Instance.enemiesLeft.Count, maxAttackers);
 
         foreach (var index in result)
         {
@@ -37,12 +37,7 @@ public class EnemyAttackManager : MonoBehaviour
                 var obj = enemy.GameObject();
                 if (currentAttackers.Contains(obj)) continue;
                 currentAttackers.Add(obj);
-              /*  var enemyAI = enemy.GameObject().GetComponent<EnemyAI>();
-               
-                if (enemyAI != null)
-                {
-                    enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
-                }*/
+                SetCurrentAttacker(obj);
             }
         }
     }

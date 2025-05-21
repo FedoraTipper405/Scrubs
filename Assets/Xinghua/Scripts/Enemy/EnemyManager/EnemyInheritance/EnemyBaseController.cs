@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
 using static EnemyAI;
 
 public class EnemyBaseController : MonoBehaviour
@@ -24,7 +26,7 @@ public class EnemyBaseController : MonoBehaviour
     Vector3 stopOffset;
 
     [Header("Die")]
-    [SerializeField] protected float dropChance = 0.1f;
+    [SerializeField] protected float dropChance = 0.8f;
     [SerializeField] protected GameObject dropPerfab;
     protected bool isDead;
     protected Animator animator;
@@ -173,26 +175,27 @@ public class EnemyBaseController : MonoBehaviour
         else
         {
             currentHealth = 0;
+            Die();
         }
         if (knockBack != null)
         {
             knockBack.PlayKnockBackFeedBack(sender);
         }
 
-        Die();
+    
+       
     }
 
     protected virtual void Die()
     {
         animator.SetTrigger("isDeath");
         isDead = true;
-        Destroy(gameObject);
-        EnemyTriggerManager.Instance.HandleEnemyChange(gameObject);
-       
     }
 
     public void OnDeath()
     {
+        Destroy(gameObject);
+        EnemyTriggerManager.Instance.HandleEnemyChange(gameObject);
         if (enemyData.canDrop && UnityEngine.Random.value < dropChance)
         {
             GameObject item = Instantiate(dropPerfab, transform.position, Quaternion.identity);

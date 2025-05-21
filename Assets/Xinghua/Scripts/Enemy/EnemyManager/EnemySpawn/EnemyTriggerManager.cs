@@ -15,7 +15,7 @@ public class EnemyTriggerManager : MonoBehaviour
     public int taskEnemieCount;
     public List<GameObject> taskEnemies = new List<GameObject>();
     public List<GameObject> enemiesClear;
-
+    public List<GameObject> enemiesLeft = new List<GameObject>();//this list is all the enemies in the scene left
 
     bool isAllSpawnerEnable = true;
     private int currentIndex = 0;
@@ -53,17 +53,17 @@ public class EnemyTriggerManager : MonoBehaviour
     }
     public List<GameObject> GetObjectsNotInList(List<GameObject> bigList, List<GameObject> smallList)
     {
-        List<GameObject> result = new List<GameObject>();
+
 
         foreach (GameObject obj in enemiesClear)
         {
             if (!bigList.Contains(obj))
             {
-                result.Add(obj);
+                enemiesLeft.Add(obj);
             }
         }
 
-        return result;
+        return enemiesLeft;
     }
 
     public void HandleEnemyChange(GameObject obj)
