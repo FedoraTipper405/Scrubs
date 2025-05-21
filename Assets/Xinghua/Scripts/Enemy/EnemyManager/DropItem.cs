@@ -6,6 +6,7 @@ public class DropItem : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerMovement>() != null)
         {
+
             Destroy(gameObject);
             //add the money to player pocket
         }

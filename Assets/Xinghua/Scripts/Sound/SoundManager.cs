@@ -92,19 +92,5 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayHBD(float vol)
-    {
-        Sound s = Array.Find(sfx, x => x.name == "HBD");
-        if (s != null)
-        {
-            bgmSource.clip = s.clip;
-            bgmVolume = vol;
-            bgmSource.volume = bgmVolume;
-            bgmSource.Play();
-        }
-        else
-        {
-            Debug.Log("BGM not found");
-        }
-    }
+
 }

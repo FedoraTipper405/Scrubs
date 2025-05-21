@@ -69,18 +69,16 @@ public class EnemyTriggerManager : MonoBehaviour
     public void HandleEnemyChange(GameObject obj)
     {
         enemiesClear.Add(obj);
-        Debug.Log(enemiesClear.Count + "/" + taskEnemieCount);
+       // Debug.Log(enemiesClear.Count + "/" + taskEnemieCount);
         GetObjectsNotInList(taskEnemies, enemiesClear);
-
-
         if (enemiesClear.Count == taskEnemieCount && isAllSpawnerEnable == true)
         {
 
             OnMove?.Invoke();
             EnableNextTrigger();
         }
-
     }
+
     public void CheckTriggerState(int value, int total)
     {
 

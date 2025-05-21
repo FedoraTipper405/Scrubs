@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -33,9 +34,10 @@ public class EnemyBaseController : MonoBehaviour
     protected Animator animator;
     private KnockBack knockBack;
     [Header("Die")]
-    private float takeDamageCooldown =1f;
+    private float takeDamageCooldown =0.2f;
     private float lastDamageTime = -Mathf.Infinity;
 
+    public event Action<GameObject> OnKnockBack;
     protected virtual void Start()
     {
         enemyAI = GetComponent<EnemyAI>();
@@ -166,7 +168,7 @@ public class EnemyBaseController : MonoBehaviour
 
     public virtual void TakeDamage(int amount, GameObject sender)
     {
-
+        OnKnockBack?.Invoke(gameObject);
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
         lastDamageTime = Time.time;
@@ -185,7 +187,7 @@ public class EnemyBaseController : MonoBehaviour
         {
             knockBack.PlayKnockBackFeedBack(sender);
         }
-        Debug.Log(this.name + "take damage:" + amount);
+       // Debug.Log(this.name + "take damage:" + amount+"current health:" +currentHealth);
     }
 
     protected virtual void Die()
@@ -194,7 +196,8 @@ public class EnemyBaseController : MonoBehaviour
         isDead = true;
     }
 
-    public void OnDeath()
+
+    protected virtual void OnDeath()
     {
         Destroy(gameObject);
         EnemyTriggerManager.Instance.HandleEnemyChange(gameObject);
