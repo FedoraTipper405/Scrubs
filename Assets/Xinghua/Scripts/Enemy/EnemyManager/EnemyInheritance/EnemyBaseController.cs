@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static EnemyAI;
@@ -20,7 +21,7 @@ public class EnemyBaseController : MonoBehaviour
 
 
     [Header("Pacing")]
-    private Vector3[] patrolOffsets;
+    protected Vector3[] patrolOffsets;
     private int currentPatrolIndex = 0;
 
     Vector3 stopOffset;
@@ -31,7 +32,9 @@ public class EnemyBaseController : MonoBehaviour
     protected bool isDead;
     protected Animator animator;
     private KnockBack knockBack;
-
+    [Header("Die")]
+    private float takeDamageCooldown =1f;
+    private float lastDamageTime = -Mathf.Infinity;
 
     protected virtual void Start()
     {
@@ -39,7 +42,7 @@ public class EnemyBaseController : MonoBehaviour
         animator = GetComponent<Animator>();
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
-        SetPacingLocation();
+        
         isDead = false;
     }
 
@@ -54,7 +57,7 @@ public class EnemyBaseController : MonoBehaviour
     {
         if (enemyAI != null)
         {
-            // Debug.Log("enemyAI" + enemyAI);
+
             switch (enemyAI.currentState)
             {
                 case EnemyState.Idle:
@@ -71,14 +74,9 @@ public class EnemyBaseController : MonoBehaviour
         // EnemySpawnTrigger.Instance.CheckEnemyNumberInTheScene();
     }
 
-    private void SetPacingLocation()
+    protected virtual void SetPacingLocation()
     {
-        patrolOffsets = new Vector3[]
-            {
-                Vector3.up * enemyData.pacingRadius,
-                Vector3.down *enemyData.pacingRadius,
-
-            };
+       
     }
 
     void FlipTowardsPlayer()
@@ -168,6 +166,11 @@ public class EnemyBaseController : MonoBehaviour
 
     public virtual void TakeDamage(int amount, GameObject sender)
     {
+
+        if (Time.time - lastDamageTime < takeDamageCooldown)
+            return;
+        lastDamageTime = Time.time;
+
         if (currentHealth > amount)
         {
             currentHealth -= amount;
@@ -182,6 +185,7 @@ public class EnemyBaseController : MonoBehaviour
         {
             knockBack.PlayKnockBackFeedBack(sender);
         }
+        Debug.Log(this.name + "take damage:" + amount);
     }
 
     protected virtual void Die()

@@ -5268,7 +5268,7 @@ PrefabInstance:
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+      objectReference: {fileID: 11400000, guid: 058c68492092fc54d9dfb8a45b466c44, type: 2}
     - target: {fileID: 7975204766586209877, guid: 3ab6bae0470d42e4399f3ff80ab7e9cb, type: 3}
       propertyPath: 'enemyDatas.Array.data[4]'
       value: 
@@ -8727,7 +8727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: sfx.Array.size
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: bgm.Array.data[0].clip
@@ -8740,18 +8740,50 @@ PrefabInstance:
     - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: sfx.Array.data[0].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 2dcadc9a800b74944bc87733d5bbe92e, type: 3}
+      objectReference: {fileID: 8300000, guid: 9aac5b914a4249141934a0208b19e552, type: 3}
     - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: sfx.Array.data[0].name
-      value: TrashcanDeath
+      value: TrashcanAttk
       objectReference: {fileID: 0}
     - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: sfx.Array.data[1].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 63d488262f1e1ef40a02b941fa5f8eeb, type: 3}
+      objectReference: {fileID: 8300000, guid: 2dcadc9a800b74944bc87733d5bbe92e, type: 3}
     - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: sfx.Array.data[1].name
+      value: TrashcanDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 63d488262f1e1ef40a02b941fa5f8eeb, type: 3}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[2].name
       value: Shoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2da8cdbd218319b46bf538f7cab02f71, type: 3}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[3].name
+      value: CorporateDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ec062c658fb10ee4597e4dc41d383420, type: 3}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[4].name
+      value: PlayerPunch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f80e4321382fad478fb912e81fec891, type: 3}
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: sfx.Array.data[5].name
+      value: PlayerKick
       objectReference: {fileID: 0}
     - target: {fileID: 3161759855647047515, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: m_Enabled

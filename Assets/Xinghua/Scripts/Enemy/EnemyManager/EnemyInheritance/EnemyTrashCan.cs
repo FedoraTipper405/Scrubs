@@ -15,7 +15,7 @@ public class EnemyTrashCan : EnemyBaseController
         base.Start();
         enemyAI.SetEnemyState(EnemyState.Attack);
         enemyData.canDrop = true;
-       
+        SetPacingLocation();
     }
 
     protected override void Pacing()
@@ -35,6 +35,16 @@ public class EnemyTrashCan : EnemyBaseController
             enemyAI.SetEnemyState(EnemyState.Attack);
         }
     }
+    protected override void SetPacingLocation()
+    {
+        patrolOffsets = new Vector3[]
+            {
+                Vector3.up * enemyData.pacingRadius,
+                Vector3.down *enemyData.pacingRadius,
+
+            };
+
+    }
     protected override void AttackPlayer()
     {
         if (player == null) return;
@@ -44,6 +54,7 @@ public class EnemyTrashCan : EnemyBaseController
         {
 
             animator.SetBool("isAttack", true);
+            SoundManager.Instance.PlaySFX("TrashcanAttk",1f);
             lastAttackTime = Time.time;
         }
         //even within the range still move to player if player location changed

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttacks : MonoBehaviour
@@ -172,6 +173,7 @@ public class PlayerAttacks : MonoBehaviour
     {
         //play basic punch animation
         animator.SetTrigger("isPunch");
+        SoundManager.Instance.PlaySFX("PlayerPunch",0.9f);
 
         yield return new WaitForSeconds(.25f);
         if(isAttackingRight)
@@ -200,6 +202,7 @@ public class PlayerAttacks : MonoBehaviour
 
         //player basic kick animation
         animator.SetTrigger("isKick");
+        SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);//xh add
 
         yield return new WaitForSeconds(.25f);
         if (isAttackingRight)

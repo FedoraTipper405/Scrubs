@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private Sound[] bgm, sfx;
     [SerializeField] private AudioSource bgmSource, sfxSource;
     [Range(0f, 1f)][SerializeField] private float bgmVolume = 1.0f;
-    [Range(0f, 1f)][SerializeField] private float sfxVolume = 1.0f;
+   // [Range(0f, 1f)][SerializeField] private float sfxVolume = 1.0f;
 
  
     private void Awake()
@@ -51,7 +51,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySFX(string name, float volume)
     {
-        Debug.Log("play SFX " + name);
         Sound s = Array.Find(sfx, x => x.name == name);
 
         if (s != null)

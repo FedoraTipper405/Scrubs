@@ -1,51 +1,60 @@
 using UnityEngine;
+using static EnemyAI;
 
 public class EnemyCorporateTrash : EnemyBaseController
 {
+    private float pacingTimer;
+    private float maxPacingTime;
+
     protected void Awake()
     {
         player = FindAnyObjectByType<PlayerMovement>().transform;
+        enemyAI = GetComponent<EnemyAI>();
+        animator = GetComponent<Animator>();
     }
     protected override void Start()
     {
 
         if (enemyAI != null)
-        { enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing); }
-        else
         {
-          
-            enemyAI = GetComponent<EnemyAI>();
-            enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing);
+            enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
         }
-
+      
 
         transform.position += new Vector3(-1, 1, 0);
         enemyData.canDrop = true;
+
+        SetPacingLocation();
+    }
+
+    protected override void SetPacingLocation()
+    {
+        patrolOffsets = new Vector3[]
+            {
+                Vector3.up * enemyData.pacingRadius,
+                Vector3.down *enemyData.pacingRadius,
+
+            };
+
     }
 
     protected override void AttackPlayer()
     {
-        base.MoveToPlayer();
+
         if (player == null) return;
 
-        float dist = Vector3.Distance(transform.position, player.position);
-
-        // if player run move to the player again
-        if (dist > enemyData.attackRange)
+        MoveToPlayer();
+        if (IsArrivedTargetPosition() == true)
         {
-            //  enemyAI.currentState = EnemyState.Pacing;
-            return;
+            PatrolAround();
         }
+        pacingTimer += Time.deltaTime;
 
-        //even within the range still move to player if player location changed
-        Vector3 dir = (GetStopPosition() - transform.position).normalized;
-        transform.position += dir * (enemyData.moveSpeed * 0.5f) * Time.deltaTime;
-
-        // keep attack
-        if (Time.time - lastAttackTime >= enemyData.attackCooldown)
+        if (pacingTimer >= maxPacingTime)
         {
-            //player process the damage
-            lastAttackTime = Time.time;
+            pacingTimer = 0f;
+            enemyAI.SetEnemyState(EnemyState.Attack);
+            animator.SetTrigger("isAttack");
         }
     }
 
