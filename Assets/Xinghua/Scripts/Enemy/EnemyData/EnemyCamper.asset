@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Camper
   damage: 1
-  maxHealth: 1
+  maxHealth: 100
   moveSpeed: 0
   attackRange: 10
   pacingRadius: 200

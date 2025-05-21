@@ -21,6 +21,17 @@ public class PlayerAttacks : MonoBehaviour
     BaseAtkCollider[] leftColScript = new BaseAtkCollider[4];
     BaseAtkCollider[] rightColScript = new BaseAtkCollider[4];
 
+    [SerializeField] PlayerHealth playerStatScript;
+    [SerializeField]
+    SOUltimates[] soUltArray;
+    [SerializeField]
+    GameObject[] ultimateColliders;
+    [SerializeField]
+    BaseAtkCollider[] ultimateColScripts;
+    int activeUltIndex = 0;
+
+
+
     bool isAttackingRight = true;
     bool canInput = true;
     [SerializeField] int[] spartanKickArray = new int[3];
@@ -88,7 +99,43 @@ public class PlayerAttacks : MonoBehaviour
         {
             ClearComboArray();
         }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SpecialInput();
+        }
     }
+
+    //Ultimate area
+
+
+    public void SpecialInput()
+    {
+        if (canInput && playerStatScript.currentSpecial >= playerStatScript.FullSpecial)
+        {
+            if(activeUltIndex == 0)
+            {
+                StartCoroutine(RifleFist());
+            }
+
+            canInput = false;
+            playerStatScript.UsedSpecial();
+        }
+    }
+   IEnumerator RifleFist()
+    {
+        yield return new WaitForSeconds(.3f);
+        
+            ultimateColliders[activeUltIndex].SetActive(true);
+            ultimateColScripts[activeUltIndex].PrepareForAttack(soUltArray[activeUltIndex].damage, soUltArray[activeUltIndex].knockback);
+            yield return new WaitForSeconds(.15f);
+        ultimateColliders[activeUltIndex].SetActive(false);
+        canInput = true;
+    }
+
+
+    //checking Combos
+
+
     void CheckComboArray()
     {
         if (currentComboIndex == 1)
@@ -164,6 +211,38 @@ public class PlayerAttacks : MonoBehaviour
             }
         
     }
+
+
+
+
+
+
+    //Basic Attacks
+
+    public void KickInput()
+    {
+        if (canInput)
+        {
+            timeWithoutInput = 0;
+            comboArray[currentComboIndex] = 1;
+            currentComboIndex++;
+            CheckComboArray();
+            canInput = false;
+        }
+
+    }
+    public void PunchInput()
+    {
+        if (canInput)
+        {
+            timeWithoutInput = 0;
+            comboArray[currentComboIndex] = 0;
+            currentComboIndex++;
+            CheckComboArray();
+            canInput = false;
+        }
+    }
+
     public void BasicPunch()
     {
         StartCoroutine(BPunchSequence());
@@ -270,6 +349,14 @@ public class PlayerAttacks : MonoBehaviour
         }
         canInput = true;
     }
+
+
+
+
+
+    //ComboFinishes
+
+
     public void SpartanKick(int colliderIndex, int comboIndex)
     {
         Debug.Log("spart");
@@ -341,27 +428,5 @@ public class PlayerAttacks : MonoBehaviour
         Debug.Log("supaaaa");
     }
 
-    public void KickInput()
-    {
-        if(canInput)
-        {
-            timeWithoutInput = 0;
-            comboArray[currentComboIndex] = 1;
-            currentComboIndex++;
-            CheckComboArray();
-            canInput = false;
-        }
-       
-    }
-    public void PunchInput()
-    {
-        if (canInput)
-        {
-            timeWithoutInput = 0;
-            comboArray[currentComboIndex] = 0;
-            currentComboIndex++;
-            CheckComboArray();
-            canInput = false;
-        }
-    }
+   
 }
