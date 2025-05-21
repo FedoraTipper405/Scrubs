@@ -48,14 +48,14 @@ TagManager:
   - name: Building
     uniqueID: 1340910175
     locked: 0
+  - name: Props
+    uniqueID: 4275125701
+    locked: 0
   - name: MiddleGround
     uniqueID: 2405920837
     locked: 0
-  - name: Enemy
+  - name: Character
     uniqueID: 346211767
-    locked: 0
-  - name: Props
-    uniqueID: 4275125701
     locked: 0
   m_RenderingLayers:
   - Default

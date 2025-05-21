@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Enzo/MAIN MENU.unity
+    guid: bd91aef4613c8464c9705e782d3f6e9e
+  - enabled: 1
+    path: Assets/Xinghua/XinghuaH.unity
+    guid: d9b7e019328e3c84fbca5dfd7390251d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
