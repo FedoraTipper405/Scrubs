@@ -34,7 +34,8 @@ public class BaseAtkCollider : MonoBehaviour
                 if (hitEnemy.GetComponent<EnemyBaseController>() != null)
                 {
 
-                 //   Debug.Log("3");
+                    //   Debug.Log("3");
+                    playerGameobject.transform.GetChild(2).GetComponent<PlayerHealth>().GainSpecial(5);
                     hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
                     canHit = false;
                 }
@@ -45,5 +46,6 @@ public class BaseAtkCollider : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         AttackHandler(collision.gameObject);
+       
     }
 }

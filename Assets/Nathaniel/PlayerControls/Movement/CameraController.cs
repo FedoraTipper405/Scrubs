@@ -6,6 +6,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform playerTransform;
     [SerializeField] float cameraFollowSpeed;
     [SerializeField] bool canMove;
+    [SerializeField] GameObject Enemyholder;
+    float timeFrozen = 0;
     void Start()
     {
         
@@ -27,6 +29,16 @@ public class CameraController : MonoBehaviour
         if(playerTransform.position.x > transform.position.x && canMove)
         {
             transform.position += new Vector3(cameraFollowSpeed * Time.deltaTime,0,0);
+        }
+
+        if(canMove == false)
+        {
+            timeFrozen += Time.deltaTime;
+            if(timeFrozen > 10 && Enemyholder.transform.childCount == 0) { }
+            {
+                canMove = true;
+                timeFrozen = 0;
+            }
         }
     }
 }

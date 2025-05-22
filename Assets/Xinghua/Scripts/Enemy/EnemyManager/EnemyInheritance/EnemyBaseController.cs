@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using static EnemyAI;
 
 public class EnemyBaseController : MonoBehaviour
@@ -38,6 +39,7 @@ public class EnemyBaseController : MonoBehaviour
     private float lastDamageTime = -Mathf.Infinity;
 
     public event Action<GameObject> OnKnockBack;
+  
     protected virtual void Start()
     {
         enemyAI = GetComponent<EnemyAI>();
@@ -196,13 +198,15 @@ public class EnemyBaseController : MonoBehaviour
         {
             knockBack.PlayKnockBackFeedBack(sender);
         }
+
         //event
-       Debug.Log(this.name + "take damage:" + amount+"current health:" +currentHealth);
+        Debug.Log(this.name + "take damage:" + amount+"current health:" +currentHealth);
     }
 
     protected virtual void Die()
     {
         animator.SetTrigger("isDeath");
+       
         isDead = true;
     }
 

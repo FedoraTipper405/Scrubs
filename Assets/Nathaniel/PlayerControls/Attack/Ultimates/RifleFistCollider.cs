@@ -34,7 +34,7 @@ public class RifleFistCollider : BaseAtkCollider
                 if (hitEnemy.GetComponent<EnemyBaseController>() != null)
                 {
 
-                //    Debug.Log("3");
+                    //    Debug.Log("3");
                     hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
                     hasHit = true;
                 }
