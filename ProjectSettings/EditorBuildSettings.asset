@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Enzo/MAIN MENU.unity
-    guid: bd91aef4613c8464c9705e782d3f6e9e
+    path: Assets/Xinghua/SceneGym/MainMenu.unity
+    guid: 412b38d2bcddae84e83aaad4a84d12db
   - enabled: 1
     path: Assets/Xinghua/XinghuaH.unity
     guid: d9b7e019328e3c84fbca5dfd7390251d
