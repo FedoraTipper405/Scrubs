@@ -38,7 +38,7 @@ public class PlayerHealth : MonoBehaviour
         healthBlackBar.transform.localScale = new Vector3(1 - ( currentPlayerHealth / maxPlayerHealth),healthBlackBar.transform.localScale.y,healthBlackBar.transform.localScale.z);
         if(currentPlayerHealth < 0)
         {
-            Debug.Log("Dead");
+          //  Debug.Log("Dead");
         }
     }
     public void GainSpecial(float specialVal)

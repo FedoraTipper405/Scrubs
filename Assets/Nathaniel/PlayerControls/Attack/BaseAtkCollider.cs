@@ -27,18 +27,19 @@ public class BaseAtkCollider : MonoBehaviour
     {
         if (canHit)
         {
-            Debug.Log("1");
+           // Debug.Log("1");
             if (hitEnemy.layer == 6)
             {
-                Debug.Log("2");
+              //  Debug.Log("2");
                 if (hitEnemy.GetComponent<EnemyBaseController>() != null)
                 {
 
-                    Debug.Log("3");
+                 //   Debug.Log("3");
                     hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
+                    canHit = false;
                 }
             }
-            canHit = false;
+            
         }
     }
     private void OnTriggerStay2D(Collider2D collision)

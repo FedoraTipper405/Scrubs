@@ -124,6 +124,7 @@ public class PlayerAttacks : MonoBehaviour
     }
    IEnumerator RifleFist()
     {
+        animator.SetTrigger("isRifle");
         yield return new WaitForSeconds(.3f);
         
             ultimateColliders[activeUltIndex].SetActive(true);
@@ -254,22 +255,24 @@ public class PlayerAttacks : MonoBehaviour
         animator.SetTrigger("isPunch");
         SoundManager.Instance.PlaySFX("PlayerPunch",0.9f);
 
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         if(isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
             rightColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.12f);
             rightColliderArray[0].SetActive(false);
+            canInput = true;
         }
         else
         {
             leftColliderArray[0].SetActive(true);
             leftColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.12f);
             leftColliderArray[0].SetActive(false);
+            canInput = true;
         }
-        canInput = true;
+       
 
     }
     public void BasicKick()
@@ -283,22 +286,24 @@ public class PlayerAttacks : MonoBehaviour
         animator.SetTrigger("isKick");
         SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);//xh add
 
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         if (isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
             rightColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.35f);
             rightColliderArray[0].SetActive(false);
+            canInput = true;
         }
         else
         {
             leftColliderArray[0].SetActive(true);
             leftColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.35f);
             leftColliderArray[0].SetActive(false);
+            canInput = true;
         }
-        canInput = true;
+       
     }
     public void SecondPunch()
     {
@@ -307,24 +312,25 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator SPunchSequence()
     {
         //play special punch animation
-        animator.SetTrigger("isPunch");//for now just have punch
+        animator.SetTrigger("isPunch2");//for now just have punch
 
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         if (isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
             rightColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.18f);
             rightColliderArray[0].SetActive(false);
+            canInput = true;
         }
         else
         {
             leftColliderArray[0].SetActive(true);
             leftColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.18f);
             leftColliderArray[0].SetActive(false);
+            canInput = true;
         }
-        canInput = true;
     }
     public void SecondKick()
     {
@@ -333,24 +339,25 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator SKickSequence()
     {
         //play special kick animation
-        animator.SetTrigger("isKick");
+        animator.SetTrigger("isKick2");
 
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         if (isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
             rightColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.3f);
             rightColliderArray[0].SetActive(false);
+            canInput = true;
         }
         else
         {
             leftColliderArray[0].SetActive(true);
             leftColScript[0].PrepareForAttack(5, 0);
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.3f);
             leftColliderArray[0].SetActive(false);
+            canInput = true;
         }
-        canInput = true;
     }
 
 
@@ -369,7 +376,7 @@ public class PlayerAttacks : MonoBehaviour
     {
 
         //Play spartan Kick Animation
-        animator.SetTrigger("isKick");
+        animator.SetTrigger("isSpartan");
 
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
@@ -378,6 +385,7 @@ public class PlayerAttacks : MonoBehaviour
             rightColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
             yield return new WaitForSeconds(.15f);
             rightColliderArray[colliderIndex].SetActive(false);
+            canInput = true;
         }
         else
         {
@@ -385,8 +393,8 @@ public class PlayerAttacks : MonoBehaviour
             leftColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
             yield return new WaitForSeconds(.15f);
             leftColliderArray[colliderIndex].SetActive(false);
+            canInput = true;
         }
-        canInput = true;
     }
     public void HammerPunch(int colliderIndex, int comboIndex)
     {
@@ -408,7 +416,7 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator JabSequence(int colliderIndex, int comboIndex)
     {
         //play jab combo finisher animation
-        animator.SetTrigger("isPunch");
+        animator.SetTrigger("isJab");
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
@@ -416,6 +424,7 @@ public class PlayerAttacks : MonoBehaviour
             rightColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
             yield return new WaitForSeconds(.15f);
             rightColliderArray[colliderIndex].SetActive(false);
+            canInput = true;
         }
         else
         {
@@ -423,8 +432,8 @@ public class PlayerAttacks : MonoBehaviour
             leftColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
             yield return new WaitForSeconds(.15f);
             leftColliderArray[colliderIndex].SetActive(false);
+            canInput = true;
         }
-        canInput = true;
     }
     public void ChargedPunch(int colliderIndex, int comboIndex)
     {

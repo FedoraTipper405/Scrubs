@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5615939628362981617}
   - component: {fileID: 3259175823471902646}
   - component: {fileID: 2558150438787125212}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: AttackArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 2555671267055856187}
   - component: {fileID: -7725890697098353170}
   - component: {fileID: -3039253537440376471}
-  - component: {fileID: 6952044377559311140}
   m_Layer: 6
   m_Name: TrashCan
   m_TagString: Untagged
@@ -254,8 +253,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.090040766, y: 0.075213104}
-  m_Size: {x: 0.7172232, y: 0.109573856}
+  m_Offset: {x: 0.090040766, y: 0.12422762}
+  m_Size: {x: 0.71722335, y: 0.35464665}
   m_Direction: 1
 --- !u!95 &2555671267055856187
 Animator:
@@ -315,7 +314,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -323,44 +322,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!70 &6952044377559311140
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8834637972409278391}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.01562506, y: 0.921875}
-  m_Size: {x: 1.09375, y: 1.78125}
-  m_Direction: 0
+  m_CollisionDetection: 1
+  m_Constraints: 7

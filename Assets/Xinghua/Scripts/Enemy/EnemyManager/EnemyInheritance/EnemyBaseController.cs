@@ -74,6 +74,15 @@ public class EnemyBaseController : MonoBehaviour
         }
         FlipTowardsPlayer();
         // EnemySpawnTrigger.Instance.CheckEnemyNumberInTheScene();
+
+
+
+        //Nathan Temp fix I hope
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     protected virtual void SetPacingLocation()
@@ -176,7 +185,7 @@ public class EnemyBaseController : MonoBehaviour
         if (currentHealth > amount)
         {
             currentHealth -= amount;
-            enemyAI.SetEnemyState(EnemyState.Pacing);
+           // enemyAI.SetEnemyState(EnemyState.Idle);
         }
         else
         {
@@ -187,7 +196,8 @@ public class EnemyBaseController : MonoBehaviour
         {
             knockBack.PlayKnockBackFeedBack(sender);
         }
-       // Debug.Log(this.name + "take damage:" + amount+"current health:" +currentHealth);
+        //event
+       Debug.Log(this.name + "take damage:" + amount+"current health:" +currentHealth);
     }
 
     protected virtual void Die()

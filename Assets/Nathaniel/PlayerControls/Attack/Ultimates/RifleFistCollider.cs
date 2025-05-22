@@ -27,14 +27,14 @@ public class RifleFistCollider : BaseAtkCollider
         if (canHit)
         {
             hasHit = false;
-            Debug.Log("1");
+          //  Debug.Log("1");
             if (hitEnemy.layer == 6)
             {
-                Debug.Log("2");
+             //   Debug.Log("2");
                 if (hitEnemy.GetComponent<EnemyBaseController>() != null)
                 {
 
-                    Debug.Log("3");
+                //    Debug.Log("3");
                     hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
                     hasHit = true;
                 }
