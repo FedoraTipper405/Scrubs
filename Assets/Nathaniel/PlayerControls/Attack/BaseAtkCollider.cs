@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class BaseAtkCollider : MonoBehaviour
 {
-    float currentDamage;
-    float currentKnockback;
-    bool canHit = false;
-    [SerializeField] GameObject playerGameobject;
+    protected float currentDamage;
+    protected float currentKnockback;
+    protected bool canHit = false;
+    [SerializeField] protected GameObject playerGameobject;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,21 +23,29 @@ public class BaseAtkCollider : MonoBehaviour
         currentKnockback = knockback;
         canHit = true;
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    protected virtual void AttackHandler(GameObject hitEnemy)
     {
         if (canHit)
         {
-            Debug.Log("1");
-            if (collision.gameObject.layer == 6)
+           // Debug.Log("1");
+            if (hitEnemy.layer == 6)
             {
-                Debug.Log("2");
-                if (collision.gameObject.GetComponent<EnemyBaseController>() != null){
+              //  Debug.Log("2");
+                if (hitEnemy.GetComponent<EnemyBaseController>() != null)
+                {
 
-                    Debug.Log("3");
-                    collision.gameObject.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage),playerGameobject);
+                    //   Debug.Log("3");
+                    playerGameobject.transform.GetChild(2).GetComponent<PlayerHealth>().GainSpecial(5);
+                    hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
+                    canHit = false;
                 }
             }
-            canHit = false;
+            
         }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        AttackHandler(collision.gameObject);
+       
     }
 }

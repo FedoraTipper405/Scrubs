@@ -76,6 +76,6 @@ public class EnemyTrashCan : EnemyBaseController
     protected override void Die()
     {
         base.Die();
-        SoundManager.Instance.PlaySFX("TrashcanDeath", 0.8f);
+     //   SoundManager.Instance.PlaySFX("TrashcanDeath", 0.8f);
     }
 }

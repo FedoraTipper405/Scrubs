@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -18,8 +19,12 @@ public class PlayerHealth : MonoBehaviour
     {
         currentPlayerHealth = maxPlayerHealth;
         currentSpecial = 0;
+       
     }
-
+    private void OnEnable()
+    {
+        
+    }
     // Update is called once per frame
     void Update()
     {
@@ -38,7 +43,9 @@ public class PlayerHealth : MonoBehaviour
         healthBlackBar.transform.localScale = new Vector3(1 - ( currentPlayerHealth / maxPlayerHealth),healthBlackBar.transform.localScale.y,healthBlackBar.transform.localScale.z);
         if(currentPlayerHealth < 0)
         {
-            Debug.Log("Dead");
+            //  Debug.Log("Dead");
+
+            SceneManager.LoadScene("MainMenu");
         }
     }
     public void GainSpecial(float specialVal)
@@ -70,7 +77,8 @@ public class PlayerHealth : MonoBehaviour
     public void GainHealth(float healthVal)
     {
         currentPlayerHealth += healthVal;
-        if(currentPlayerHealth >  maxPlayerHealth)
+        healthBlackBar.transform.localScale = new Vector3(1 - (currentPlayerHealth / maxPlayerHealth), healthBlackBar.transform.localScale.y, healthBlackBar.transform.localScale.z);
+        if (currentPlayerHealth >  maxPlayerHealth)
         {
             currentPlayerHealth=maxPlayerHealth;
         }
