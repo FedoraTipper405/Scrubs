@@ -124,7 +124,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: train2
     originalName: 
-    pivot: {x: 0.49593496, y: -0.032258064}
+    pivot: {x: 0.49593496, y: -0.10344827}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,7 +133,7 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 123
-      height: 31
+      height: 29
     spriteID: cf8a4a18a44ee964691a9948c7ac9431
     spriteBone: []
     spriteOutline: []
@@ -157,9 +157,9 @@ ScriptedImporter:
       additiveSortOrder: 0
       cellRect:
         x: 2
-        y: 1
+        y: 3
         width: 123
-        height: 31
+        height: 29
       spriteId: cf8a4a18a44ee964691a9948c7ac9431
     linkedCells: []
     parentIndex: -1
