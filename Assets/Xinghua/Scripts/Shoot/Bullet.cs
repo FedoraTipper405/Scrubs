@@ -4,13 +4,13 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     private Vector3 moveDirection;
-    private EnemyBaseController enemyOwner;
-    public void Shoot(Vector3 direction, GameObject owner)
+    private float damage;//different shooter have different damage; for example boss and camper both can shoot ,the damage is different
+    public void Shoot(Vector3 direction,float amount)
     {
         SoundManager.Instance.PlaySFX("Shoot",0.6f);
         direction.z = 0;
         moveDirection = direction;
-        enemyOwner = owner.GetComponent<EnemyBaseController>();
+        damage = amount;
         Destroy(gameObject, 3f);
     }
     private void FixedUpdate()
@@ -20,11 +20,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
-
-        if (player != null && enemyOwner != null)
+        PlayerHealth player = other.gameObject.GetComponentInChildren<PlayerHealth>();
+        if (player != null)
         {
-            player.TakeDamage(enemyOwner.enemyData.damage);
+            player.TakeDamage(damage);
             Destroy(gameObject);
         }
 

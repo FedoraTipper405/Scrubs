@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8630839800071817376}
   - component: {fileID: 7625632046200576521}
   - component: {fileID: 4779558687144428608}
+  - component: {fileID: 9151749332121017826}
   m_Layer: 6
   m_Name: Camper
   m_TagString: Untagged
@@ -182,6 +183,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9151749332121017826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966470631647450342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb53c4d5a04f872478d46c54485b6fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9142053342132202314
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ public class Brute : BaseBoss
 
     [SerializeField] private Transform player;
     private float distToPlayer;
-    [SerializeField]private float stopDistance = 1f;
     protected Vector3 stopOffset;
 
     [Header("Animator")]
@@ -28,7 +27,7 @@ public class Brute : BaseBoss
     {
         anim = GetComponent<Animator>();
         Debug.Log("Animation" + anim.name);
-       
+        player = FindAnyObjectByType<PlayerMovement>().transform;
     }
     private void Start()
     {
@@ -102,7 +101,7 @@ public class Brute : BaseBoss
         if (!canAttack)
         {
             Vector3 dir = (player.transform.position - transform.position).normalized;
-            transform.position += dir * moveSpeed * Time.deltaTime;
+            transform.position += dir * speed * Time.deltaTime;
             anim.SetBool("isMoving", true);
         }
     
