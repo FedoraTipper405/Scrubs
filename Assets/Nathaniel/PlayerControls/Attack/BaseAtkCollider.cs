@@ -39,6 +39,14 @@ public class BaseAtkCollider : MonoBehaviour
                     hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
                     canHit = false;
                 }
+                //xh add
+                if (hitEnemy.GetComponent<BaseBoss>() != null)
+                {
+      
+                    hitEnemy.GetComponent<BaseBoss>().TakeDamage(50);//50 need be valuable
+                    canHit = false;
+                }
+                //xh code end
             }
             
         }

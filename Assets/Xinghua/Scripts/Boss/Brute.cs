@@ -10,7 +10,7 @@ public class Brute : BaseBoss
     }
     private BruteState currentState;
 
-    [SerializeField] private Transform player;
+    [HideInInspector] private Transform player;
     private float distToPlayer;
     protected Vector3 stopOffset;
 
@@ -19,27 +19,27 @@ public class Brute : BaseBoss
 
     [Header("Attack")]
     private bool canAttack = false;
-    public float maxHealth;
     private float damageAmount;
     [SerializeField]private float bonusDamage;
     private Vector3 attackPosition;
+    [SerializeField] GameObject healthHPBar;
+    private Health health;
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        Debug.Log("Animation" + anim.name);
         player = FindAnyObjectByType<PlayerMovement>().transform;
     }
+
     private void Start()
     {
         currentHealth = maxHealth;
-       
         SetCurrentState(BruteState.Attack);
-
+        health = GetComponentInChildren<Health>();
+        healthHPBar.SetActive(true);
     }
 
     private void Update()
     {
-       
         switch (currentState)
         {
             case BruteState.Idle:
@@ -118,7 +118,7 @@ public class Brute : BaseBoss
         anim.SetBool("isRecovering",true); 
     }
 
-    public void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
         SetCurrentState(BruteState.Recovering);
 
@@ -138,7 +138,9 @@ public class Brute : BaseBoss
         else
         {
             currentHealth = 0;
+            Destroy(gameObject);
         }
+        health.UpdateHealthUI(currentHealth, maxHealth);
     }
 
     private void OnAttackEnd()

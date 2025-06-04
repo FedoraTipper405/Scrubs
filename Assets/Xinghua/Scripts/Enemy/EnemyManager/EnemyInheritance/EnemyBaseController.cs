@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Xml.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using static EnemyAI;
 
 public class EnemyBaseController : MonoBehaviour
@@ -37,6 +39,7 @@ public class EnemyBaseController : MonoBehaviour
     [Header("Die")]
     private float takeDamageCooldown =0.2f;
     private float lastDamageTime = -Mathf.Infinity;
+  
 
     public event Action<GameObject> OnKnockBack;
   
@@ -48,6 +51,7 @@ public class EnemyBaseController : MonoBehaviour
         SetEnemyValue();
         
         isDead = false;
+       
     }
 
     protected virtual void SetEnemyValue()
@@ -172,6 +176,7 @@ public class EnemyBaseController : MonoBehaviour
         }
         return true;
     }
+
     protected virtual void AttackPlayer()
     {
 
@@ -187,7 +192,12 @@ public class EnemyBaseController : MonoBehaviour
         if (currentHealth > amount)
         {
             currentHealth -= amount;
-           // enemyAI.SetEnemyState(EnemyState.Idle);
+            //enemyAI.SetEnemyState(EnemyState.Idle);
+           Health visuakHealth = GetComponentInChildren<Health>();
+            if (visuakHealth != null)
+            {
+                visuakHealth.UpdateHealthUI(currentHealth,enemyData.maxHealth);
+            }
         }
         else
         {

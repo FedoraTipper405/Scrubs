@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Brute;
 
 public class FlyBoss : BaseBoss
 {
@@ -32,16 +33,21 @@ public class FlyBoss : BaseBoss
     private bool hasReachedTarget = false;
     private Vector3 lastDirection;
     private bool facingRight = true;
-    public Transform player;
+    [HideInInspector]public Transform player;
     private Shooter shooter;
+
+    private float damageAmount;
+    [SerializeField] private float bonusDamage;
+    private Health health;
     private void Awake()
     {
         shooter = GetComponent<Shooter>();
         player = FindAnyObjectByType<PlayerMovement>().transform;
-
+        health = GetComponentInChildren<Health>();
     }
     private void Start()
     {
+        currentHealth = maxHealth;
         SetCurrentState(FlyBossState.Flying);
     }
     public void SetCurrentState(FlyBossState state)
@@ -147,5 +153,31 @@ public class FlyBoss : BaseBoss
     {
         //fly and shoot again
     }
+    public override void TakeDamage(float amount)
+    {
+        Debug.Log("hit amount:" + amount);
+        SetCurrentState(FlyBossState.Recovering);
 
+        if (currentState == FlyBossState.Recovering)
+        {
+            damageAmount = bonusDamage * amount;
+        }
+        else
+        {
+            damageAmount = amount;
+        }
+
+       // Debug.Log(this.name + " TakeDamage before" + "current:"+currentHealth + "max:"+maxHealth + "damage apply:" + damageAmount);
+        if (currentHealth >= damageAmount)
+        {
+            currentHealth -= damageAmount;
+        }
+        else
+        {
+            currentHealth = 0;
+            Destroy(gameObject);
+        }
+       // Debug.Log(this.name + " TakeDamage after" + "current:" + currentHealth + "max:" + maxHealth + "damage apply:" + damageAmount);
+        health.UpdateHealthUI(currentHealth, maxHealth);
+    }
 }
