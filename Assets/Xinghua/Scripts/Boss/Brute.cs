@@ -36,6 +36,8 @@ public class Brute : BaseBoss
         SetCurrentState(BruteState.Attack);
         health = GetComponentInChildren<Health>();
         healthHPBar.SetActive(true);
+        player = FindAnyObjectByType<PlayerMovement>().transform;
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -51,6 +53,24 @@ public class Brute : BaseBoss
             case BruteState.Recovering:
                 Recovering();
                 break;
+        }
+    }
+    private void FixedUpdate()
+    {
+        FlipTowardsPlayer();
+    }
+    protected override void FlipTowardsPlayer()
+    {
+        //Debug.Log("flip the boss" + player.transform);
+        if (player == null) return;
+
+        if (player.position.x < transform.position.x)
+        {
+            renderer.flipX = false;
+        }
+        else
+        {
+            renderer.flipX = true;
         }
     }
 
@@ -102,20 +122,21 @@ public class Brute : BaseBoss
         {
             Vector3 dir = (player.transform.position - transform.position).normalized;
             transform.position += dir * speed * Time.deltaTime;
-            anim.SetBool("isMoving", true);
+            //anim.SetBool("isMoving", true);
         }
     
         else
         {
             Debug.Log("boss arrive attack position");
-            anim.SetBool("isAttack",true);
+            //anim.SetBool("isAttack",true);
         } 
     }
 
     private void Recovering()
     {
         Debug.Log("boss recovering now");
-        anim.SetBool("isRecovering",true); 
+       // anim.SetBool("isRecovering",true); 
+       //maybe when recovering can spawn some enemy
     }
 
     public override void TakeDamage(float amount)
@@ -134,6 +155,7 @@ public class Brute : BaseBoss
         if (currentHealth >= damageAmount)
         {
             currentHealth -= damageAmount;
+             SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
         }
         else
         {

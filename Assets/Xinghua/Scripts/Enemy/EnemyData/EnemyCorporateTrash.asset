@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: CorporateTrash
   damage: 3
-  maxHealth: 45
-  moveSpeed: 3
+  maxHealth: 20
+  moveSpeed: 1
   attackRange: 1.2
   pacingRadius: 2
   stopDistance: 1

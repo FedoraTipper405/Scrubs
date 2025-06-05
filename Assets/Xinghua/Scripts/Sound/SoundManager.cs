@@ -23,13 +23,13 @@ public class SoundManager : MonoBehaviour
         Instance = this;
 
 
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
     private void Start()
     {
-
         PlayBGM("BGM",0.1f);
     }
+
     public void PlayBGM(string name, float vol)
     {
         Sound s = Array.Find(bgm, x => x.name == name);

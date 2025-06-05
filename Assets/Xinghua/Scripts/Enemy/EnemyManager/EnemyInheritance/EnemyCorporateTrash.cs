@@ -11,20 +11,19 @@ public class EnemyCorporateTrash : EnemyBaseController
         player = FindAnyObjectByType<PlayerMovement>().transform;
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
+        renderer = GetComponent<SpriteRenderer>();
     }
     protected override void Start()
     {
-
         if (enemyAI != null)
         {
             enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
         }
       
-
         transform.position += new Vector3(-1, 1, 0);
         enemyData.canDrop = true;
-
-        SetPacingLocation();
+        currentHealth = enemyData.maxHealth;
+       SetPacingLocation();
     }
 
     protected override void SetPacingLocation()
@@ -33,9 +32,7 @@ public class EnemyCorporateTrash : EnemyBaseController
             {
                 Vector3.up * enemyData.pacingRadius,
                 Vector3.down *enemyData.pacingRadius,
-
             };
-
     }
 
     protected override void AttackPlayer()
@@ -57,16 +54,20 @@ public class EnemyCorporateTrash : EnemyBaseController
             animator.SetTrigger("isAttack");
         }
     }
-
     protected override void Die()
     {
         base.Die();
-        float rand = Random.value;
-        if (rand <= dropChance)
-        {
-            Instantiate(dropPerfab, transform.position, Quaternion.identity);
-        }
+        //   SoundManager.Instance.PlaySFX("TrashcanDeath", 0.8f);
     }
+    /* protected override void Die()
+     {
+         base.Die();
+         float rand = Random.value;
+         if (rand <= dropChance)
+         {
+             Instantiate(dropPerfab, transform.position, Quaternion.identity);
+         }
+     }*/
 }
 
 

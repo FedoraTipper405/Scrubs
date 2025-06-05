@@ -32,7 +32,7 @@ public class FlyBoss : BaseBoss
     private float angle;
     private bool hasReachedTarget = false;
     private Vector3 lastDirection;
-    private bool facingRight = true;
+
     [HideInInspector]public Transform player;
     private Shooter shooter;
 
