@@ -36,7 +36,7 @@ public class BaseAtkCollider : MonoBehaviour
 
                     //   Debug.Log("3");
                     playerGameobject.transform.GetChild(2).GetComponent<PlayerHealth>().GainSpecial(5);
-                    hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), playerGameobject);
+                    hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), currentKnockback,playerGameobject);
                     canHit = false;
                 }
                 //xh add

@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class Brute : BaseBoss
 {
     public enum BruteState
@@ -24,6 +24,7 @@ public class Brute : BaseBoss
     private Vector3 attackPosition;
     [SerializeField] GameObject healthHPBar;
     private Health health;
+   
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -48,7 +49,7 @@ public class Brute : BaseBoss
                 break;
             case BruteState.Attack:
                 MovingToPlayer();
-                Attack();
+                TryAttack();
                 break;
             case BruteState.Recovering:
                 Recovering();
@@ -79,15 +80,22 @@ public class Brute : BaseBoss
         currentState = state;
     }
 
-    private void Attack()
+    private void TryAttack()
     {
-        MovingToPlayer(); 
+        if(IsArrivedAttackPosition() == true)
+        {
+            HandleAttackAction();
+        }
+        else
+        {
+            MovingToPlayer();
+        }
+       
     }
 
     protected Vector3 GetStopPosition()
     {
        
-
         if (player.position.x < transform.position.x)
         {
 
@@ -103,40 +111,35 @@ public class Brute : BaseBoss
 
     protected bool IsArrivedAttackPosition()
     {
-        Debug.Log("detect distance");
+        //Debug.Log("detect distance");
         distToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         if (distToPlayer > stopDistance)
         {
             return false;
         }
-        Debug.Log(distToPlayer + stopDistance);
         return true;
     }
 
     private void MovingToPlayer()
     {
-      
-        canAttack = Vector3.Distance(transform.position, player.transform.position) <= stopDistance;
-        if (!canAttack)
-        {
-            Vector3 dir = (player.transform.position - transform.position).normalized;
-            transform.position += dir * speed * Time.deltaTime;
-            //anim.SetBool("isMoving", true);
-        }
-    
-        else
-        {
-            Debug.Log("boss arrive attack position");
-            //anim.SetBool("isAttack",true);
-        } 
+        Vector3 dir = (player.transform.position - transform.position).normalized;
+        transform.position += dir * speed * Time.deltaTime;
+        anim.SetBool("isMoving", true);
+        anim.SetBool("isRecovering", false);
+
     }
 
+    private void HandleAttackAction()
+    {
+        canAttack = true;
+        anim.SetBool("isAttack", true);
+        
+    }
     private void Recovering()
     {
-        Debug.Log("boss recovering now");
-       // anim.SetBool("isRecovering",true); 
-       //maybe when recovering can spawn some enemy
+        anim.SetBool("isRecovering",true); 
+        StartCoroutine(EndRecover());
     }
 
     public override void TakeDamage(float amount)
@@ -155,7 +158,9 @@ public class Brute : BaseBoss
         if (currentHealth >= damageAmount)
         {
             currentHealth -= damageAmount;
-             SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
+            SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
+            renderer.color = new Color(1f,0f,0f,1f);//red
+            StartCoroutine(EndFlash());
         }
         else
         {
@@ -165,9 +170,25 @@ public class Brute : BaseBoss
         health.UpdateHealthUI(currentHealth, maxHealth);
     }
 
-    private void OnAttackEnd()
+     private IEnumerator EndFlash()
     {
-        SetCurrentState(BruteState.Attack);
+        yield return new WaitForSeconds(0.25f);
+
+        renderer.color = new Color(1f, 1f, 1f, 1f);
     }
 
+    private void BossAttackEnd()//this event attach to the attack animation
+    {
+        Debug.Log("oss bosson attack end");
+        SetCurrentState(BruteState.Recovering);
+    }
+
+    private IEnumerator EndRecover()
+    {
+       //float random = Random.Range(1, 8)
+        Debug.Log("end recover");
+        yield return new WaitForSeconds(6f);
+        SetCurrentState(BruteState.Attack);
+       
+    }
 }

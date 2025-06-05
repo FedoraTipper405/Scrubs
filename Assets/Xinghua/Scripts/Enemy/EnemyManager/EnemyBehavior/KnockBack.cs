@@ -29,7 +29,7 @@ public class KnockBack : MonoBehaviour
         enemyBaseController.OnKnockBack -= PlayKnockBackFeedBack;
     }
 
-    public void PlayKnockBackFeedBack(GameObject obj)
+    public void PlayKnockBackFeedBack(GameObject obj,float value)
     {
         StopAllCoroutines();
      
@@ -38,7 +38,7 @@ public class KnockBack : MonoBehaviour
         Vector2 dir = (transform.position - obj.transform.position);
         dir.y = 0f;
         dir = dir.normalized;
-        rb.AddForce(dir * strength, ForceMode2D.Impulse);
+        rb.AddForce(dir * strength * value, ForceMode2D.Impulse);
         originalDrag = rb.linearDamping;
         rb.linearDamping = 8f;
         StartCoroutine(Reset());

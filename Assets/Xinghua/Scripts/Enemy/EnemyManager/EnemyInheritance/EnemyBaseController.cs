@@ -36,7 +36,7 @@ public class EnemyBaseController : MonoBehaviour
     private float lastDamageTime = -Mathf.Infinity;
     protected SpriteRenderer renderer;
 
-    public event Action<GameObject> OnKnockBack;
+    public event Action<GameObject,float> OnKnockBack;
 
     protected virtual void Start()
     {
@@ -168,9 +168,9 @@ public class EnemyBaseController : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage(int amount, GameObject sender)
+    public virtual void TakeDamage(int amount, float knockBack ,GameObject sender)
     {
-        OnKnockBack?.Invoke(gameObject);
+        OnKnockBack?.Invoke(gameObject,knockBack);
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
         lastDamageTime = Time.time;
@@ -192,10 +192,10 @@ public class EnemyBaseController : MonoBehaviour
             currentHealth = 0;
             Die();
         }
-        if (knockBack != null)
-        {
-            knockBack.PlayKnockBackFeedBack(sender);
-        }
+       // if (knockBack != null)
+      //  {
+          //  knockBack.PlayKnockBackFeedBack(sender,knockBack);
+       // }
 
         //event
         Health visuakHealth = GetComponentInChildren<Health>();
@@ -205,13 +205,13 @@ public class EnemyBaseController : MonoBehaviour
         }
         if (renderer != null)
         {
-            renderer.color = new Color(0f, 0f, 0f, 1f);
-            StartCoroutine(Flash());
+            renderer.color = new Color(1f, 0f, 0f, 1f);//red
+            StartCoroutine(EndFlash());
         }
 
     }
 
-    private IEnumerator Flash()
+    private IEnumerator EndFlash()
     {
         yield return new WaitForSeconds(0.25f);
 
