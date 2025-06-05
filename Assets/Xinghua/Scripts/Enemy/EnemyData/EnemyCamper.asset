@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: EnemyCamper
   m_EditorClassIdentifier: 
   enemyName: Camper
-  damage: 1
-  maxHealth: 1
-  moveSpeed: 1
+  damage: 5
+  maxHealth: 35
+  moveSpeed: 0
   attackRange: 10
-  pacingRange: 1
+  pacingRadius: 200
+  stopDistance: 0
   enemyPrefab: {fileID: 6966470631647450342, guid: 4f5a84dc22408424faddcc3ffed51066, type: 3}
+  attackCooldown: 1
+  canDrop: 0

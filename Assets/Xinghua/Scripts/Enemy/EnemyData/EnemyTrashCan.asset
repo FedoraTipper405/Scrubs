@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: EnemyTrashCan
   m_EditorClassIdentifier: 
   enemyName: TrashCan
-  damage: 2
-  maxHealth: 2
+  damage: 4
+  maxHealth: 70
   moveSpeed: 2
-  attackRange: 10
-  pacingRange: 3
+  attackRange: 1.1
+  pacingRadius: 2
+  stopDistance: 4
   enemyPrefab: {fileID: 8834637972409278391, guid: 6a1bb0d7448109d4aacd7afe3ea0729a, type: 3}
+  attackCooldown: 2
+  canDrop: 1
