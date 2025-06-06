@@ -1,5 +1,4 @@
 using UnityEngine;
-using static EnemyAI;
 
 public class EnemyCorporateTrash : EnemyBaseController
 {
@@ -11,7 +10,7 @@ public class EnemyCorporateTrash : EnemyBaseController
         player = FindAnyObjectByType<PlayerMovement>().transform;
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
-        renderer = GetComponent<SpriteRenderer>();
+        enemyRenderer = GetComponent<SpriteRenderer>();
     }
     protected override void Start()
     {
@@ -19,11 +18,11 @@ public class EnemyCorporateTrash : EnemyBaseController
         {
             enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
         }
-      
+
         transform.position += new Vector3(-1, 1, 0);
         enemyData.canDrop = true;
         currentHealth = enemyData.maxHealth;
-       SetPacingLocation();
+        SetPacingLocation();
     }
 
     protected override void SetPacingLocation()
@@ -37,23 +36,37 @@ public class EnemyCorporateTrash : EnemyBaseController
 
     protected override void AttackPlayer()
     {
-
         if (player == null) return;
 
-        MoveToPlayer();
-        if (IsArrivedTargetPosition() == true)
+        if (IsArrivedTargetPosition() == false)
         {
-            PatrolAround();
+            MoveToPlayer();
+            //PatrolAround();
         }
-        pacingTimer += Time.deltaTime;
-
-        if (pacingTimer >= maxPacingTime)
+        else
         {
-            pacingTimer = 0f;
-            enemyAI.SetEnemyState(EnemyState.Attack);
+            HandlrAttackAction();
+        }
+
+        /*  pacingTimer += Time.deltaTime;
+
+          if (pacingTimer >= maxPacingTime)
+          {
+              pacingTimer = 0f;
+              enemyAI.SetEnemyState(EnemyState.Attack);
+              animator.SetTrigger("isAttack");
+          }*/
+    }
+
+    private void HandlrAttackAction()
+    {
+        if(animator != null)
+        {
             animator.SetTrigger("isAttack");
+            animator.SetBool("isMoving",false);
         }
     }
+
     protected override void Die()
     {
         base.Die();

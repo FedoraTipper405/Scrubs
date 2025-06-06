@@ -14,7 +14,7 @@ public class EnemyCamper : EnemyBaseController
     {
         player = FindAnyObjectByType<PlayerMovement>().transform;
         shooter = GetComponent<Shooter>();
-
+        enemyRenderer = GetComponent<SpriteRenderer>();
     }
     protected override void Start()
     {

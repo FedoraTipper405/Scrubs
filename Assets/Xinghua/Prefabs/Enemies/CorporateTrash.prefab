@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -9142553742267731316}
   - component: {fileID: 6674752565431828053}
   - component: {fileID: 7257153428523871003}
+  - component: {fileID: -4651156432920058012}
   m_Layer: 6
   m_Name: CorporateTrash
   m_TagString: Untagged
@@ -239,7 +240,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.10990256, y: 0.13240811}
+  m_Offset: {x: 0.18006763, y: 0.24155378}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: -0.03636364}
@@ -249,8 +250,22 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0384091, y: 0.1398161}
+  m_Size: {x: 0.49268073, y: 0.35810745}
   m_EdgeRadius: 0
+--- !u!114 &-4651156432920058012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277788722177717595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0ead0ca3cfda94c88647a994aae559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOffset: 1000
+  precision: 100
 --- !u!1 &6674839271561764024
 GameObject:
   m_ObjectHideFlags: 0

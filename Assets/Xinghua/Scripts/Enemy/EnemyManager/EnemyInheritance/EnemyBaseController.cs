@@ -34,17 +34,23 @@ public class EnemyBaseController : MonoBehaviour
     [Header("Die")]
     private float takeDamageCooldown = 0.2f;
     private float lastDamageTime = -Mathf.Infinity;
-    protected SpriteRenderer renderer;
+    protected SpriteRenderer enemyRenderer;
 
     public event Action<GameObject,float> OnKnockBack;
-
+    private void Awake()
+    {
+        enemyRenderer = GetComponent<SpriteRenderer>();
+    }
     protected virtual void Start()
     {
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
-        renderer = GetComponent<SpriteRenderer>();
+
+       
+        
+       
         isDead = false;
 
     }
@@ -64,6 +70,7 @@ public class EnemyBaseController : MonoBehaviour
             switch (enemyAI.currentState)
             {
                 case EnemyState.Idle:
+                    Idle();
                     break;
                 case EnemyState.Pacing:
                     Pacing();
@@ -82,19 +89,22 @@ public class EnemyBaseController : MonoBehaviour
 
     }
 
-    void FlipTowardsPlayer()
+    protected virtual void FlipTowardsPlayer()
     {
         if (player == null) return;
 
-
-        if (player.position.x < transform.position.x)
+        if(enemyRenderer != null)
         {
-            renderer.flipX = false;
+            if (player.position.x < transform.position.x)
+            {
+                enemyRenderer.flipX = false;
+            }
+            else
+            {
+                enemyRenderer.flipX = true;
+            }
         }
-        else
-        {
-            renderer.flipX = true;
-        }
+       
     }
 
     protected Vector3 GetStopPosition()//if attack stopDistance 1f;pacing 2f for test
@@ -120,7 +130,17 @@ public class EnemyBaseController : MonoBehaviour
 
         return player.position + stopOffset;
     }
+    protected  void Idle()
+    {
+        animator.SetBool("isIdle",true);
+        StartCoroutine(EndIdle());
+    }
 
+    private IEnumerator EndIdle()
+    {
+        yield return new WaitForSeconds(1f);
+        enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+    }
 
     protected virtual void Pacing()
     {
@@ -142,6 +162,7 @@ public class EnemyBaseController : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isMoving", true);
+           
         }
 
         Vector3 dir = (player.position - transform.position).normalized;
@@ -165,19 +186,20 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void AttackPlayer()
     {
-
+        
     }
 
     public virtual void TakeDamage(int amount, float knockBack ,GameObject sender)
     {
-        OnKnockBack?.Invoke(gameObject,knockBack);
+       // OnKnockBack?.Invoke(player.gameObject,knockBack);
+        OnKnockBack?.Invoke(player.gameObject, 12f);
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
         lastDamageTime = Time.time;
         if (currentHealth > amount)
         {
             currentHealth -= amount;
-            //enemyAI.SetEnemyState(EnemyState.Idle);
+            enemyAI.SetEnemyState(EnemyState.Idle);
             if (SoundManager.Instance != null)
             {
                 SoundManager.Instance.PlaySFX("PlayerKick", 1f);
@@ -192,20 +214,15 @@ public class EnemyBaseController : MonoBehaviour
             currentHealth = 0;
             Die();
         }
-       // if (knockBack != null)
-      //  {
-          //  knockBack.PlayKnockBackFeedBack(sender,knockBack);
-       // }
-
-        //event
+     
         Health visuakHealth = GetComponentInChildren<Health>();
         if (visuakHealth != null)
         {
             visuakHealth.UpdateHealthUI(currentHealth, enemyData.maxHealth);
         }
-        if (renderer != null)
+        if (enemyRenderer != null)
         {
-            renderer.color = new Color(1f, 0f, 0f, 1f);//red
+            enemyRenderer.color = new Color(1f, 0f, 0f, 1f);//red
             StartCoroutine(EndFlash());
         }
 
@@ -215,7 +232,7 @@ public class EnemyBaseController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
 
-        renderer.color = new Color(1f, 1f, 1f, 1f);
+        enemyRenderer.color = new Color(1f, 1f, 1f, 1f);
     }
 
     protected virtual void Die()

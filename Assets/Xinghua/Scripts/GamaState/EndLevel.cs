@@ -1,24 +1,22 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class EndLevel : MonoBehaviour
 {
-    [SerializeField] GameObject winMenu;
+    [SerializeField] GameObject bossPrefab;
+    private bool isSpawned = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<PlayerMovement>() != null )
+        if (other.GetComponent<PlayerMovement>() != null && !isSpawned )
         {
-         
-            if (winMenu != null)
-            {
- 
-                winMenu.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("winMenu null");
-            }
-           
+
+            Instantiate(bossPrefab,transform.position,Quaternion.identity);
+            isSpawned = true;
         }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+       isSpawned = true;
     }
 }

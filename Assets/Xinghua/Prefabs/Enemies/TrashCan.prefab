@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 2555671267055856187}
   - component: {fileID: -7725890697098353170}
   - component: {fileID: -3039253537440376471}
+  - component: {fileID: 7595868736450612666}
   m_Layer: 6
   m_Name: TrashCan
   m_TagString: Untagged
@@ -327,6 +328,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
+--- !u!114 &7595868736450612666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8834637972409278391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0ead0ca3cfda94c88647a994aae559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOffset: 1000
+  precision: 100
 --- !u!1001 &8859030920340852907
 PrefabInstance:
   m_ObjectHideFlags: 0

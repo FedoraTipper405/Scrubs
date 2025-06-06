@@ -29,13 +29,13 @@ public class KnockBack : MonoBehaviour
         enemyBaseController.OnKnockBack -= PlayKnockBackFeedBack;
     }
 
-    public void PlayKnockBackFeedBack(GameObject obj,float value)
+    public void PlayKnockBackFeedBack(GameObject sender,float value)
     {
         StopAllCoroutines();
-     
-        //play the anima ：get hit
 
-        Vector2 dir = (transform.position - obj.transform.position);
+        //play the anima ：get knock back
+       // Debug.Log("play knock back sender:" + sender.name + value);
+        Vector2 dir = (transform.position - sender.transform.position);
         dir.y = 0f;
         dir = dir.normalized;
         rb.AddForce(dir * strength * value, ForceMode2D.Impulse);
@@ -49,7 +49,6 @@ public class KnockBack : MonoBehaviour
         yield return new WaitForSeconds(delay);
         rb.linearVelocity = Vector2.zero;
         //reset the animation
-
     }
 
 }

@@ -3,13 +3,9 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     private float damage;
-    private void Start()
-    {
-        Debug.Log(transform.parent.name + "start attack script ");
-    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(this.name + "attack ");
         HandleAttack(other.gameObject);
     }
 
@@ -23,12 +19,12 @@ public class Attack : MonoBehaviour
         {
             targetPlayer.TakeDamage(attackerEnemy.enemyData.damage);
         }
-        else if(targetPlayer != null && attackerBoss != null)
+        else if (targetPlayer != null && attackerBoss != null)
         {
             targetPlayer.TakeDamage(attackerBoss.damage);
         }
-        
-       
+
+
     }
 
 }

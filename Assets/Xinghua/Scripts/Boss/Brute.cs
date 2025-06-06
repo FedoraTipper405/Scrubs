@@ -18,7 +18,6 @@ public class Brute : BaseBoss
     private Animator anim;
 
     [Header("Attack")]
-    private bool canAttack = false;
     private float damageAmount;
     [SerializeField]private float bonusDamage;
     private Vector3 attackPosition;
@@ -38,7 +37,7 @@ public class Brute : BaseBoss
         health = GetComponentInChildren<Health>();
         healthHPBar.SetActive(true);
         player = FindAnyObjectByType<PlayerMovement>().transform;
-        renderer = GetComponent<SpriteRenderer>();
+        bossRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -67,11 +66,11 @@ public class Brute : BaseBoss
 
         if (player.position.x < transform.position.x)
         {
-            renderer.flipX = false;
+            bossRenderer.flipX = false;
         }
         else
         {
-            renderer.flipX = true;
+            bossRenderer.flipX = true;
         }
     }
 
@@ -132,7 +131,6 @@ public class Brute : BaseBoss
 
     private void HandleAttackAction()
     {
-        canAttack = true;
         anim.SetBool("isAttack", true);
         
     }
@@ -159,13 +157,14 @@ public class Brute : BaseBoss
         {
             currentHealth -= damageAmount;
             SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
-            renderer.color = new Color(1f,0f,0f,1f);//red
+            bossRenderer.color = new Color(1f,0f,0f,1f);//red
             StartCoroutine(EndFlash());
         }
         else
         {
             currentHealth = 0;
-            Destroy(gameObject);
+            Die();
+           
         }
         health.UpdateHealthUI(currentHealth, maxHealth);
     }
@@ -174,12 +173,11 @@ public class Brute : BaseBoss
     {
         yield return new WaitForSeconds(0.25f);
 
-        renderer.color = new Color(1f, 1f, 1f, 1f);
+        bossRenderer.color = new Color(1f, 1f, 1f, 1f);
     }
 
     private void BossAttackEnd()//this event attach to the attack animation
     {
-        Debug.Log("oss bosson attack end");
         SetCurrentState(BruteState.Recovering);
     }
 
