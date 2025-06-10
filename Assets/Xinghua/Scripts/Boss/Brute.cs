@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 public class Brute : BaseBoss
 {
     public enum BruteState
@@ -8,7 +8,7 @@ public class Brute : BaseBoss
         Attack,
         Recovering,
     }
-    private BruteState currentState;
+    public BruteState currentState;
 
     [HideInInspector] private Transform player;
     private float distToPlayer;
@@ -19,11 +19,11 @@ public class Brute : BaseBoss
 
     [Header("Attack")]
     private float damageAmount;
-    [SerializeField]private float bonusDamage;
+    [SerializeField] private float bonusDamage;
     private Vector3 attackPosition;
     [SerializeField] GameObject healthHPBar;
     private Health health;
-   
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -47,11 +47,10 @@ public class Brute : BaseBoss
             case BruteState.Idle:
                 break;
             case BruteState.Attack:
-                MovingToPlayer();
                 TryAttack();
                 break;
             case BruteState.Recovering:
-                Recovering();
+                RecoveringBegin();
                 break;
         }
     }
@@ -81,7 +80,7 @@ public class Brute : BaseBoss
 
     private void TryAttack()
     {
-        if(IsArrivedAttackPosition() == true)
+        if (IsArrivedAttackPosition() == true)
         {
             HandleAttackAction();
         }
@@ -89,12 +88,12 @@ public class Brute : BaseBoss
         {
             MovingToPlayer();
         }
-       
+
     }
 
     protected Vector3 GetStopPosition()
     {
-       
+
         if (player.position.x < transform.position.x)
         {
 
@@ -125,19 +124,24 @@ public class Brute : BaseBoss
         Vector3 dir = (player.transform.position - transform.position).normalized;
         transform.position += dir * speed * Time.deltaTime;
         anim.SetBool("isMoving", true);
+        anim.SetBool("isRecoverBegin", false);
         anim.SetBool("isRecovering", false);
 
     }
 
     private void HandleAttackAction()
     {
-        anim.SetBool("isAttack", true);
-        
+        anim.SetTrigger("isAttack");
+        anim.SetBool("isRecovering", false);
+        anim.SetBool("isRecoverloop", false);
+        anim.SetBool("isMoving", false);
+
     }
-    private void Recovering()
+    private void RecoveringBegin()
     {
-        anim.SetBool("isRecovering",true); 
-        StartCoroutine(EndRecover());
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverloop", false);
+        anim.SetBool("isMoving", false);
     }
 
     public override void TakeDamage(float amount)
@@ -157,19 +161,19 @@ public class Brute : BaseBoss
         {
             currentHealth -= damageAmount;
             SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
-            bossRenderer.color = new Color(1f,0f,0f,1f);//red
+            bossRenderer.color = new Color(1f, 0f, 0f, 1f);//red
             StartCoroutine(EndFlash());
         }
         else
         {
             currentHealth = 0;
             Die();
-           
+
         }
         health.UpdateHealthUI(currentHealth, maxHealth);
     }
 
-     private IEnumerator EndFlash()
+    private IEnumerator EndFlash()
     {
         yield return new WaitForSeconds(0.25f);
 
@@ -181,12 +185,27 @@ public class Brute : BaseBoss
         SetCurrentState(BruteState.Recovering);
     }
 
-    private IEnumerator EndRecover()
+    public void OnRecoverEnd()//set up in animation recover end
     {
-       //float random = Random.Range(1, 8)
-        Debug.Log("end recover");
-        yield return new WaitForSeconds(6f);
-        SetCurrentState(BruteState.Attack);
        
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverLoop", false);
+        anim.SetBool("isMoving", false);
+        SetCurrentState(BruteState.Attack);
     }
+    public void OnRecoveringLoop()
+    {
+        StartCoroutine(OnRecovering());
+    }
+
+    public IEnumerator OnRecovering()
+    {
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverLoop", true);
+        anim.SetBool("isMoving", false);
+        float random = Random.Range(3, 10);
+        yield return new WaitForSeconds(random);
+      OnRecoverEnd();
+    }
+
 }
