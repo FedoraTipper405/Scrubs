@@ -192,7 +192,7 @@ public class EnemyBaseController : MonoBehaviour
     public virtual void TakeDamage(int amount, float knockBack ,GameObject sender)
     {
        // OnKnockBack?.Invoke(player.gameObject,knockBack);
-        OnKnockBack?.Invoke(player.gameObject, 12f);
+        OnKnockBack?.Invoke(player.gameObject, knockBack);
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
         lastDamageTime = Time.time;

@@ -275,7 +275,10 @@ public class PlayerAttacks : MonoBehaviour
             inputQueue.Enqueue(0);
         }
     }
-
+    public void CancelQueue()
+    {
+        inputQueue.Clear();
+    }
     public void BasicPunch()
     {
         StartCoroutine(BPunchSequence());
@@ -409,12 +412,12 @@ public class PlayerAttacks : MonoBehaviour
         //Play spartan Kick Animation
         animator.SetTrigger("isSpartan");
 
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.5f);
         if (isAttackingRight)
         {
             rightColliderArray[colliderIndex].SetActive(true);
             rightColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.05f);
             rightColliderArray[colliderIndex].SetActive(false);
             canInput = true;
         }
@@ -422,7 +425,7 @@ public class PlayerAttacks : MonoBehaviour
         {
             leftColliderArray[colliderIndex].SetActive(true);
             leftColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.05f);
             leftColliderArray[colliderIndex].SetActive(false);
             canInput = true;
         }
