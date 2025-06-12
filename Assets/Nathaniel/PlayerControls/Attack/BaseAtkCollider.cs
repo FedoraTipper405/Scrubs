@@ -6,6 +6,7 @@ public class BaseAtkCollider : MonoBehaviour
     protected float currentKnockback;
     protected bool canHit = false;
     [SerializeField] protected GameObject playerGameobject;
+    [SerializeField] SOPlayerStats stats;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,7 +20,7 @@ public class BaseAtkCollider : MonoBehaviour
     }
     public void PrepareForAttack(float damage, float knockback)
     {
-        currentDamage = damage;
+        currentDamage = damage * (stats.strengthMultPerLevel * stats.strengthLevel - stats.strengthMultPerLevel + 1);
         currentKnockback = knockback;
         canHit = true;
     }
