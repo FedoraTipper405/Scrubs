@@ -1,0 +1,211 @@
+using System.Collections;
+using UnityEngine;
+public class Brute : BaseBoss
+{
+    public enum BruteState
+    {
+        Idle,
+        Attack,
+        Recovering,
+    }
+    public BruteState currentState;
+
+    [HideInInspector] private Transform player;
+    private float distToPlayer;
+    protected Vector3 stopOffset;
+
+    [Header("Animator")]
+    private Animator anim;
+
+    [Header("Attack")]
+    private float damageAmount;
+    [SerializeField] private float bonusDamage;
+    private Vector3 attackPosition;
+    [SerializeField] GameObject healthHPBar;
+    private Health health;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        player = FindAnyObjectByType<PlayerMovement>().transform;
+    }
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+        SetCurrentState(BruteState.Attack);
+        health = GetComponentInChildren<Health>();
+        healthHPBar.SetActive(true);
+        player = FindAnyObjectByType<PlayerMovement>().transform;
+        bossRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        switch (currentState)
+        {
+            case BruteState.Idle:
+                break;
+            case BruteState.Attack:
+                TryAttack();
+                break;
+            case BruteState.Recovering:
+                RecoveringBegin();
+                break;
+        }
+    }
+    private void FixedUpdate()
+    {
+        FlipTowardsPlayer();
+    }
+    protected override void FlipTowardsPlayer()
+    {
+        //Debug.Log("flip the boss" + player.transform);
+        if (player == null) return;
+
+        if (player.position.x < transform.position.x)
+        {
+            bossRenderer.flipX = false;
+        }
+        else
+        {
+            bossRenderer.flipX = true;
+        }
+    }
+
+    private void SetCurrentState(BruteState state)
+    {
+        currentState = state;
+    }
+
+    private void TryAttack()
+    {
+        if (IsArrivedAttackPosition() == true)
+        {
+            HandleAttackAction();
+        }
+        else
+        {
+            MovingToPlayer();
+        }
+
+    }
+
+    protected Vector3 GetStopPosition()
+    {
+
+        if (player.position.x < transform.position.x)
+        {
+
+            stopOffset = new Vector3(stopDistance, 0, 0);
+        }
+        else if (player.position.x >= transform.position.x)
+        {
+            stopOffset = new Vector3(-stopDistance, 0, 0);
+        }
+
+        return player.position + stopOffset;
+    }
+
+    protected bool IsArrivedAttackPosition()
+    {
+        //Debug.Log("detect distance");
+        distToPlayer = Vector3.Distance(transform.position, player.transform.position);
+
+        if (distToPlayer > stopDistance)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void MovingToPlayer()
+    {
+        Vector3 dir = (player.transform.position - transform.position).normalized;
+        transform.position += dir * speed * Time.deltaTime;
+        anim.SetBool("isMoving", true);
+        anim.SetBool("isRecoverBegin", false);
+        anim.SetBool("isRecovering", false);
+
+    }
+
+    private void HandleAttackAction()
+    {
+        anim.SetTrigger("isAttack");
+        anim.SetBool("isRecovering", false);
+        anim.SetBool("isRecoverloop", false);
+        anim.SetBool("isMoving", false);
+
+    }
+    private void RecoveringBegin()
+    {
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverloop", false);
+        anim.SetBool("isMoving", false);
+    }
+
+    public override void TakeDamage(float amount)
+    {
+        SetCurrentState(BruteState.Recovering);
+
+        if (currentState == BruteState.Recovering)
+        {
+            damageAmount = bonusDamage * amount;
+        }
+        else
+        {
+            damageAmount = amount;
+        }
+
+        if (currentHealth >= damageAmount)
+        {
+            currentHealth -= damageAmount;
+            SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
+            bossRenderer.color = new Color(1f, 0f, 0f, 1f);//red
+            StartCoroutine(EndFlash());
+        }
+        else
+        {
+            currentHealth = 0;
+            Die();
+
+        }
+        health.UpdateHealthUI(currentHealth, maxHealth);
+    }
+
+    private IEnumerator EndFlash()
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        bossRenderer.color = new Color(1f, 1f, 1f, 1f);
+    }
+
+    private void BossAttackEnd()//this event attach to the attack animation
+    {
+        SetCurrentState(BruteState.Recovering);
+    }
+
+    public void OnRecoverEnd()//set up in animation recover end
+    {
+       
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverLoop", false);
+        anim.SetBool("isMoving", false);
+        SetCurrentState(BruteState.Attack);
+    }
+    public void OnRecoveringLoop()
+    {
+        StartCoroutine(OnRecovering());
+    }
+
+    public IEnumerator OnRecovering()
+    {
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverLoop", true);
+        anim.SetBool("isMoving", false);
+        float random = Random.Range(3, 10);
+        yield return new WaitForSeconds(random);
+      OnRecoverEnd();
+    }
+
+}

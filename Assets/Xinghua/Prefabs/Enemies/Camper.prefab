@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8630839800071817376}
   - component: {fileID: 7625632046200576521}
   - component: {fileID: 4779558687144428608}
+  - component: {fileID: 9151749332121017826}
+  - component: {fileID: -5075990549923692184}
   m_Layer: 6
   m_Name: Camper
   m_TagString: Untagged
@@ -182,6 +184,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9151749332121017826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966470631647450342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb53c4d5a04f872478d46c54485b6fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPerfab: {fileID: 0}
+  bulletStartPoint: {fileID: 0}
+  maxBulletNum: 0
+  damageAmount: 0
+  bulletPool: []
+--- !u!114 &-5075990549923692184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6966470631647450342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0ead0ca3cfda94c88647a994aae559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOffset: 1000
+  precision: 100
 --- !u!1 &9142053342132202314
 GameObject:
   m_ObjectHideFlags: 0

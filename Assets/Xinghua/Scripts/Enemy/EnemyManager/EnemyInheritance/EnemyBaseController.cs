@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections;
-using System.Xml.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using static EnemyAI;
 
 public class EnemyBaseController : MonoBehaviour
 {
     public EnemyData enemyData;
-    private float currentHealth;
+    protected float currentHealth;
     private Vector3 patrolCenter;
     protected EnemyAI enemyAI;
 
@@ -35,19 +32,27 @@ public class EnemyBaseController : MonoBehaviour
     protected Animator animator;
     private KnockBack knockBack;
     [Header("Die")]
-    private float takeDamageCooldown =0.2f;
+    private float takeDamageCooldown = 0.2f;
     private float lastDamageTime = -Mathf.Infinity;
+    protected SpriteRenderer enemyRenderer;
 
-    public event Action<GameObject> OnKnockBack;
-  
+    public event Action<GameObject,float> OnKnockBack;
+    private void Awake()
+    {
+        enemyRenderer = GetComponent<SpriteRenderer>();
+    }
     protected virtual void Start()
     {
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
+
+       
         
+       
         isDead = false;
+
     }
 
     protected virtual void SetEnemyValue()
@@ -65,6 +70,7 @@ public class EnemyBaseController : MonoBehaviour
             switch (enemyAI.currentState)
             {
                 case EnemyState.Idle:
+                    Idle();
                     break;
                 case EnemyState.Pacing:
                     Pacing();
@@ -76,37 +82,31 @@ public class EnemyBaseController : MonoBehaviour
         }
         FlipTowardsPlayer();
         // EnemySpawnTrigger.Instance.CheckEnemyNumberInTheScene();
-
-
-
-        //Nathan Temp fix I hope
-
-        if(currentHealth <= 0)
-        {
-            Die();
-        }
     }
 
     protected virtual void SetPacingLocation()
     {
-       
+
     }
 
-    void FlipTowardsPlayer()
+    protected virtual void FlipTowardsPlayer()
     {
         if (player == null) return;
 
-
-        if (player.position.x < transform.position.x)
+        if(enemyRenderer != null)
         {
-
-            transform.localScale = new Vector3(1, 1, 1);
+            if (player.position.x < transform.position.x)
+            {
+                enemyRenderer.flipX = false;
+            }
+            else
+            {
+                enemyRenderer.flipX = true;
+            }
         }
-        else
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
+       
     }
+
     protected Vector3 GetStopPosition()//if attack stopDistance 1f;pacing 2f for test
     {
         if (enemyAI.currentState == EnemyAI.EnemyState.Attack)
@@ -130,7 +130,17 @@ public class EnemyBaseController : MonoBehaviour
 
         return player.position + stopOffset;
     }
+    protected  void Idle()
+    {
+        animator.SetBool("isIdle",true);
+        StartCoroutine(EndIdle());
+    }
 
+    private IEnumerator EndIdle()
+    {
+        yield return new WaitForSeconds(1f);
+        enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+    }
 
     protected virtual void Pacing()
     {
@@ -152,6 +162,7 @@ public class EnemyBaseController : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isMoving", true);
+           
         }
 
         Vector3 dir = (player.position - transform.position).normalized;
@@ -172,44 +183,63 @@ public class EnemyBaseController : MonoBehaviour
         }
         return true;
     }
+
     protected virtual void AttackPlayer()
     {
-
+        
     }
 
-    public virtual void TakeDamage(int amount, GameObject sender)
+    public virtual void TakeDamage(int amount, float knockBack ,GameObject sender)
     {
-        OnKnockBack?.Invoke(gameObject);
+       // OnKnockBack?.Invoke(player.gameObject,knockBack);
+        OnKnockBack?.Invoke(player.gameObject, 12f);
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
         lastDamageTime = Time.time;
-
         if (currentHealth > amount)
         {
             currentHealth -= amount;
-           // enemyAI.SetEnemyState(EnemyState.Idle);
+            enemyAI.SetEnemyState(EnemyState.Idle);
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySFX("PlayerKick", 1f);
+            }
+            else
+            {
+                Debug.Log("sound manager is null");
+            }
         }
         else
         {
             currentHealth = 0;
             Die();
         }
-        if (knockBack != null)
+     
+        Health visuakHealth = GetComponentInChildren<Health>();
+        if (visuakHealth != null)
         {
-            knockBack.PlayKnockBackFeedBack(sender);
+            visuakHealth.UpdateHealthUI(currentHealth, enemyData.maxHealth);
+        }
+        if (enemyRenderer != null)
+        {
+            enemyRenderer.color = new Color(1f, 0f, 0f, 1f);//red
+            StartCoroutine(EndFlash());
         }
 
-        //event
-        Debug.Log(this.name + "take damage:" + amount+"current health:" +currentHealth);
+    }
+
+    private IEnumerator EndFlash()
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        enemyRenderer.color = new Color(1f, 1f, 1f, 1f);
     }
 
     protected virtual void Die()
     {
         animator.SetTrigger("isDeath");
-       
         isDead = true;
     }
-
 
     protected virtual void OnDeath()
     {

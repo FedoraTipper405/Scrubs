@@ -4,16 +4,17 @@ using UnityEngine;
 public class EnemyCamper : EnemyBaseController
 {
     [SerializeField] GameObject bulletPerfab;
-    private List<GameObject> bulletPool = new List<GameObject>();
     [Header("Shoot")]
     [SerializeField] float shootCooldown = 1.5f;
     private float shootTimer = 0f;
     private Bullet bullet;
     [SerializeField] GameObject bulletStartPoint;
+    private Shooter shooter;
     private void Awake()
     {
         player = FindAnyObjectByType<PlayerMovement>().transform;
-
+        shooter = GetComponent<Shooter>();
+        enemyRenderer = GetComponent<SpriteRenderer>();
     }
     protected override void Start()
     {
@@ -39,9 +40,8 @@ public class EnemyCamper : EnemyBaseController
         if (shootTimer > 0f) return;
         shootTimer = shootCooldown;
         GameObject newBullet = Instantiate(bulletPerfab, bulletStartPoint.transform.position, Quaternion.identity);
-        bulletPool.Add(newBullet);
         bullet = newBullet.GetComponentInChildren<Bullet>();
         Vector3 direction = (player.position + new Vector3(0, 1, 0) - bulletStartPoint.transform.position).normalized;
-        bullet.Shoot(direction,gameObject);
+        bullet.Shoot(direction, shooter.damageAmount);
     }
 }

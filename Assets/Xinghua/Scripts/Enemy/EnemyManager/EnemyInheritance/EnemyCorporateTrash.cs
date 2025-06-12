@@ -1,5 +1,4 @@
 using UnityEngine;
-using static EnemyAI;
 
 public class EnemyCorporateTrash : EnemyBaseController
 {
@@ -11,19 +10,18 @@ public class EnemyCorporateTrash : EnemyBaseController
         player = FindAnyObjectByType<PlayerMovement>().transform;
         enemyAI = GetComponent<EnemyAI>();
         animator = GetComponent<Animator>();
+        enemyRenderer = GetComponent<SpriteRenderer>();
     }
     protected override void Start()
     {
-
         if (enemyAI != null)
         {
             enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
         }
-      
 
         transform.position += new Vector3(-1, 1, 0);
         enemyData.canDrop = true;
-
+        currentHealth = enemyData.maxHealth;
         SetPacingLocation();
     }
 
@@ -33,40 +31,56 @@ public class EnemyCorporateTrash : EnemyBaseController
             {
                 Vector3.up * enemyData.pacingRadius,
                 Vector3.down *enemyData.pacingRadius,
-
             };
-
     }
 
     protected override void AttackPlayer()
     {
-
         if (player == null) return;
 
-        MoveToPlayer();
-        if (IsArrivedTargetPosition() == true)
+        if (IsArrivedTargetPosition() == false)
         {
-            PatrolAround();
+            MoveToPlayer();
+            //PatrolAround();
         }
-        pacingTimer += Time.deltaTime;
-
-        if (pacingTimer >= maxPacingTime)
+        else
         {
-            pacingTimer = 0f;
-            enemyAI.SetEnemyState(EnemyState.Attack);
+            HandlrAttackAction();
+        }
+
+        /*  pacingTimer += Time.deltaTime;
+
+          if (pacingTimer >= maxPacingTime)
+          {
+              pacingTimer = 0f;
+              enemyAI.SetEnemyState(EnemyState.Attack);
+              animator.SetTrigger("isAttack");
+          }*/
+    }
+
+    private void HandlrAttackAction()
+    {
+        if(animator != null)
+        {
             animator.SetTrigger("isAttack");
+            animator.SetBool("isMoving",false);
         }
     }
 
     protected override void Die()
     {
         base.Die();
-        float rand = Random.value;
-        if (rand <= dropChance)
-        {
-            Instantiate(dropPerfab, transform.position, Quaternion.identity);
-        }
+        //   SoundManager.Instance.PlaySFX("TrashcanDeath", 0.8f);
     }
+    /* protected override void Die()
+     {
+         base.Die();
+         float rand = Random.value;
+         if (rand <= dropChance)
+         {
+             Instantiate(dropPerfab, transform.position, Quaternion.identity);
+         }
+     }*/
 }
 
 
