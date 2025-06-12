@@ -109,6 +109,7 @@ public class PlayerAttacks : MonoBehaviour
         }
         if(canInput && inputQueue.Count != 0)
         {
+            Debug.Log("Queue");
             if(inputQueue.Peek() == 0)
             {
                 inputQueue.Dequeue();
