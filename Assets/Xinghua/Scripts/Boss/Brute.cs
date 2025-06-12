@@ -133,14 +133,14 @@ public class Brute : BaseBoss
     {
         anim.SetTrigger("isAttack");
         anim.SetBool("isRecovering", false);
-        anim.SetBool("isRecoverloop", false);
+        anim.SetBool("isRecoveroop", false);
         anim.SetBool("isMoving", false);
 
     }
     private void RecoveringBegin()
     {
         anim.SetBool("isRecovering", true);
-        anim.SetBool("isRecoverloop", false);
+        anim.SetBool("isRecoverlLoop", false);
         anim.SetBool("isMoving", false);
     }
 
