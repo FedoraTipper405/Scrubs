@@ -14,12 +14,19 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] GameObject specialBlackBar;
     [SerializeField] GameObject fullBlackSpecial;
+
+    [SerializeField] SOPlayerStats stats;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentPlayerHealth = maxPlayerHealth;
         currentSpecial = 0;
-       
+        HealthIncrease();   
+    }
+    public void HealthIncrease()
+    {
+        maxPlayerHealth = maxPlayerHealth * (stats.vitalityMultPerLevel * stats.vitalityLevel - stats.vitalityMultPerLevel + 1);
+        currentPlayerHealth = maxPlayerHealth;
     }
     private void OnEnable()
     {
@@ -50,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public void GainSpecial(float specialVal)
     {
-        currentSpecial += specialVal;
+        currentSpecial += specialVal * (stats.expertiseMultPerLevel  * stats.expertiseLevel - stats.expertiseMultPerLevel + 1);
         if(currentSpecial > FullSpecial)
         {
             currentSpecial = FullSpecial;
