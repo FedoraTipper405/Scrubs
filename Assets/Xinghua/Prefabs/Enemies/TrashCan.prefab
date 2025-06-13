@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linearDampingApplied: 6
-  strength: 7
+  strength: 1
   delay: 0.2
   OnBegin:
     m_PersistentCalls:

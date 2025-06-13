@@ -395,6 +395,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasHealth
       objectReference: {fileID: 0}
+    - target: {fileID: 4911115705380215191, guid: a689417a852690b4daef5cd3362f990f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5465612626429802890, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -130.0859
@@ -478,6 +482,10 @@ PrefabInstance:
     - target: {fileID: 8771044511815168033, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837374135923916665, guid: a689417a852690b4daef5cd3362f990f, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8847082666453357435, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_AnchoredPosition.y

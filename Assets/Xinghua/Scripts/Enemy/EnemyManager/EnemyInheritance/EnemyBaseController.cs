@@ -47,10 +47,9 @@ public class EnemyBaseController : MonoBehaviour
         animator = GetComponent<Animator>();
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
-
+   
        
-        
-       
+              
         isDead = false;
 
     }

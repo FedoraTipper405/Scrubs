@@ -314,7 +314,11 @@ public class PlayerAttacks : MonoBehaviour
     {
 
         //player basic kick animation
-        animator.SetTrigger("isKick");
+        if(animator != null)
+        {
+            animator.SetTrigger("isKick");
+        }
+      
        // SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);//xh add
 
         yield return new WaitForSeconds(.15f);
