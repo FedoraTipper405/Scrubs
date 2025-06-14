@@ -439,7 +439,7 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator HammerSequence(int colliderIndex, int comboIndex)
     {
         //play Hammer combo finisher animation
-      //  animator.SetTrigger("isJab");
+      animator.SetTrigger("isHammer");
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
@@ -469,7 +469,7 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator RoundHouseSequence(int colliderIndex, int comboIndex)
     {
         //play RH combo finisher animation
-        //  animator.SetTrigger("isJab");
+        animator.SetTrigger("isRH");
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
@@ -500,7 +500,7 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator SpinKickSequence(int colliderIndex, int comboIndex)
     {
         //play Spin Kick combo finisher animation
-        //  animator.SetTrigger("isJab");
+          animator.SetTrigger("isSpin");
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
@@ -586,7 +586,7 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator ChargedPunchSequence(int colliderIndex, int comboIndex)
     {
         //play Charged Punch combo finisher animation
-     //   animator.SetTrigger("isJab");
+     animator.SetTrigger("isCharged");
         yield return new WaitForSeconds(.3f);
         if (isAttackingRight)
         {
