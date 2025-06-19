@@ -1418,7 +1418,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.06557131, y: 0.28571475}
+  m_Offset: {x: 0.054617405, y: 0.30708158}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1428,7 +1428,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.1717458, y: 1.1099665}
+  m_Size: {x: 2.6685266, y: 1.3450019}
   m_EdgeRadius: 0
 --- !u!1001 &172746533
 PrefabInstance:
@@ -1582,7 +1582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &191768026
 Transform:
   m_ObjectHideFlags: 0
@@ -2652,7 +2652,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.6262896, y: 0.11931133}
+  m_Offset: {x: 0.6692469, y: 0.21059525}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2662,7 +2662,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.1148849, y: 0.53822136}
+  m_Size: {x: 1.2007995, y: 0.7207892}
   m_EdgeRadius: 0
 --- !u!4 &351908614 stripped
 Transform:
@@ -2770,6 +2770,7 @@ MonoBehaviour:
   SanjiArray: 010000000100000001000000
   JabArray: 000000000000000000000000
   ChargedPunchArray: 010000000000000000000000
+  SOUnlockedCOmbos: {fileID: 11400000, guid: ca537e3a0f7ae4345b167c464b325ca9, type: 2}
 --- !u!114 &353042327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2853,6 +2854,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
   m_PrefabInstance: {fileID: 771095533}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &353042333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353042323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0ead0ca3cfda94c88647a994aae559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortingOffset: 1000
+  precision: 100
 --- !u!1001 &374286681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4393,7 +4408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &638554244
 Transform:
   m_ObjectHideFlags: 0
@@ -5039,7 +5054,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.5445744, y: 0.13211155}
+  m_Offset: {x: 0.7208512, y: 0.20155406}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5049,7 +5064,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9514544, y: 0.5296879}
+  m_Size: {x: 1.304008, y: 1.0745435}
   m_EdgeRadius: 0
 --- !u!4 &693763672 stripped
 Transform:
@@ -5826,6 +5841,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 353042324}
+    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 353042333}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: ab6e769ff6f324f4986756818616c3a7, type: 3}
 --- !u!4 &792034224 stripped
 Transform:
@@ -7646,7 +7664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1006509587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12477,7 +12495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd314bf070e2d1646a63a77def2bb999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winMenu: {fileID: 1550072108}
+  bossPrefab: {fileID: 0}
 --- !u!1 &1465225389
 GameObject:
   m_ObjectHideFlags: 0
@@ -15721,7 +15739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1841960159
 Transform:
   m_ObjectHideFlags: 0
@@ -17342,7 +17360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a352d77de63ab8448acffa6309c524f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayerHealth: 100
+  maxPlayerHealth: 10000
   FullSpecial: 100
   currentSpecial: 0
   healthBlackBar: {fileID: 836565555}

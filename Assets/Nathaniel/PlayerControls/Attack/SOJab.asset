@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SOJab
   m_EditorClassIdentifier: 
   damage: 25
-  knockback: 5
+  knockback: 1.5

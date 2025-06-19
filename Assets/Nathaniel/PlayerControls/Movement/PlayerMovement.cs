@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerTransform.localScale = new Vector3(-1, 1, 1);
         } 
-        
+        playerAttacks.CancelQueue();
     }
     private void HandleMovement(Vector2 input)
     {
