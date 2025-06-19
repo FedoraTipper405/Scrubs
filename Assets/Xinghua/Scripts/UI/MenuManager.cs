@@ -53,6 +53,5 @@ public class MenuManager : MonoBehaviour
         {
             Debug.Log("dropText is null");
         }
-
     }
 }

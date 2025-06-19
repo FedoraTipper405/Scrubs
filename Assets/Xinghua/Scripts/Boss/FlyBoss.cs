@@ -12,7 +12,7 @@ public class FlyBoss : BaseBoss
         Attack,
         Recovering,
     }
-    private FlyBossState currentState;
+    public FlyBossState currentState;
 
 
     [Header("Attack")]
@@ -35,7 +35,7 @@ public class FlyBoss : BaseBoss
 
     [HideInInspector]public Transform player;
     private Shooter shooter;
-
+    private Animator anim;
     private float damageAmount;
     [SerializeField] private float bonusDamage;
     private Health health;
@@ -44,6 +44,7 @@ public class FlyBoss : BaseBoss
         shooter = GetComponent<Shooter>();
         player = FindAnyObjectByType<PlayerMovement>().transform;
         health = GetComponentInChildren<Health>();
+        anim = GetComponent<Animator>();
     }
     private void Start()
     {
@@ -134,8 +135,9 @@ public class FlyBoss : BaseBoss
     }
     private void Recovering()
     {
-        Debug.Log("Recovering");
-       shooter.bulletPool.Clear();
+        Debug.Log("rocover now play reload anim");
+        anim.SetBool("isRecover",true);
+        shooter.bulletPool.Clear();
         StartCoroutine(Land());
     }
 
@@ -143,15 +145,18 @@ public class FlyBoss : BaseBoss
     {
         yield return new WaitForSeconds(4f);
         transform.position = landPosition;
+        anim.SetBool("isRecover", true);
     }
 
     protected void Attack()
     {
+        anim.SetBool("isRecover",false);
         shooter.Shoot();
     }
     public void OnRecoverEnd()
     {
         //fly and shoot again
+       
     }
     public override void TakeDamage(float amount)
     {

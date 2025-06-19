@@ -27,7 +27,11 @@ public class GameManager : MonoBehaviour
     {
         dropItemCount = 0;
         moneyCount = 0;
-        MenuManager.Instance.DisplayMoneytText("0");
+        if(MenuManager.Instance != null)
+        {
+            MenuManager.Instance.DisplayMoneytText("0");
+        }
+       
     }
     //public void UpdateDropItem(int value)
     //{
@@ -51,7 +55,6 @@ public class GameManager : MonoBehaviour
         {
             moneyValue = 10;
         }
-
 
         Debug.Log("random money:" + moneyValue);
         moneyCount += moneyValue;

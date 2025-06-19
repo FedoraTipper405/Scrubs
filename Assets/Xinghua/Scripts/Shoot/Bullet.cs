@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX("Shoot",0.6f);
         direction.z = 0;
+        direction.y = 0;
         moveDirection = direction;
         damage = amount;
         Destroy(gameObject, 3f);
