@@ -2736,6 +2736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  baseAttack: {fileID: 0}
   comboArray: 000000000000000000000000
   timeToClearCombo: 2
   currentComboIndex: 0
