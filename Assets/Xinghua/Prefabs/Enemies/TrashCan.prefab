@@ -220,7 +220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
   dropChance: 1
-  dropPerfab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
+  dropItemPrefab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
+  dropMoneyPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
 --- !u!70 &4634892760496595583
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -382,6 +383,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasHealth
       objectReference: {fileID: 0}
+    - target: {fileID: 4911115705380215191, guid: a689417a852690b4daef5cd3362f990f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5465612626429802890, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -130.007
@@ -469,6 +474,10 @@ PrefabInstance:
     - target: {fileID: 8771044511815168033, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837374135923916665, guid: a689417a852690b4daef5cd3362f990f, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8847082666453357435, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_AnchoredPosition.y

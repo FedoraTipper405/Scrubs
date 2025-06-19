@@ -7,13 +7,12 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject dropTextCanves;
-    [SerializeField] TMP_Text dropText;
+    [SerializeField] TMP_Text moneyText;
     public UnityEvent PlayerWin;
 
     private void Start()
     {
         winMenu.SetActive(false);
-        DisplayDropText(0);
     }
 
     private void Awake()
@@ -35,7 +34,7 @@ public class MenuManager : MonoBehaviour
             ShowWinMenu();
         }
     }
-    private void ShowWinMenu()
+    public void ShowWinMenu()
     {
         if (winMenu != null)
         {
@@ -43,15 +42,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void DisplayDropText(float value)
+    public void DisplayMoneytText(string value)
     {
-      
-        if (dropText != null)
+        if (moneyText != null)
         {
             dropTextCanves.SetActive(true);
-
-            dropText.text = "value";
-            Debug.Log("display drop item");
+            moneyText.text = value;
         }
         else
         {

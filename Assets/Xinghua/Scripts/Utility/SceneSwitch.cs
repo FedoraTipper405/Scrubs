@@ -21,6 +21,11 @@ public class SceneSwitch : MonoBehaviour
 
         }
     }
+
+    public void EndLevel()
+    {
+        //if the boss died and no enemy left
+    }
     private void LoadScene()
     {
 

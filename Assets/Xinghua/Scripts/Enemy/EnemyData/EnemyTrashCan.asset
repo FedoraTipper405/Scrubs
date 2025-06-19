@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: TrashCan
   damage: 4
-  maxHealth: 3
+  maxHealth: 8
   moveSpeed: 2
   attackRange: 0.9
   pacingRadius: 2

@@ -52,7 +52,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   stopDistance: 1
+  currentHealth: 0
   maxHealth: 1000
+  damage: 0
   attackValue: 20
   landPosition: {x: 0, y: 0, z: 0}
   radius: 5
@@ -165,8 +167,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 346211767
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -5347575505225574736, guid: f8039e47b75e4384eb6132e1713eb71a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

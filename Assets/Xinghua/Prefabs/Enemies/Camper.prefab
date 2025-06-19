@@ -120,8 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 74503e56826956e47b0f4b3675bdb7b3, type: 2}
-  dropChance: 0.1
-  dropPerfab: {fileID: 0}
+  dropChance: 1
+  dropItemPrefab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
+  dropMoneyPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
   bulletPerfab: {fileID: 403691674074021551, guid: 3b9bfb0d56288054ca267c4495467be8, type: 3}
   shootCooldown: 1.5
   bulletStartPoint: {fileID: 9142053342132202314}

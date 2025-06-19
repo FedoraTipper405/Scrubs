@@ -27,7 +27,10 @@ public class EnemyBaseController : MonoBehaviour
 
     [Header("Die")]
     [SerializeField] protected float dropChance = 0.8f;
-    [SerializeField] protected GameObject dropPerfab;
+    [SerializeField] protected GameObject dropItemPrefab;
+    [SerializeField] protected float dropMoneyChance = 0.8f;
+    [SerializeField] protected GameObject dropMoneyPrefab;
+
     protected bool isDead;
     protected Animator animator;
     private KnockBack knockBack;
@@ -247,11 +250,23 @@ public class EnemyBaseController : MonoBehaviour
         EnemyTriggerManager.Instance.HandleEnemyChange(gameObject);
         if (enemyData.canDrop && UnityEngine.Random.value < dropChance)
         {
-            GameObject item = Instantiate(dropPerfab, transform.position, Quaternion.identity);
+            GameObject item = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);
+            
+
             item.SetActive(true);
             if (item != null)
             {
                 Destroy(item, 8f);
+            };
+        }
+        if(enemyData.canDrop && UnityEngine.Random.value < dropMoneyChance)
+        {
+            GameObject money = Instantiate(dropMoneyPrefab, transform.position, Quaternion.identity);
+
+            money.SetActive(true);
+            if (money != null)
+            {
+                //Destroy(money, 8f);
             };
         }
     }
