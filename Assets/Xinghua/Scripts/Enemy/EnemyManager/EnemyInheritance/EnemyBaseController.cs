@@ -195,6 +195,7 @@ public class EnemyBaseController : MonoBehaviour
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
         lastDamageTime = Time.time;
+
         if (currentHealth > amount)
         {
             currentHealth -= amount;

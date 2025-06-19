@@ -14,6 +14,7 @@ public class DropItem : MonoBehaviour
         if (other.gameObject.GetComponentInChildren<PlayerHealth>() != null)
         {
             itemCount++;
+            MenuManager.Instance.DisplayDropText(itemCount);
 
             Destroy(gameObject);
             //Health the player
