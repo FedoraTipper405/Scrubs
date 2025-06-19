@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 058c68492092fc54d9dfb8a45b466c44, type: 2}
-  dropChance: 0.1
+  dropChance: 1
   dropPerfab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
 --- !u!114 &-4026642997884261606
 MonoBehaviour:
@@ -205,7 +205,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!61 &7257153428523871003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -395,6 +395,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasHealth
       objectReference: {fileID: 0}
+    - target: {fileID: 4911115705380215191, guid: a689417a852690b4daef5cd3362f990f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5465612626429802890, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -130.0859
@@ -478,6 +482,10 @@ PrefabInstance:
     - target: {fileID: 8771044511815168033, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837374135923916665, guid: a689417a852690b4daef5cd3362f990f, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8847082666453357435, guid: a689417a852690b4daef5cd3362f990f, type: 3}
       propertyPath: m_AnchoredPosition.y

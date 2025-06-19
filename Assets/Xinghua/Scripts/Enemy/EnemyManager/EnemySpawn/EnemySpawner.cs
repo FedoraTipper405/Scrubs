@@ -37,8 +37,9 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnOffset = new Vector3(12 + randomOffsetX, randomOffsetY, 0);
         GameObject enemy = Instantiate(data.enemyPrefab, position + spawnOffset, Quaternion.identity);
         enemy.transform.SetParent(enemyParent);
+
         EnemyTriggerManager.Instance.taskEnemies.Add(enemy);
-        EnemyAttackManager.Instance.SetCurrentAttacker(enemy);
+       // EnemyAttackManager.Instance.SetCurrentAttacker(enemy);
         EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();
         controller.enemyData = data;
 

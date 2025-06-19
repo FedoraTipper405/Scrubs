@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Xinghua/SceneGym/MainMenu.unity
     guid: 412b38d2bcddae84e83aaad4a84d12db
   - enabled: 1
-    path: Assets/Xinghua/XinghuaH.unity
-    guid: d9b7e019328e3c84fbca5dfd7390251d
+    path: Assets/Kyle/Scenes/LevelSelectionMenu.unity
+    guid: 2c727ab1e2ec4d14baad4b862d120b73
+  - enabled: 1
+    path: Assets/Xinghua/SceneGym/XHSubway.unity
+    guid: 1091f8b3c164344879a56d57c928ce96
+  - enabled: 1
+    path: Assets/Xinghua/SceneGym/XHGym.unity
+    guid: 01935c1ad04f81a45aafedc736994188
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

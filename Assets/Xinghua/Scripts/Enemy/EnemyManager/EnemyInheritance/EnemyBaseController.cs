@@ -47,10 +47,9 @@ public class EnemyBaseController : MonoBehaviour
         animator = GetComponent<Animator>();
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
-
+   
        
-        
-       
+              
         isDead = false;
 
     }
@@ -196,6 +195,7 @@ public class EnemyBaseController : MonoBehaviour
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
         lastDamageTime = Time.time;
+
         if (currentHealth > amount)
         {
             currentHealth -= amount;

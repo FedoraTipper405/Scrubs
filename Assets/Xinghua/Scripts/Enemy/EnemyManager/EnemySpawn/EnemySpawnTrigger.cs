@@ -5,7 +5,6 @@ public class EnemySpawnTrigger : MonoBehaviour
     public int total = 0;
     public int activeTriggersCount = 0;
 
-
     public void GetAllEnemyCurrentWave()
     {
         total = 0;

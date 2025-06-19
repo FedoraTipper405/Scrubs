@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
-  dropChance: 0.6
+  dropChance: 1
   dropPerfab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
 --- !u!70 &4634892760496595583
 CapsuleCollider2D:
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linearDampingApplied: 6
-  strength: 7
+  strength: 2
   delay: 0.2
   OnBegin:
     m_PersistentCalls:
