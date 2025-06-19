@@ -43,13 +43,15 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] int[] JabArray = new int[3];
     [SerializeField] int[] ChargedPunchArray = new int[3];
 
-    
+
+    [SerializeField] SOUnlockedCOmbos SOUnlockedCOmbos;
 
     Queue<int> inputQueue = new Queue<int>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         animator = GetComponent<Animator>();//xh add
+        
     }
     void Start()
     {
@@ -197,27 +199,27 @@ public class PlayerAttacks : MonoBehaviour
         }
             if(currentComboIndex == 3)
             {
-            if (comboArray[0] == spartanKickArray[0] && comboArray[1] == spartanKickArray[1] && comboArray[2] == spartanKickArray[2])
+            if (comboArray[0] == spartanKickArray[0] && comboArray[1] == spartanKickArray[1] && comboArray[2] == spartanKickArray[2] && SOUnlockedCOmbos.hasComboArray[0])
             {
                 SpartanKick(0, 0);
             }
-            else if (comboArray[0] == HammerPunchArray[0] && comboArray[1] == HammerPunchArray[1] && comboArray[2] == HammerPunchArray[2])
+            else if (comboArray[0] == HammerPunchArray[0] && comboArray[1] == HammerPunchArray[1] && comboArray[2] == HammerPunchArray[2] && SOUnlockedCOmbos.hasComboArray[1])
             {
                 HammerPunch(1, 1);
             }
-            else if (comboArray[0] == RoundHouseArray[0] && comboArray[1] == RoundHouseArray[1] && comboArray[2] == RoundHouseArray[2])
+            else if (comboArray[0] == RoundHouseArray[0] && comboArray[1] == RoundHouseArray[1] && comboArray[2] == RoundHouseArray[2] && SOUnlockedCOmbos.hasComboArray[2])
             {
                 RoundHouse(2, 2);
             }
-            else if (comboArray[0] == SanjiArray[0] && comboArray[1] == SanjiArray[1] && comboArray[2] == SanjiArray[2])
+            else if (comboArray[0] == SanjiArray[0] && comboArray[1] == SanjiArray[1] && comboArray[2] == SanjiArray[2] && SOUnlockedCOmbos.hasComboArray[3])
             {
                 SanjiTableTop(3, 3);
             }
-            else if (comboArray[0] == JabArray[0] && comboArray[1] == JabArray[1] && comboArray[2] == JabArray[2])
+            else if (comboArray[0] == JabArray[0] && comboArray[1] == JabArray[1] && comboArray[2] == JabArray[2] && SOUnlockedCOmbos.hasComboArray[4])
             {
                 StraightJab(0, 4);
             }
-            else if (comboArray[0] == ChargedPunchArray[0] && comboArray[1] == ChargedPunchArray[1] && comboArray[2] == ChargedPunchArray[2])
+            else if (comboArray[0] == ChargedPunchArray[0] && comboArray[1] == ChargedPunchArray[1] && comboArray[2] == ChargedPunchArray[2] && SOUnlockedCOmbos.hasComboArray[5])
             {
                 ChargedPunch(0, 5);
             }
