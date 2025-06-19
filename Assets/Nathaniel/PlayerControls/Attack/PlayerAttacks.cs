@@ -7,6 +7,8 @@ public class PlayerAttacks : MonoBehaviour
 {
     [SerializeField]  Animator animator;
 
+
+    [SerializeField] SOCombo baseAttack;
     [SerializeField]
     int[] comboArray = new int[3];
 
@@ -296,7 +298,7 @@ public class PlayerAttacks : MonoBehaviour
         if(isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
-            rightColScript[0].PrepareForAttack(5, 0);
+            rightColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.15f);
             rightColliderArray[0].SetActive(false);
             canInput = true;
@@ -304,7 +306,7 @@ public class PlayerAttacks : MonoBehaviour
         else
         {
             leftColliderArray[0].SetActive(true);
-            leftColScript[0].PrepareForAttack(5, 0);
+            leftColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.15f);
             leftColliderArray[0].SetActive(false);
             canInput = true;
@@ -331,7 +333,7 @@ public class PlayerAttacks : MonoBehaviour
         if (isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
-            rightColScript[0].PrepareForAttack(5, 0);
+            rightColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.35f);
             rightColliderArray[0].SetActive(false);
             canInput = true;
@@ -339,7 +341,7 @@ public class PlayerAttacks : MonoBehaviour
         else
         {
             leftColliderArray[0].SetActive(true);
-            leftColScript[0].PrepareForAttack(5, 0);
+            leftColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.35f);
             leftColliderArray[0].SetActive(false);
             canInput = true;
@@ -359,7 +361,7 @@ public class PlayerAttacks : MonoBehaviour
         if (isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
-            rightColScript[0].PrepareForAttack(5, 0);
+            rightColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.35f);
             rightColliderArray[0].SetActive(false);
             canInput = true;
@@ -367,7 +369,7 @@ public class PlayerAttacks : MonoBehaviour
         else
         {
             leftColliderArray[0].SetActive(true);
-            leftColScript[0].PrepareForAttack(5, 0);
+            leftColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.35f);
             leftColliderArray[0].SetActive(false);
             canInput = true;
@@ -386,7 +388,7 @@ public class PlayerAttacks : MonoBehaviour
         if (isAttackingRight)
         {
             rightColliderArray[0].SetActive(true);
-            rightColScript[0].PrepareForAttack(5, 0);
+            rightColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.35f);
             rightColliderArray[0].SetActive(false);
             canInput = true;
@@ -394,7 +396,7 @@ public class PlayerAttacks : MonoBehaviour
         else
         {
             leftColliderArray[0].SetActive(true);
-            leftColScript[0].PrepareForAttack(5, 0);
+            leftColScript[0].PrepareForAttack(baseAttack.damage, 0);
             yield return new WaitForSeconds(.35f);
             leftColliderArray[0].SetActive(false);
             canInput = true;
@@ -446,12 +448,12 @@ public class PlayerAttacks : MonoBehaviour
     {
         //play Hammer combo finisher animation
       animator.SetTrigger("isHammer");
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.6f);
         if (isAttackingRight)
         {
             rightColliderArray[colliderIndex].SetActive(true);
             rightColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.05f);
             rightColliderArray[colliderIndex].SetActive(false);
             canInput = true;
         }
@@ -459,7 +461,7 @@ public class PlayerAttacks : MonoBehaviour
         {
             leftColliderArray[colliderIndex].SetActive(true);
             leftColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.05f);
             leftColliderArray[colliderIndex].SetActive(false);
             canInput = true;
         }
