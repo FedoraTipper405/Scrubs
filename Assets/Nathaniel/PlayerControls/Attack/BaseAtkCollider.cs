@@ -44,7 +44,7 @@ public class BaseAtkCollider : MonoBehaviour
                 if (hitEnemy.GetComponent<BaseBoss>() != null)
                 {
       
-                    hitEnemy.GetComponent<BaseBoss>().TakeDamage(50);//50 need be valuable
+                    hitEnemy.GetComponent<BaseBoss>().TakeDamage((int)Mathf.Ceil(currentDamage));//50 need be valuable
                     canHit = false;
                 }
                 //xh code end

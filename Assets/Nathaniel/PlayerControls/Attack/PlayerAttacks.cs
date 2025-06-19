@@ -593,12 +593,12 @@ public class PlayerAttacks : MonoBehaviour
     {
         //play Charged Punch combo finisher animation
      animator.SetTrigger("isCharged");
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.6f);
         if (isAttackingRight)
         {
             rightColliderArray[colliderIndex].SetActive(true);
             rightColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.05f);
             rightColliderArray[colliderIndex].SetActive(false);
             canInput = true;
         }
@@ -606,7 +606,7 @@ public class PlayerAttacks : MonoBehaviour
         {
             leftColliderArray[colliderIndex].SetActive(true);
             leftColScript[colliderIndex].PrepareForAttack(soComboArray[comboIndex].damage, soComboArray[comboIndex].knockback);
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(.05f);
             leftColliderArray[colliderIndex].SetActive(false);
             canInput = true;
         }
