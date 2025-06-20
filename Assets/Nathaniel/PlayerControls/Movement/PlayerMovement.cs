@@ -56,14 +56,17 @@ public class PlayerMovement : MonoBehaviour
     public void MovementInput(Vector2 input)
     {
         inputMovement = input;
-        if(input.x > 0)
+        if (PlayerTransform != null)//xh add this only line ;cause if not will show error in second level play
         {
-            PlayerTransform.localScale = new Vector3(1,1, 1);
+            if (input.x > 0)
+            {
+                PlayerTransform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (input.x < 0)
+            {
+                PlayerTransform.localScale = new Vector3(-1, 1, 1);
+            }
         }
-        else if(input.x < 0)
-        {
-            PlayerTransform.localScale = new Vector3(-1, 1, 1);
-        } 
         playerAttacks.CancelQueue();
     }
     private void HandleMovement(Vector2 input)

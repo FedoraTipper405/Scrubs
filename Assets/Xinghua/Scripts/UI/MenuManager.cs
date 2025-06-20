@@ -24,16 +24,16 @@ public class MenuManager : MonoBehaviour
         }
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
+ /*   private void Update()
     {
         if (GameManager.Instance.isWin == true)
         {
             ShowWinMenu();
         }
-    }
+    }*/
     public void ShowWinMenu()
     {
         if (winMenu != null)

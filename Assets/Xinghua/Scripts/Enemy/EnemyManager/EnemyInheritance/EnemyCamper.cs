@@ -6,6 +6,7 @@ public class EnemyCamper : EnemyBaseController
     [SerializeField] GameObject bulletPerfab;
     [Header("Shoot")]
     [SerializeField] float shootCooldown = 1.5f;
+    [SerializeField] private float shootSpeed = 10f;
     private float shootTimer = 0f;
     private Bullet bullet;
     [SerializeField] GameObject bulletStartPoint;
@@ -42,6 +43,8 @@ public class EnemyCamper : EnemyBaseController
         GameObject newBullet = Instantiate(bulletPerfab, bulletStartPoint.transform.position, Quaternion.identity);
         bullet = newBullet.GetComponentInChildren<Bullet>();
         Vector3 direction = (player.position + new Vector3(0, 1, 0) - bulletStartPoint.transform.position).normalized;
-        bullet.Shoot(direction, shooter.damageAmount);
+        direction.y = 0;
+        bullet.Shoot(direction, shooter.damageAmount,shootSpeed);
+        SoundManager.Instance.PlaySFX("Shoot", 0.6f);
     }
 }

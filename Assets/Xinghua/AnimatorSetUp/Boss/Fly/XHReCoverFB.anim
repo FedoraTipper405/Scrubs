@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ReloadFlyingBoss_Clip
+  m_Name: XHReCoverFB
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -101,14 +101,58 @@ AnimationClip:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    pptrCurveMapping:
+    - {fileID: -47943160616419803, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 2236728637280975454, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -3524022998934624605, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 1722020750812610706, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -3822523161709663765, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -6830461902402933792, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -6067962871191234838, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -1171673308255241813, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 5669143232017767723, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -6295060791191348876, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -2140104317959864338, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 5464607440675347707, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -2645309832059521882, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -6686112756292883290, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 7281531594620762085, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -9078726175596676024, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 7724139994933294629, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -2782509623924865732, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -3897647134626984964, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 73442670767880720, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 381723441130709057, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -7099413422835521906, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 1279790834405103816, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -7834205830818924387, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 2241362608907830469, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -7191949229603613422, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 9167730406056296518, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 4853208243466440311, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -7951363673048054544, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: 6072540290665551189, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -2397829279957034376, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -1985659819812016190, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -3384675663243323038, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -442459292418329549, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
+    - {fileID: -442459292418329549, guid: c5a4599f010915b4b8e57dffb1cd3244, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 3.3999999
+    m_StopTime: 3.4
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -127,4 +171,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 3.4
+    functionName: OnRecoverEnd
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

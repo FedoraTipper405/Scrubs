@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int moneyValue = 0;
 
     public bool isWin = false;
+    public bool isBossDied = false;
 
     private void Awake()
     {
@@ -20,18 +21,18 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         dropItemCount = 0;
         moneyCount = 0;
-        if(MenuManager.Instance != null)
+        if (MenuManager.Instance != null)
         {
             MenuManager.Instance.DisplayMoneytText("0");
         }
-       
+
     }
     //public void UpdateDropItem(int value)
     //{
@@ -43,11 +44,11 @@ public class GameManager : MonoBehaviour
     {
         int random = UnityEngine.Random.Range(1, 100);
 
-        if(random >=1 && random < 50)
+        if (random >= 1 && random < 50)
         {
             moneyValue = 1;
         }
-        else if(random >=50 && random < 90)
+        else if (random >= 50 && random < 90)
         {
             moneyValue = 5;
         }
@@ -56,7 +57,6 @@ public class GameManager : MonoBehaviour
             moneyValue = 10;
         }
 
-        Debug.Log("random money:" + moneyValue);
         moneyCount += moneyValue;
         Debug.Log("game manager add money:" + moneyValue);
         MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
@@ -69,10 +69,23 @@ public class GameManager : MonoBehaviour
         cam.transform.position = Vector3.zero;
 
     }
-    public void CheckLevelState()
+    public IEnumerator LoadSceneWhenLevelEnd()
     {
+        Debug.Log("Load scene");
+        yield return new WaitForSeconds(1);
+        if (isBossDied && SceneLoader.Instance != null)
+        {
+            SceneLoader.Instance.LoadSceneWhenLevelEnd();
+        }
+        else
+        {
+            Debug.Log(" scene loader not found");
+        };
+    }
 
-        //check the boss and enemy amout ,now just check boss
-        isWin = true;
+    public void SetBossDeath()
+    {
+        isBossDied = true;
+        StartCoroutine(LoadSceneWhenLevelEnd());
     }
 }

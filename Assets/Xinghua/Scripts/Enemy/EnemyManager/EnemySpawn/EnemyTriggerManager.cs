@@ -121,6 +121,10 @@ public class EnemyTriggerManager : MonoBehaviour
                 spawnTrigger.GetAllEnemyCurrentWave();
             }
         }
+        else 
+        {
+            Debug.Log("Last enemy wave");
+        }
     }
 
 }

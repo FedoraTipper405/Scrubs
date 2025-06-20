@@ -134,7 +134,7 @@ public class EnemyBaseController : MonoBehaviour
     }
     protected  void Idle()
     {
-        animator.SetBool("isIdle",true);
+       // animator.SetBool("isIdle",true);
         StartCoroutine(EndIdle());
     }
 
