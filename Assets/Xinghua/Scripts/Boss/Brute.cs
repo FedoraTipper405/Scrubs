@@ -125,8 +125,6 @@ public class Brute : BaseBoss
         Vector3 dir = (player.transform.position - transform.position).normalized;
         transform.position += dir * speed * Time.deltaTime;
         anim.SetBool("isMoving", true);
-
-
     }
 
     private void HandleAttackAction()
@@ -134,10 +132,9 @@ public class Brute : BaseBoss
         anim.SetBool("isAttack", true);
     }
 
-
     public override void TakeDamage(float amount)
     {
-        SetCurrentState(BruteState.Recovering);
+       // SetCurrentState(BruteState.Recovering);
 
         if (currentState == BruteState.Recovering)
         {

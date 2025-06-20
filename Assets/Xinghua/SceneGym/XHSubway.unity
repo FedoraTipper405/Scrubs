@@ -1920,7 +1920,7 @@ MonoBehaviour:
   OnMove:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 383022927}
         m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
         m_MethodName: StopEncounter
         m_Mode: 1
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   OnLock:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 383022927}
         m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
         m_MethodName: StartEncounter
         m_Mode: 1
