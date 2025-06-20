@@ -12,10 +12,14 @@ public class BossTrigger : MonoBehaviour
     private bool isSpawned = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
+        EnemyTriggerManager.Instance.enemiesKilled = 0;
         if (other.GetComponent<PlayerMovement>() != null && !isSpawned)
         {
-
+            
             GameObject boss = Instantiate(bossPrefab, spawnPoint.position + new Vector3(spawnXOffset, 0, 0), Quaternion.identity);
+            EnemyTriggerManager.Instance.taskEnemieCount++;
+            EnemyTriggerManager.Instance.HandleEnemyChange(true,false);
+            
             isSpawned = true;
         }
     }

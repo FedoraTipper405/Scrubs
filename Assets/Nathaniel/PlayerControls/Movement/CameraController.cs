@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float cameraFollowSpeed;
     [SerializeField] bool canMove;
     [SerializeField] GameObject Enemyholder;
-    float timeFrozen = 0;
+    //float timeFrozen = 0;
     void Start()
     {
         

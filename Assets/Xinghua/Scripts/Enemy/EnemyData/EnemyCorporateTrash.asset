@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EnemyCorporateTrash
   m_EditorClassIdentifier: 
   enemyName: CorporateTrash
+  canMove: 1
   damage: 3
   maxHealth: 12
   moveSpeed: 1

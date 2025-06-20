@@ -38,6 +38,7 @@ public class FlyBoss : BaseBoss
     private float damageAmount;
     [SerializeField] private float bonusDamage;
     private Health health;
+
     private void Awake()
     {
         shooter = GetComponent<Shooter>();
@@ -49,6 +50,7 @@ public class FlyBoss : BaseBoss
     {
         currentHealth = maxHealth;
         SetCurrentState(FlyBossState.Flying);
+        isFinalBoss = false;
     }
     public void SetCurrentState(FlyBossState state)
     {

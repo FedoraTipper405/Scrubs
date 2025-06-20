@@ -25,7 +25,7 @@ public class Brute : BaseBoss
     private Vector3 attackPosition;
     [SerializeField] GameObject healthHPBar;
     private Health health;
-
+   
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -40,6 +40,8 @@ public class Brute : BaseBoss
         healthHPBar.SetActive(true);
         player = FindAnyObjectByType<PlayerMovement>().transform;
         bossRenderer = GetComponent<SpriteRenderer>();
+
+        isFinalBoss = true;
     }
 
     private void Update()

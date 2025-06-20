@@ -11,7 +11,7 @@ public class BaseBoss : MonoBehaviour
     protected SpriteRenderer bossRenderer;
     public float damage;
     public event Action OnDeath;
-
+    protected bool isFinalBoss =false;
     public virtual void TakeDamage(float amount)
     {
 
@@ -28,6 +28,7 @@ public class BaseBoss : MonoBehaviour
         
         Destroy(gameObject);
         //sound
+      
         GameManager.Instance.LoadSceneWhenLevelEnd();
         OnDeath?.Invoke();
 
@@ -50,11 +51,11 @@ public class BaseBoss : MonoBehaviour
     }
     protected void OnDeathAnimEnd()
     {
-        Debug.Log(this.name + "OnDeathAnimEnd");
+
         Destroy(gameObject);
         if (GameManager.Instance!= null)
         {
-            GameManager.Instance.SetBossDeath();
+            GameManager.Instance.SetBossDeath(this.isFinalBoss);
         }
         else
         {

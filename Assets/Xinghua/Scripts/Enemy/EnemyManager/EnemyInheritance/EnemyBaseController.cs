@@ -51,10 +51,7 @@ public class EnemyBaseController : MonoBehaviour
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
    
-       
-              
         isDead = false;
-
     }
 
     protected virtual void SetEnemyValue()
@@ -245,8 +242,9 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void OnDeath()
     {
+        EnemyTriggerManager.Instance.HandleEnemyChange(false,true);
         Destroy(gameObject);
-        EnemyTriggerManager.Instance.HandleEnemyChange(gameObject);
+       
         if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropHealItemChance)
         {
             GameObject item = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,18 +7,17 @@ public class EnemyTriggerManager : MonoBehaviour
 {
     public static EnemyTriggerManager Instance;
     private List<Transform> enemyTriggers = new List<Transform>();
-
+    public Transform enemyParent;
     [Header("Camera related")]
     public UnityEvent OnMove;
     public UnityEvent OnLock;
 
-    [HideInInspector]
+
     public int taskEnemieCount;
     public List<GameObject> taskEnemies = new List<GameObject>();
-    public List<GameObject> enemiesClear;
-    public List<GameObject> enemiesLeft = new List<GameObject>();//this list is all the enemies in the scene left
+    public int enemiesKilled;
 
-    bool isAllSpawnerEnable = true;
+  //  bool isAllSpawnerEnable = true;
     private int currentIndex = 0;
     private void Start()
     {
@@ -51,61 +51,50 @@ public class EnemyTriggerManager : MonoBehaviour
         }
 
     }
-    public List<GameObject> GetObjectsNotInList(List<GameObject> bigList, List<GameObject> smallList)
+
+    public void HandleEnemyChange(bool spawn, bool die)
     {
-        foreach (GameObject obj in enemiesClear)
-        {
-            if (!bigList.Contains(obj))
-            {
-                enemiesLeft.Add(obj);
-            }
-        }
-        return enemiesLeft;
-    }
-
-    public void HandleEnemyChange(GameObject obj)
-    {
-        enemiesClear.Add(obj);
-
-        GetObjectsNotInList(taskEnemies, enemiesClear);
-
-        if (enemiesClear.Count == taskEnemieCount && isAllSpawnerEnable == true)
-        {
-            OnMove?.Invoke();
-            MenuManager.Instance.ShowGo();
-           
-            EnableNextTrigger();
-            enemiesClear.Clear();
-        }
-    }
-
-    public void CheckTriggerState(int value, int total)
-    {
-        if (value == total)
+        if (spawn == true)
         {
             LockCamera();
-            MenuManager.Instance.HideGo();
+
+        }
+        if (die == true)
+        {
+            enemiesKilled++;
+            LockCamera();
+        }
+        if (enemiesKilled >= taskEnemieCount)
+        {
+            MenuManager.Instance.ShowGo();
+            OnMove?.Invoke();
+            EnableNextTrigger();
+            //enemiesClear.Clear();
         }
     }
 
-    private void LockCamera()
+
+    public void LockCamera()
     {
+       
         OnLock?.Invoke();
     }
 
-    public void RemoveTrigger(GameObject obj)
-    {
-        enemyTriggers.Remove(obj.transform);
-    }
 
-    public void AddTrigger(GameObject obj)
-    {
-        enemyTriggers.Add(obj.transform);
-    }
+    /*    public void RemoveTrigger(GameObject obj)
+        {
+            enemyTriggers.Remove(obj.transform);
+        }
+
+        public void AddTrigger(GameObject obj)
+        {
+            enemyTriggers.Add(obj.transform);
+        }*/
 
     private void EnableNextTrigger()
     {
         taskEnemieCount = 0;
+        taskEnemies.Clear();
         currentIndex++;
         if (currentIndex < enemyTriggers.Count)
         {
@@ -114,10 +103,11 @@ public class EnemyTriggerManager : MonoBehaviour
             EnemySpawnTrigger spawnTrigger = enemyTriggers[currentIndex].GetComponent<EnemySpawnTrigger>();
             if (spawnTrigger != null)
             {
+                //  triggeredCount = 0;
                 spawnTrigger.SetTaskEnemyInCurrentWave();
             }
         }
-        else 
+        else
         {
             Debug.Log("Last enemy wave");
         }

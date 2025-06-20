@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EnemyTrashCan
   m_EditorClassIdentifier: 
   enemyName: TrashCan
+  canMove: 1
   damage: 4
   maxHealth: 8
   moveSpeed: 2

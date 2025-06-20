@@ -86,9 +86,18 @@ public class GameManager : MonoBehaviour
         };
     }
 
-    public void SetBossDeath()
+    public void SetBossDeath(bool isFinalboss)
     {
-        isBossDied = true;
-        StartCoroutine(LoadSceneWhenLevelEnd());
+        if (!isFinalboss)
+        {
+            isBossDied = true;
+
+            StartCoroutine(LoadSceneWhenLevelEnd());
+        }
+        else
+        {
+            EnemyTriggerManager.Instance.HandleEnemyChange(false,true);
+        }
+
     }
 }

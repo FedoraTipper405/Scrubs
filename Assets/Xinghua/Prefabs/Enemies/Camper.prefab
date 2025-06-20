@@ -21,7 +21,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &2873136004052450149
 Transform:
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 74503e56826956e47b0f4b3675bdb7b3, type: 2}
-  dropChance: 1
+  dropHealItemChance: 0.8
   dropItemPrefab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
   dropMoneyChance: 0.8
   dropMoneyPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
@@ -233,7 +233,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7889402917176927349
 Transform:

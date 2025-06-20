@@ -5,10 +5,10 @@ using UnityEngine.Events;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
-    [SerializeField] GameObject winMenu;
-    [SerializeField] GameObject dropTextCanves;
-    [SerializeField] GameObject goCanves;
-    [SerializeField] TMP_Text moneyText;
+    [SerializeField] private GameObject winMenu;
+    [SerializeField]private GameObject dropTextCanves;
+    [SerializeField] private GameObject goCanves;
+    private TMP_Text moneyText;
     public UnityEvent PlayerWin;
 
     private void Start()
@@ -39,9 +39,11 @@ public class MenuManager : MonoBehaviour
 
     public void DisplayMoneytText(string value)
     {
+        moneyText = dropTextCanves.GetComponentInChildren<TMP_Text>();
         if (moneyText != null)
         {
             dropTextCanves.SetActive(true);
+            
             moneyText.text = value;
         }
         else

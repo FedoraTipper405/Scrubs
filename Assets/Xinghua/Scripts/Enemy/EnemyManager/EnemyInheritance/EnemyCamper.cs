@@ -22,12 +22,6 @@ public class EnemyCamper : EnemyBaseController
         base.Start();
         enemyAI = GetComponent<EnemyAI>();
         enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
-
-        if (gameObject != null && player != null)
-        {
-            transform.position = player.position + new Vector3(4f, 0, 0);
-        }
-
     }
     protected override void Update()
     {
