@@ -33,7 +33,6 @@ public class SceneLoader : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == "XHSubway")
         {
             SceneLoader.Instance.LoadScene("MainMenu");
-            Debug.Log("scene switch to main menu");
         }
     }
 

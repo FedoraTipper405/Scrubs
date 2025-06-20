@@ -7,12 +7,14 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject dropTextCanves;
+    [SerializeField] GameObject goCanves;
     [SerializeField] TMP_Text moneyText;
     public UnityEvent PlayerWin;
 
     private void Start()
     {
         winMenu.SetActive(false);
+        goCanves.SetActive(false);
     }
 
     private void Awake()
@@ -27,13 +29,6 @@ public class MenuManager : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
- /*   private void Update()
-    {
-        if (GameManager.Instance.isWin == true)
-        {
-            ShowWinMenu();
-        }
-    }*/
     public void ShowWinMenu()
     {
         if (winMenu != null)
@@ -54,4 +49,20 @@ public class MenuManager : MonoBehaviour
             Debug.Log("dropText is null");
         }
     }
+    public void ShowGo()  
+    {
+        if(goCanves != null)
+        {
+            goCanves.SetActive(true);
+        }
+        Invoke("HideGo", 1f);
+    }
+    public void HideGo()
+    {
+        if (goCanves != null)
+        {
+            goCanves.SetActive(false);
+        }
+    }
+
 }

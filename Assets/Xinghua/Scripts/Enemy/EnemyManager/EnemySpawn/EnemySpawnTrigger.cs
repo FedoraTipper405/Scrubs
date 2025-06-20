@@ -5,7 +5,7 @@ public class EnemySpawnTrigger : MonoBehaviour
     public int total = 0;
     public int activeTriggersCount = 0;
 
-    public void GetAllEnemyCurrentWave()
+    public void SetTaskEnemyInCurrentWave()
     {
         total = 0;
         EnemySpawner[] spawners = GetComponentsInChildren<EnemySpawner>();
@@ -21,6 +21,7 @@ public class EnemySpawnTrigger : MonoBehaviour
         {
             EnemyTriggerManager.Instance.taskEnemieCount = total;
         }
+        
     }
 
 }

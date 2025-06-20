@@ -155,10 +155,15 @@ public class Brute : BaseBoss
         else
         {
             currentHealth = 0;
-            Die();
+            HandDieAnim();
 
         }
         health.UpdateHealthUI(currentHealth, maxHealth);
+    }
+    private void HandDieAnim()
+    {
+        Debug.Log("handle die");
+        anim.SetTrigger("isDeath");
     }
 
     private void BossAttackEnd()//anim event

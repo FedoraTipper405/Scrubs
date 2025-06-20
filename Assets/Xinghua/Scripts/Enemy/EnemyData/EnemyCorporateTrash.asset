@@ -21,4 +21,6 @@ MonoBehaviour:
   stopDistance: 1
   enemyPrefab: {fileID: 277788722177717595, guid: d716909d5ab88394b9c4a506d916d370, type: 3}
   attackCooldown: 5
+  dropHealItemChance: 0.6
+  dropMoneyChance: 0.8
   canDrop: 1

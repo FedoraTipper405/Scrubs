@@ -50,7 +50,8 @@ public class EnemySpawner : MonoBehaviour
         {
             isTrigger = true;
             currentActiveTrigger.activeTriggersCount++;
-            EnemyTriggerManager.Instance.CheckTriggerState(currentActiveTrigger.activeTriggersCount, currentActiveTrigger.transform.childCount);
+            int totalSpawner = currentActiveTrigger.transform.childCount;// the totalspawner is 1 
+            EnemyTriggerManager.Instance.CheckTriggerState(currentActiveTrigger.activeTriggersCount, totalSpawner);
             this.gameObject.SetActive(false);
         }
     }

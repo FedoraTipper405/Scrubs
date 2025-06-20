@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public int dropItemCount;
     public int moneyCount;
     public int moneyValue = 0;
+    public int moneyValue50Percent;
+    public int moneyValue40Percent;
+    public int moneyValue10Percent;
 
     public bool isWin = false;
     public bool isBossDied = false;
@@ -46,15 +49,15 @@ public class GameManager : MonoBehaviour
 
         if (random >= 1 && random < 50)
         {
-            moneyValue = 1;
+            moneyValue = moneyValue10Percent;
         }
         else if (random >= 50 && random < 90)
         {
-            moneyValue = 5;
+            moneyValue = moneyValue40Percent;
         }
         else
         {
-            moneyValue = 10;
+            moneyValue = moneyValue50Percent;
         }
 
         moneyCount += moneyValue;

@@ -25,8 +25,8 @@ public class EnemyBaseController : MonoBehaviour
 
     Vector3 stopOffset;
 
-    [Header("Die")]
-    [SerializeField] protected float dropChance = 0.8f;
+    [Header("Drop")]
+    [SerializeField] protected float dropHealItemChance = 0.8f;
     [SerializeField] protected GameObject dropItemPrefab;
     [SerializeField] protected float dropMoneyChance = 0.8f;
     [SerializeField] protected GameObject dropMoneyPrefab;
@@ -166,7 +166,6 @@ public class EnemyBaseController : MonoBehaviour
             animator.SetBool("isMoving", true);
            
         }
-
         Vector3 dir = (player.position - transform.position).normalized;
 
         if (IsArrivedTargetPosition() == false)
@@ -248,7 +247,7 @@ public class EnemyBaseController : MonoBehaviour
     {
         Destroy(gameObject);
         EnemyTriggerManager.Instance.HandleEnemyChange(gameObject);
-        if (enemyData.canDrop && UnityEngine.Random.value < dropChance)
+        if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropHealItemChance)
         {
             GameObject item = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);
             
@@ -259,14 +258,15 @@ public class EnemyBaseController : MonoBehaviour
                 Destroy(item, 8f);
             };
         }
-        if(enemyData.canDrop && UnityEngine.Random.value < dropMoneyChance)
+        float offsetX = 0.6f;
+        if(enemyData.canDrop && UnityEngine.Random.value < enemyData.dropMoneyChance)
         {
-            GameObject money = Instantiate(dropMoneyPrefab, transform.position, Quaternion.identity);
+            GameObject money = Instantiate(dropMoneyPrefab, transform.position + new Vector3(offsetX ,0,0), Quaternion.identity);
 
             money.SetActive(true);
             if (money != null)
             {
-                //Destroy(money, 8f);
+                Destroy(money, 8f);
             };
         }
     }

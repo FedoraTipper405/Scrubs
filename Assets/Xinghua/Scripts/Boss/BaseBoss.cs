@@ -22,9 +22,10 @@ public class BaseBoss : MonoBehaviour
     {
 
     }
-
+    
     protected void Die()
     {
+        
         Destroy(gameObject);
         //sound
         GameManager.Instance.LoadSceneWhenLevelEnd();

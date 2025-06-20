@@ -6,10 +6,10 @@ public class EnemyTriggerManager : MonoBehaviour
 {
     public static EnemyTriggerManager Instance;
     private List<Transform> enemyTriggers = new List<Transform>();
+
     [Header("Camera related")]
     public UnityEvent OnMove;
     public UnityEvent OnLock;
-
 
     [HideInInspector]
     public int taskEnemieCount;
@@ -41,7 +41,7 @@ public class EnemyTriggerManager : MonoBehaviour
                 EnemySpawnTrigger spawnTrigger = enemyTriggers[0].GetComponent<EnemySpawnTrigger>();
                 if (spawnTrigger != null)
                 {
-                    spawnTrigger.GetAllEnemyCurrentWave();
+                    spawnTrigger.SetTaskEnemyInCurrentWave();
                 }
             }
             else
@@ -53,8 +53,6 @@ public class EnemyTriggerManager : MonoBehaviour
     }
     public List<GameObject> GetObjectsNotInList(List<GameObject> bigList, List<GameObject> smallList)
     {
-
-
         foreach (GameObject obj in enemiesClear)
         {
             if (!bigList.Contains(obj))
@@ -62,39 +60,39 @@ public class EnemyTriggerManager : MonoBehaviour
                 enemiesLeft.Add(obj);
             }
         }
-
         return enemiesLeft;
     }
 
     public void HandleEnemyChange(GameObject obj)
     {
         enemiesClear.Add(obj);
-       // Debug.Log(enemiesClear.Count + "/" + taskEnemieCount);
+
         GetObjectsNotInList(taskEnemies, enemiesClear);
+
         if (enemiesClear.Count == taskEnemieCount && isAllSpawnerEnable == true)
         {
-
             OnMove?.Invoke();
+            MenuManager.Instance.ShowGo();
+           
             EnableNextTrigger();
+            enemiesClear.Clear();
         }
     }
 
     public void CheckTriggerState(int value, int total)
     {
-
         if (value == total)
         {
-
             LockCamera();
+            MenuManager.Instance.HideGo();
         }
     }
 
     private void LockCamera()
     {
         OnLock?.Invoke();
-        Debug.Log("cam move false");
-
     }
+
     public void RemoveTrigger(GameObject obj)
     {
         enemyTriggers.Remove(obj.transform);
@@ -107,9 +105,7 @@ public class EnemyTriggerManager : MonoBehaviour
 
     private void EnableNextTrigger()
     {
-        //Debug.Log("EnableNextTrigger");
         taskEnemieCount = 0;
-        enemiesClear.Clear();
         currentIndex++;
         if (currentIndex < enemyTriggers.Count)
         {
@@ -118,7 +114,7 @@ public class EnemyTriggerManager : MonoBehaviour
             EnemySpawnTrigger spawnTrigger = enemyTriggers[currentIndex].GetComponent<EnemySpawnTrigger>();
             if (spawnTrigger != null)
             {
-                spawnTrigger.GetAllEnemyCurrentWave();
+                spawnTrigger.SetTaskEnemyInCurrentWave();
             }
         }
         else 
