@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float cameraFollowSpeed;
     [SerializeField] bool canMove;
     [SerializeField] GameObject Enemyholder;
-    float timeFrozen = 0;
+    //float timeFrozen = 0;
     void Start()
     {
         
@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
             transform.position += new Vector3(cameraFollowSpeed * Time.deltaTime,0,0);
         }
 
-        if(canMove == false)
+      /*  if(canMove == false)  xh commit this ? may be not need ?cause for now camera work
         {
             timeFrozen += Time.deltaTime;
             if(timeFrozen > 10 && Enemyholder.transform.childCount == 0) { }
@@ -39,6 +39,6 @@ public class CameraController : MonoBehaviour
                 canMove = true;
                 timeFrozen = 0;
             }
-        }
+        }*/
     }
 }

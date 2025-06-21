@@ -14,7 +14,7 @@ public class SceneLoader : MonoBehaviour
         }
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     public void LoadScene(string name)
@@ -22,6 +22,20 @@ public class SceneLoader : MonoBehaviour
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(name);
     }
+
+    public void LoadSceneWhenLevelEnd()
+    {
+        if (SceneManager.GetActiveScene().name == "XHGym")
+        {
+            SceneLoader.Instance.LoadScene("LevelSelectionMenu");
+            GameManager.Instance.ResetPlayerPosition();
+        }
+        else if (SceneManager.GetActiveScene().name == "XHSubway")
+        {
+            SceneLoader.Instance.LoadScene("MainMenu");
+        }
+    }
+
     public void QuitGame()
     {
 

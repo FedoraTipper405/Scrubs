@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static Brute;
 
 public class FlyBoss : BaseBoss
 {
@@ -12,20 +10,21 @@ public class FlyBoss : BaseBoss
         Attack,
         Recovering,
     }
-    private FlyBossState currentState;
+    public FlyBossState currentState;
 
 
     [Header("Attack")]
     private bool canAttack = false;
     public float attackValue = 20f;
-   
+    [SerializeField] private float bulletScale = 0.2f;
+
     [Header("Land")]
     public Vector3 landPosition;
 
 
     [Header("Flying")]
-    public float radius = 5f;        
-    public float heightOffset = 5f;    
+    public float radius = 5f;
+    public float heightOffset = 5f;
     public float floatAmplitude = 0.5f;
     public float floatSpeed = 2f;
     private Vector3 lastTargetPos;
@@ -33,22 +32,25 @@ public class FlyBoss : BaseBoss
     private bool hasReachedTarget = false;
     private Vector3 lastDirection;
 
-    [HideInInspector]public Transform player;
+    [HideInInspector] public Transform player;
     private Shooter shooter;
-
+    private Animator anim;
     private float damageAmount;
     [SerializeField] private float bonusDamage;
     private Health health;
+
     private void Awake()
     {
         shooter = GetComponent<Shooter>();
         player = FindAnyObjectByType<PlayerMovement>().transform;
         health = GetComponentInChildren<Health>();
+        anim = GetComponent<Animator>();
     }
     private void Start()
     {
         currentHealth = maxHealth;
         SetCurrentState(FlyBossState.Flying);
+        isFinalBoss = false;
     }
     public void SetCurrentState(FlyBossState state)
     {
@@ -57,24 +59,28 @@ public class FlyBoss : BaseBoss
 
     private void Update()
     {
-        
+
         switch (currentState)
         {
             case FlyBossState.Idle:
+                // Idle();
                 break;
             case FlyBossState.Flying:
                 Flying();
                 Attack();
                 break;
-            case FlyBossState.Attack:
-                Attack();
-                break;
+            /* case FlyBossState.Attack:
+                 Attack();
+                 break;*/
             case FlyBossState.Recovering:
                 Recovering();
                 break;
         }
     }
-
+    private void Idle()
+    {
+        anim.SetBool("isFlying", true);
+    }
     private void MovingToPlayer()
     {
 
@@ -92,7 +98,7 @@ public class FlyBoss : BaseBoss
             //anim
         }
     }
-    private float t;
+
     private void Flying()
     {
         if (player == null) return;
@@ -106,7 +112,7 @@ public class FlyBoss : BaseBoss
 
         float floatY = Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
 
-      
+
         Vector3 targetPos = player.position + new Vector3(x, heightOffset + floatY, z);
         transform.position = targetPos;
 
@@ -116,7 +122,7 @@ public class FlyBoss : BaseBoss
             scale.x *= -1;
             transform.localScale = scale;
 
-            hasReachedTarget = true; 
+            hasReachedTarget = true;
         }
 
         Vector3 currentDirection = (player.position - transform.position).normalized;
@@ -131,31 +137,38 @@ public class FlyBoss : BaseBoss
             transform.localScale = new Vector3(1, 1, 1);
         }
 
+        anim.SetBool("isFlying", true);
+        anim.SetBool("isRecover", false);
+
+        Attack();
     }
     private void Recovering()
     {
-        Debug.Log("Recovering");
-       shooter.bulletPool.Clear();
         StartCoroutine(Land());
     }
 
     private IEnumerator Land()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(0.1f);
         transform.position = landPosition;
+        anim.SetBool("isRecover", true);
     }
 
     protected void Attack()
     {
-        shooter.Shoot();
+        shooter = GetComponent<Shooter>();
+        shooter.BossShoot(bulletScale);
     }
+
     public void OnRecoverEnd()
     {
-        //fly and shoot again
+        shooter.bulletPool.Clear();
+        SetCurrentState(FlyBossState.Flying);
     }
+
     public override void TakeDamage(float amount)
     {
-        Debug.Log("hit amount:" + amount);
+        // Debug.Log("hit amount:" + amount);
         SetCurrentState(FlyBossState.Recovering);
 
         if (currentState == FlyBossState.Recovering)
@@ -167,17 +180,22 @@ public class FlyBoss : BaseBoss
             damageAmount = amount;
         }
 
-       // Debug.Log(this.name + " TakeDamage before" + "current:"+currentHealth + "max:"+maxHealth + "damage apply:" + damageAmount);
         if (currentHealth >= damageAmount)
         {
             currentHealth -= damageAmount;
+            base.GetHitFlash();
         }
         else
         {
             currentHealth = 0;
-            Destroy(gameObject);
+            HandleDie();
         }
-       // Debug.Log(this.name + " TakeDamage after" + "current:" + currentHealth + "max:" + maxHealth + "damage apply:" + damageAmount);
+
         health.UpdateHealthUI(currentHealth, maxHealth);
     }
+    private void HandleDie()
+    {
+        anim.SetTrigger("isDeath");
+    }
+
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     public string enemyName;
+    public bool canMove;
     public int damage;
     public int maxHealth;
     public float moveSpeed;
@@ -12,5 +13,7 @@ public class EnemyData : ScriptableObject
     public float stopDistance;
     public GameObject enemyPrefab;
     public float attackCooldown;
+    public float dropHealItemChance;
+    public float dropMoneyChance;
     public bool canDrop;
 }

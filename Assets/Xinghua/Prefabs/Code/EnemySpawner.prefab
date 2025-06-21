@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0007792204, y: 0.19363628, z: 0.0013500303}
-  m_LocalScale: {x: 2.03, y: 8.24, z: 3.2000003}
+  m_LocalScale: {x: 2.29, y: 14.862176, z: 3.69}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDatas:
-  - {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
+  - {fileID: 11400000, guid: 058c68492092fc54d9dfb8a45b466c44, type: 2}
+  - {fileID: 11400000, guid: 058c68492092fc54d9dfb8a45b466c44, type: 2}
   enemies: []
   enemyParent: {fileID: 0}
 --- !u!61 &6580554253142064447

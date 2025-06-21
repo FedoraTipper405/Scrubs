@@ -25,9 +25,12 @@ public class EnemyBaseController : MonoBehaviour
 
     Vector3 stopOffset;
 
-    [Header("Die")]
-    [SerializeField] protected float dropChance = 0.8f;
-    [SerializeField] protected GameObject dropPerfab;
+    [Header("Drop")]
+    [SerializeField] protected float dropHealItemChance = 0.8f;
+    [SerializeField] protected GameObject dropItemPrefab;
+    [SerializeField] protected float dropMoneyChance = 0.8f;
+    [SerializeField] protected GameObject dropMoneyPrefab;
+
     protected bool isDead;
     protected Animator animator;
     private KnockBack knockBack;
@@ -48,10 +51,7 @@ public class EnemyBaseController : MonoBehaviour
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
    
-       
-              
         isDead = false;
-
     }
 
     protected virtual void SetEnemyValue()
@@ -131,7 +131,7 @@ public class EnemyBaseController : MonoBehaviour
     }
     protected  void Idle()
     {
-        animator.SetBool("isIdle",true);
+       // animator.SetBool("isIdle",true);
         StartCoroutine(EndIdle());
     }
 
@@ -163,7 +163,6 @@ public class EnemyBaseController : MonoBehaviour
             animator.SetBool("isMoving", true);
            
         }
-
         Vector3 dir = (player.position - transform.position).normalized;
 
         if (IsArrivedTargetPosition() == false)
@@ -243,15 +242,29 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void OnDeath()
     {
+        EnemyTriggerManager.Instance.HandleEnemyChange(false,true);
         Destroy(gameObject);
-        EnemyTriggerManager.Instance.HandleEnemyChange(gameObject);
-        if (enemyData.canDrop && UnityEngine.Random.value < dropChance)
+       
+        if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropHealItemChance)
         {
-            GameObject item = Instantiate(dropPerfab, transform.position, Quaternion.identity);
+            GameObject item = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);
+            
+
             item.SetActive(true);
             if (item != null)
             {
                 Destroy(item, 8f);
+            };
+        }
+        float offsetX = 0.6f;
+        if(enemyData.canDrop && UnityEngine.Random.value < enemyData.dropMoneyChance)
+        {
+            GameObject money = Instantiate(dropMoneyPrefab, transform.position + new Vector3(offsetX ,0,0), Quaternion.identity);
+
+            money.SetActive(true);
+            if (money != null)
+            {
+                Destroy(money, 8f);
             };
         }
     }

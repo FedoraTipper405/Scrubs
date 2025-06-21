@@ -123,7 +123,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 058c68492092fc54d9dfb8a45b466c44, type: 2}
   dropChance: 1
-  dropPerfab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
+  dropItemPrefab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
+  dropMoneyChance: 0.8
+  dropMoneyPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
 --- !u!114 &-4026642997884261606
 MonoBehaviour:
   m_ObjectHideFlags: 0

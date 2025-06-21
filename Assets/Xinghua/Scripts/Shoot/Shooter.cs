@@ -15,6 +15,7 @@ public class Shooter : MonoBehaviour
     public List<GameObject> bulletPool = new List<GameObject>();
     private FlyBoss flyBoss;
 
+    [SerializeField] private float shootSpeed;
     private void Awake()
     {
         flyBoss = GetComponent<FlyBoss>();
@@ -25,13 +26,17 @@ public class Shooter : MonoBehaviour
     {
         shootTimer -= Time.deltaTime;
     }
-
-    public void Shoot()
+    public void ResetBulletNum()
+    {
+        bulletPool.Clear();
+    }
+    public void BossShoot(float bulletScale)
     {
         if (shootTimer > 0f) return;
         shootTimer = shootCooldown;
         GameObject newBullet = Instantiate(bulletPerfab, bulletStartPoint.position, Quaternion.identity);
         bullet = newBullet.GetComponentInChildren<Bullet>();
+        bullet.transform.localScale =new Vector3(bulletScale, bulletScale, bulletScale);
         bulletPool.Add(newBullet);
         if (bulletPool.Count >= maxBulletNum)
         {
@@ -39,6 +44,6 @@ public class Shooter : MonoBehaviour
             flyBoss.landPosition = flyBoss.player.transform.position + new Vector3(2, 0, 0);
         }
         Vector3 direction = (flyBoss.player.position + new Vector3(0, 1, 0) - bulletStartPoint.transform.position).normalized;
-         bullet.Shoot(direction,damageAmount);
+        bullet.Shoot(direction,damageAmount,shootSpeed);
     }
 }

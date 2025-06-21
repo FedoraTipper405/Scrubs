@@ -5,15 +5,16 @@ using UnityEngine.Events;
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
-    [SerializeField] GameObject winMenu;
-    [SerializeField] GameObject dropTextCanves;
-    [SerializeField] TMP_Text dropText;
+    [SerializeField] private GameObject winMenu;
+    [SerializeField]private GameObject dropTextCanves;
+    [SerializeField] private GameObject goCanves;
+    private TMP_Text moneyText;
     public UnityEvent PlayerWin;
 
     private void Start()
     {
         winMenu.SetActive(false);
-        DisplayDropText(0);
+        goCanves.SetActive(false);
     }
 
     private void Awake()
@@ -25,17 +26,10 @@ public class MenuManager : MonoBehaviour
         }
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
-    {
-        if (GameManager.Instance.isWin == true)
-        {
-            ShowWinMenu();
-        }
-    }
-    private void ShowWinMenu()
+    public void ShowWinMenu()
     {
         if (winMenu != null)
         {
@@ -43,20 +37,34 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void DisplayDropText(float value)
+    public void DisplayMoneytText(string value)
     {
-      
-        if (dropText != null)
+        moneyText = dropTextCanves.GetComponentInChildren<TMP_Text>();
+        if (moneyText != null)
         {
             dropTextCanves.SetActive(true);
-
-            dropText.text = "value";
-            Debug.Log("display drop item");
+            
+            moneyText.text = value;
         }
         else
         {
             Debug.Log("dropText is null");
         }
-
     }
+    public void ShowGo()  
+    {
+        if(goCanves != null)
+        {
+            goCanves.SetActive(true);
+        }
+        Invoke("HideGo", 1f);
+    }
+    public void HideGo()
+    {
+        if (goCanves != null)
+        {
+            goCanves.SetActive(false);
+        }
+    }
+
 }

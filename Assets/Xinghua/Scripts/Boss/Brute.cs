@@ -16,6 +16,8 @@ public class Brute : BaseBoss
 
     [Header("Animator")]
     private Animator anim;
+    [Header("Recover")]
+    [SerializeField] private float maxRecoverTime;
 
     [Header("Attack")]
     private float damageAmount;
@@ -23,7 +25,7 @@ public class Brute : BaseBoss
     private Vector3 attackPosition;
     [SerializeField] GameObject healthHPBar;
     private Health health;
-
+   
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -38,6 +40,8 @@ public class Brute : BaseBoss
         healthHPBar.SetActive(true);
         player = FindAnyObjectByType<PlayerMovement>().transform;
         bossRenderer = GetComponent<SpriteRenderer>();
+
+        isFinalBoss = true;
     }
 
     private void Update()
@@ -60,8 +64,7 @@ public class Brute : BaseBoss
     }
     protected override void FlipTowardsPlayer()
     {
-        //Debug.Log("flip the boss" + player.transform);
-        if (player == null) return;
+        if (player == null ||currentState == BruteState.Recovering) return;
 
         if (player.position.x < transform.position.x)
         {
@@ -124,29 +127,16 @@ public class Brute : BaseBoss
         Vector3 dir = (player.transform.position - transform.position).normalized;
         transform.position += dir * speed * Time.deltaTime;
         anim.SetBool("isMoving", true);
-        anim.SetBool("isRecoverBegin", false);
-        anim.SetBool("isRecovering", false);
-
     }
 
     private void HandleAttackAction()
     {
-        anim.SetTrigger("isAttack");
-        anim.SetBool("isRecovering", false);
-        anim.SetBool("isRecoveLoop", false);
-        anim.SetBool("isMoving", false);
-
-    }
-    private void RecoveringBegin()
-    {
-        anim.SetBool("isRecovering", true);
-        anim.SetBool("isRecoverLoop", false);
-        anim.SetBool("isMoving", false);
+        anim.SetBool("isAttack", true);
     }
 
     public override void TakeDamage(float amount)
     {
-        SetCurrentState(BruteState.Recovering);
+       // SetCurrentState(BruteState.Recovering);
 
         if (currentState == BruteState.Recovering)
         {
@@ -161,51 +151,57 @@ public class Brute : BaseBoss
         {
             currentHealth -= damageAmount;
             SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
-            bossRenderer.color = new Color(1f, 0f, 0f, 1f);//red
-            StartCoroutine(EndFlash());
+            base.GetHitFlash();
+
         }
         else
         {
             currentHealth = 0;
-            Die();
+            HandDieAnim();
 
         }
         health.UpdateHealthUI(currentHealth, maxHealth);
     }
-
-    private IEnumerator EndFlash()
+    private void HandDieAnim()
     {
-        yield return new WaitForSeconds(0.25f);
-
-        bossRenderer.color = new Color(1f, 1f, 1f, 1f);
+        Debug.Log("handle die");
+        anim.SetTrigger("isDeath");
     }
 
-    private void BossAttackEnd()//this event attach to the attack animation
+    private void BossAttackEnd()//anim event
     {
         SetCurrentState(BruteState.Recovering);
     }
 
-    public void OnRecoverEnd()//set up in animation recover end
+    private void RecoveringBegin()
     {
-       
-        anim.SetBool("isRecovering", true);
-        anim.SetBool("isRecoverLoop", false);
+        anim.SetBool("isRecoverBegin", true);
+        anim.SetBool("isAttack", false);
         anim.SetBool("isMoving", false);
-        SetCurrentState(BruteState.Attack);
     }
-    public void OnRecoveringLoop()
+ 
+    public void OnRecoveringLoop()//anim event
     {
         StartCoroutine(OnRecovering());
     }
 
     public IEnumerator OnRecovering()
     {
-        anim.SetBool("isRecovering", true);
         anim.SetBool("isRecoverLoop", true);
-        anim.SetBool("isMoving", false);
-        float random = Random.Range(3, 10);
+        float random = Random.Range(3, maxRecoverTime);
         yield return new WaitForSeconds(random);
-      OnRecoverEnd();
+        RecoverFinish();
     }
-
+    private void RecoverFinish()
+    {
+        // Debug.Log(this.name + "RecoverFinish");
+        anim.SetBool("isRecoverLoop", false);
+        anim.SetBool("isRecoverBegin", false);
+        anim.SetBool("isRecoverFinish", true);
+    }
+    public void OnRecoverFinishAnimEnd()//anim event
+    {
+        anim.SetBool("isRecoverFinish", false);
+        SetCurrentState(BruteState.Attack);
+    }
 }
