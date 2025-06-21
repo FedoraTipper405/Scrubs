@@ -42,7 +42,10 @@ public class GameManager : MonoBehaviour
     //    dropItemCount+= value;
     //    Debug.Log("game manager UpdateDropItem:" + dropItemCount);
     //}
-
+    public void UpdateMoneyText()
+    {
+        MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
+    }
     public void UpdatePlayerMoney()
     {
         int random = UnityEngine.Random.Range(1, 100);

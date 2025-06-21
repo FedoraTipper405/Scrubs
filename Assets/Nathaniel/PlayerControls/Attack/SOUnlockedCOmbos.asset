@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3978d9304e6f1934a918246170bdaeb5, type: 3}
   m_Name: SOUnlockedCOmbos
   m_EditorClassIdentifier: 
-  hasComboArray: 010101010101
+  hasComboArray: 000100010100

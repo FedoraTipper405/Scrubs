@@ -35,7 +35,7 @@ public class EnemyBaseController : MonoBehaviour
     protected Animator animator;
     private KnockBack knockBack;
     [Header("Die")]
-    private float takeDamageCooldown = 0.2f;
+    private float takeDamageCooldown = 0.1f;
     private float lastDamageTime = -Mathf.Infinity;
     protected SpriteRenderer enemyRenderer;
 
