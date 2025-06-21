@@ -18,7 +18,7 @@ public class BossTrigger : MonoBehaviour
             
             GameObject boss = Instantiate(bossPrefab, spawnPoint.position + new Vector3(spawnXOffset, 0, 0), Quaternion.identity);
             EnemyTriggerManager.Instance.taskEnemieCount++;
-            EnemyTriggerManager.Instance.HandleEnemyChange(true,false);
+            EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(true,false);
             
             isSpawned = true;
         }

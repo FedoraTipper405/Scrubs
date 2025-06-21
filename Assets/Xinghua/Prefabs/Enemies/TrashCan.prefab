@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5615939628362981617
 Transform:
   m_ObjectHideFlags: 0
@@ -219,8 +219,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 7621c2338db7bff47b85c80f417f63ed, type: 2}
-  dropChance: 1
+  dropHealItemChance: 0.8
   dropItemPrefab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
+  dropMoneyChance: 0.8
   dropMoneyPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
 --- !u!70 &4634892760496595583
 CapsuleCollider2D:

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxAttackers: 3
   currentAttackers: []
+  currentAttackNumber: 0
 --- !u!1 &6764867507319691955
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         currentActiveTrigger = GetComponentInParent<EnemySpawnTrigger>();
-       
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -33,32 +33,31 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(EnemyData data, Vector3 position)
     {
-        EnemyTriggerManager.Instance.enemiesKilled=0;
-      
+        EnemyTriggerManager.Instance.enemiesKilled = 0;
+
         float randomOffsetX = Random.Range(-8f, 4f);
         float randomOffsetY = Random.Range(-1f, 1f);
         Vector3 spawnOffset = new Vector3(0 + randomOffsetX, randomOffsetY, 0);
 
-       
+
         GameObject enemy = Instantiate(data.enemyPrefab, position, Quaternion.identity);
         enemy.transform.SetParent(EnemyTriggerManager.Instance.enemyParent, true);
+        //EnemyAttackManager.Instance.potentialAttackers.Add(enemy);
+        EnemyAttackManager.Instance.SetCurrentAttacker();
         if (data.canMove == false)//camper
         {
             float randomX = Random.Range(-6f, 0f);
             float randomY = Random.Range(-1f, 1f);
             spawnPos = position + new Vector3(randomX, randomY, 0f);
-            Debug.Log("camper pos:" + spawnPos + position);
         }
         else
         {
             spawnPos = position + spawnOffset;
-            Debug.Log("other pos:" + spawnPos);
         }
         enemy.transform.position = spawnPos;
-        Debug.Log("camper pos after:" + spawnPos + position);
         EnemyTriggerManager.Instance.taskEnemies.Add(enemy);
-        EnemyTriggerManager.Instance.HandleEnemyChange(true,false);
-        // EnemyAttackManager.Instance.SetCurrentAttacker(enemy);
+        EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(true, false);
+
         EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();
         controller.enemyData = data;
 
@@ -71,11 +70,11 @@ public class EnemySpawner : MonoBehaviour
             isTrigger = true;
             int triggeredSpawner = currentActiveTrigger.activeTriggersCount;
             triggeredSpawner++;
-           // Debug.Log("currentActiveTrigger.activeTriggersCount" + currentActiveTrigger.activeTriggersCount);
+            // Debug.Log("currentActiveTrigger.activeTriggersCount" + currentActiveTrigger.activeTriggersCount);
             int totalSpawner = currentActiveTrigger.transform.childCount;// the totalspawner is 1 
-          
-           // EnemyTriggerManager.Instance.HandleCameraWhenTriggered(triggeredSpawner, totalSpawner);
-          
+
+            // EnemyTriggerManager.Instance.HandleCameraWhenTriggered(triggeredSpawner, totalSpawner);
+
 
             this.gameObject.SetActive(false);
         }

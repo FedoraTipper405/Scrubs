@@ -57,7 +57,6 @@ public class EnemyBaseController : MonoBehaviour
     protected virtual void SetEnemyValue()
     {
         currentHealth = enemyData.maxHealth;
-        //other value need been set too if during the play been changed......
         patrolCenter = GetStopPosition();
     }
 
@@ -80,30 +79,36 @@ public class EnemyBaseController : MonoBehaviour
             }
         }
         FlipTowardsPlayer();
-        // EnemySpawnTrigger.Instance.CheckEnemyNumberInTheScene();
-    }
 
+    }
     protected virtual void SetPacingLocation()
     {
-
+        patrolOffsets = new Vector3[]
+            {
+                Vector3.up * enemyData.pacingRadius,
+                Vector3.down *enemyData.pacingRadius,
+           /*     Vector3.left *enemyData.pacingRadius,
+                 Vector3.right * enemyData.pacingRadius,*/
+            };
     }
 
     protected virtual void FlipTowardsPlayer()
     {
         if (player == null) return;
-
-        if(enemyRenderer != null)
+        Vector3 scale = transform.localScale;
+        if (enemyRenderer != null)
         {
             if (player.position.x < transform.position.x)
             {
-                enemyRenderer.flipX = false;
+                scale.x = 1f;
+                transform.localScale = scale;
             }
             else
             {
-                enemyRenderer.flipX = true;
+                scale.x = -1f;
+                transform.localScale = scale;
             }
         }
-       
     }
 
     protected Vector3 GetStopPosition()//if attack stopDistance 1f;pacing 2f for test
@@ -126,7 +131,6 @@ public class EnemyBaseController : MonoBehaviour
         {
             stopOffset = new Vector3(-stopDistance, 0, 0);
         }
-
         return player.position + stopOffset;
     }
     protected  void Idle()
@@ -137,8 +141,8 @@ public class EnemyBaseController : MonoBehaviour
 
     private IEnumerator EndIdle()
     {
-        yield return new WaitForSeconds(1f);
-        enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+        yield return new WaitForSeconds(0.1f);
+        enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing);
     }
 
     protected virtual void Pacing()
@@ -169,7 +173,6 @@ public class EnemyBaseController : MonoBehaviour
         {
             transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
         }
-
     }
 
     protected bool IsArrivedTargetPosition()
@@ -189,7 +192,7 @@ public class EnemyBaseController : MonoBehaviour
 
     public virtual void TakeDamage(int amount, float knockBack ,GameObject sender)
     {
-       // OnKnockBack?.Invoke(player.gameObject,knockBack);
+
         OnKnockBack?.Invoke(player.gameObject, knockBack);
         if (Time.time - lastDamageTime < takeDamageCooldown)
             return;
@@ -198,7 +201,7 @@ public class EnemyBaseController : MonoBehaviour
         if (currentHealth > amount)
         {
             currentHealth -= amount;
-            enemyAI.SetEnemyState(EnemyState.Idle);
+            enemyAI.SetEnemyState(EnemyState.Attack);
             if (SoundManager.Instance != null)
             {
                 SoundManager.Instance.PlaySFX("PlayerKick", 1f);
@@ -242,9 +245,10 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-        EnemyTriggerManager.Instance.HandleEnemyChange(false,true);
+        EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(false,true);
         Destroy(gameObject);
-       
+        EnemyAttackManager.Instance.currentAttackNumber--;
+
         if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropHealItemChance)
         {
             GameObject item = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);

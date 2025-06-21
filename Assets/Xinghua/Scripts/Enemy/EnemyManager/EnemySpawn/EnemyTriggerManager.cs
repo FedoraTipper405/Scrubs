@@ -49,10 +49,8 @@ public class EnemyTriggerManager : MonoBehaviour
                 childGameObject.SetActive(false);
             }
         }
-
     }
-
-    public void HandleEnemyChange(bool spawn, bool die)
+    public void HandleEnemyChangeWithCamera(bool spawn, bool die)
     {
         if (spawn == true)
         {
@@ -70,7 +68,7 @@ public class EnemyTriggerManager : MonoBehaviour
             OnMove?.Invoke();
             EnableNextTrigger();
             //enemiesClear.Clear();
-        }
+        } 
     }
 
 
@@ -80,21 +78,11 @@ public class EnemyTriggerManager : MonoBehaviour
         OnLock?.Invoke();
     }
 
-
-    /*    public void RemoveTrigger(GameObject obj)
-        {
-            enemyTriggers.Remove(obj.transform);
-        }
-
-        public void AddTrigger(GameObject obj)
-        {
-            enemyTriggers.Add(obj.transform);
-        }*/
-
     private void EnableNextTrigger()
     {
         taskEnemieCount = 0;
         taskEnemies.Clear();
+        EnemyAttackManager.Instance.currentAttackers.Clear();
         currentIndex++;
         if (currentIndex < enemyTriggers.Count)
         {

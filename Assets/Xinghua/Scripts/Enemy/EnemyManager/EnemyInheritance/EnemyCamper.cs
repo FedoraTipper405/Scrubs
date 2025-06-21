@@ -37,7 +37,6 @@ public class EnemyCamper : EnemyBaseController
         GameObject newBullet = Instantiate(bulletPerfab, bulletStartPoint.transform.position, Quaternion.identity);
         bullet = newBullet.GetComponentInChildren<Bullet>();
         Vector3 direction = (player.position + new Vector3(0, 1, 0) - bulletStartPoint.transform.position).normalized;
-        direction.y = 0;
         bullet.Shoot(direction, shooter.damageAmount,shootSpeed);
         SoundManager.Instance.PlaySFX("Shoot", 0.6f);
     }

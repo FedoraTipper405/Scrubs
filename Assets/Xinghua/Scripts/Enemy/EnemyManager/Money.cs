@@ -7,13 +7,8 @@ public class Money : MonoBehaviour
       
         if (other.gameObject.GetComponentInChildren<PlayerHealth>() != null)
         {
-            Debug.Log("player get money");
-    
             GameManager.Instance.UpdatePlayerMoney();
-
             Destroy(gameObject);
-
-          
         }
     }
 }

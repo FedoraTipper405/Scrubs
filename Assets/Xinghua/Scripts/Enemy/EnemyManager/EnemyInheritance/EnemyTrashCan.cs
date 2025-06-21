@@ -1,10 +1,9 @@
 using UnityEngine;
-using static EnemyAI;
 
 public class EnemyTrashCan : EnemyBaseController
 {
-    //private float pacingTimer = 0f;
-    //private float maxPacingTime = 8f;
+    private float pacingTimer = 0f;
+    private float maxPacingTime = 8f;
     protected void Awake()
     {
         enemyRenderer = GetComponent<SpriteRenderer>();
@@ -14,33 +13,32 @@ public class EnemyTrashCan : EnemyBaseController
     protected override void Start()
     {
         base.Start();
-        enemyAI.SetEnemyState(EnemyState.Attack);
-        enemyData.canDrop = true;
+        //enemyAI.SetEnemyState(EnemyState.Pacing);
         SetPacingLocation();
+        enemyData.canDrop = true;
     }
 
     protected override void Pacing()
     {
         if (player == null) return;
-      
-       
+
         if (IsArrivedTargetPosition() == true)
         {
-            MoveToPlayer();
+            PatrolAround();
             animator.SetBool("isMoving", true);
-            animator.SetBool("isIdle", false);
-            // PatrolAround();
         }
         else
         {
-            HandleAttackAction();
+            MoveToPlayer();
         }
-      /*  pacingTimer += Time.deltaTime;
+        pacingTimer += Time.deltaTime;
         if (pacingTimer >= maxPacingTime)
         {
             pacingTimer = 0f;
-            enemyAI.SetEnemyState(EnemyState.Attack);
-        }*/
+            /*enemyAI.SetEnemyState(EnemyState.Attack);
+            animator.SetBool("isAttack", true);*/
+            EnemyAttackManager.Instance.SetCurrentAttacker();
+        }
     }
 
     private void HandleAttackAction()
@@ -48,16 +46,7 @@ public class EnemyTrashCan : EnemyBaseController
         animator.SetTrigger("isAttack");
         SoundManager.Instance.PlaySFX("TrashcanAttk", 1f);
     }
-    protected override void SetPacingLocation()
-    {
-        patrolOffsets = new Vector3[]
-            {
-                Vector3.up * enemyData.pacingRadius,
-                Vector3.down *enemyData.pacingRadius,
 
-            };
-
-    }
     protected override void AttackPlayer()
     {
         if (player == null) return;
@@ -71,14 +60,10 @@ public class EnemyTrashCan : EnemyBaseController
         }
         else if (Time.time - lastAttackTime >= enemyData.attackCooldown && IsArrivedTargetPosition() == true)
         {
-
             HandleAttackAction();
-           
+
             lastAttackTime = Time.time;
         }
-        //even within the range still move to player if player location changed
-      /*  Vector3 dir = (GetStopPosition() - transform.position).normalized;
-        transform.position += dir * (enemyData.moveSpeed * 0.5f) * Time.deltaTime;*/
 
         // keep attack
         if (Time.time - lastAttackTime >= enemyData.attackCooldown)
@@ -95,6 +80,6 @@ public class EnemyTrashCan : EnemyBaseController
     protected override void Die()
     {
         base.Die();
-     //   SoundManager.Instance.PlaySFX("TrashcanDeath", 0.8f);
+        //   SoundManager.Instance.PlaySFX("TrashcanDeath", 0.8f);
     }
 }

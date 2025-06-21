@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
         }
 
         moneyCount += moneyValue;
-        Debug.Log("game manager add money:" + moneyValue);
         MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
     }
     public void ResetPlayerPosition()
@@ -96,7 +95,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            EnemyTriggerManager.Instance.HandleEnemyChange(false,true);
+            EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(false,true);
         }
 
     }

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyCorporateTrash : EnemyBaseController
 {
-    private float pacingTimer;
-    private float maxPacingTime;
+    private float pacingTimer = 0f;
+    private float maxPacingTime = 5f;
 
     protected void Awake()
     {
@@ -14,26 +14,35 @@ public class EnemyCorporateTrash : EnemyBaseController
     }
     protected override void Start()
     {
-        if (enemyAI != null)
-        {
-            enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
-        }
-
+        base.Start();
         transform.position += new Vector3(-1, 1, 0);
         enemyData.canDrop = true;
         currentHealth = enemyData.maxHealth;
         SetPacingLocation();
     }
 
-    protected override void SetPacingLocation()
+    protected override void Pacing()
     {
-        patrolOffsets = new Vector3[]
-            {
-                Vector3.up * enemyData.pacingRadius,
-                Vector3.down *enemyData.pacingRadius,
-            };
-    }
+        if (player == null) return;
 
+        if (IsArrivedTargetPosition() == true)
+        {
+            PatrolAround();
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            MoveToPlayer();
+        }
+        pacingTimer += Time.deltaTime;
+        if (pacingTimer >= maxPacingTime)
+        {
+            pacingTimer = 0f;
+            //EnemyAttackManager.Instance.SetCurrentAttacker();
+            enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+            animator.SetTrigger("isAttack");
+        }
+    }
     protected override void AttackPlayer()
     {
         if (player == null) return;
@@ -41,21 +50,22 @@ public class EnemyCorporateTrash : EnemyBaseController
         if (IsArrivedTargetPosition() == false)
         {
             MoveToPlayer();
-            //PatrolAround();
+            PatrolAround();
         }
         else
         {
             HandlrAttackAction();
         }
 
-        /*  pacingTimer += Time.deltaTime;
+       // pacingTimer += Time.deltaTime;
 
-          if (pacingTimer >= maxPacingTime)
-          {
-              pacingTimer = 0f;
-              enemyAI.SetEnemyState(EnemyState.Attack);
-              animator.SetTrigger("isAttack");
-          }*/
+       /* if (pacingTimer >= maxPacingTime)
+        {
+            pacingTimer = 0f;
+            //EnemyAttackManager.Instance.SetCurrentAttacker();
+            enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+            animator.SetTrigger("isAttack");
+        }*/
     }
 
     private void HandlrAttackAction()
