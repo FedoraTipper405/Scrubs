@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyCamper : EnemyBaseController
@@ -22,6 +21,16 @@ public class EnemyCamper : EnemyBaseController
         base.Start();
         enemyAI = GetComponent<EnemyAI>();
         enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+        SetPosiiton();
+    }
+    private void SetPosiiton()
+    {
+
+        float randomX = Random.Range(-6f, 0f);
+        float randomY = Random.Range(-1f, 1f);
+        Vector3 spawnPos = transform.position + new Vector3(randomX, randomY, 0f);
+
+        transform.position = spawnPos;
     }
     protected override void Update()
     {
@@ -37,7 +46,7 @@ public class EnemyCamper : EnemyBaseController
         GameObject newBullet = Instantiate(bulletPerfab, bulletStartPoint.transform.position, Quaternion.identity);
         bullet = newBullet.GetComponentInChildren<Bullet>();
         Vector3 direction = (player.position + new Vector3(0, 1, 0) - bulletStartPoint.transform.position).normalized;
-        bullet.Shoot(direction, shooter.damageAmount,shootSpeed);
+        bullet.Shoot(direction, shooter.damageAmount, shootSpeed);
         SoundManager.Instance.PlaySFX("Shoot", 0.6f);
     }
 }

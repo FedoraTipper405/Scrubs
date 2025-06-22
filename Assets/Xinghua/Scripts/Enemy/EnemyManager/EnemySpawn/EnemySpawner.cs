@@ -15,7 +15,6 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         currentActiveTrigger = GetComponentInParent<EnemySpawnTrigger>();
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -44,22 +43,10 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.SetParent(EnemyTriggerManager.Instance.enemyParent, true);
         EnemyAttackManager.Instance.potentialAttackers.Add(enemy);
 
-        if (data.canMove == false)//camper
-        {
-            float randomX = Random.Range(-6f, 0f);
-            float randomY = Random.Range(-1f, 1f);
-            spawnPos = position + new Vector3(randomX, randomY, 0f);
-        }
-        else
-        {
-            spawnPos = position + spawnOffset;
-        }
-        enemy.transform.position = spawnPos;
-      
         EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(true, false);
 
-        EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();
-        controller.enemyData = data;
+       /* EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();
+        controller.enemyData = data;*/
 
     }
     private void OnTriggerExit2D(Collider2D other)

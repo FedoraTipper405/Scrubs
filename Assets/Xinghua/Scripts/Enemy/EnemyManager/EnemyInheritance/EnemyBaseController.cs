@@ -87,29 +87,7 @@ public class EnemyBaseController : MonoBehaviour
     {
         if (player == null) return;
         MoveToPlayer();
-
     }
-
-    private Vector2 CalculateAvoidance()
-    {
-        Vector2 avoid = Vector2.zero;
-
-        foreach (var other in EnemyAttackManager.Instance.potentialAttackers)
-        {
-            if (other == this) continue;
-
-            Vector2 diff = (Vector2)(transform.position - other.transform.position);
-            float distance = diff.magnitude;
-
-            if (distance < enemyData.avoidDistance && distance > 0.01f)
-            {
-                avoid += diff.normalized / (distance * distance);
-            }
-        }
-
-        return avoid;
-    }
-
     protected virtual void SetPacingLocation()
     {
         patrolOffsets = new Vector3[]
@@ -165,15 +143,15 @@ public class EnemyBaseController : MonoBehaviour
     protected void Idle()
     {
         // animator.SetBool("isIdle",true);
-        StartCoroutine(EndIdle());
+       // StartCoroutine(EndIdle());
     }
 
-    private IEnumerator EndIdle()
+   /* private IEnumerator EndIdle()
     {
         yield return new WaitForSeconds(0.1f);
         enemyAI.SetEnemyState(EnemyAI.EnemyState.Pacing);
     }
-
+*/
     protected virtual void Pacing()
     {
 
@@ -185,7 +163,6 @@ public class EnemyBaseController : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPoint) <= 0.3f)
         {
             currentPatrolIndex = (currentPatrolIndex + 1) % patrolOffsets.Length;
-
         }
     }
 
@@ -193,22 +170,6 @@ public class EnemyBaseController : MonoBehaviour
     {
         if (enemyAI.currentState == EnemyState.Attack || enemyAI.currentState == EnemyState.Pacing)
         {
-            /*  if (animator != null)
-              {
-                  animator.SetBool("isMoving", true);
-
-              }
-              Vector3 dir = (player.position - transform.position).normalized;
-
-              if (IsArrivedTargetPosition() == false)
-              {
-                  transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
-              }*/
-            if (animator != null)
-            {
-                animator.SetBool("isMoving", true);
-
-            }
             Vector3 dir = (player.position - transform.position).normalized;
 
             if (IsArrivedTargetPosition() == false)
@@ -222,7 +183,6 @@ public class EnemyBaseController : MonoBehaviour
                 Rigidbody2D rb = GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
-                    // transform.position += (Vector3)(finalDir * enemyData.moveSpeed * Time.deltaTime);
                     rb.constraints = RigidbodyConstraints2D.None;
                     rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                     rb.MovePosition(rb.position + finalDir * enemyData.moveSpeed * Time.fixedDeltaTime);
@@ -230,7 +190,25 @@ public class EnemyBaseController : MonoBehaviour
             }
         }
     }
+    private Vector2 CalculateAvoidance()
+    {
+        Vector2 avoid = Vector2.zero;
 
+        foreach (var other in EnemyAttackManager.Instance.potentialAttackers)
+        {
+            if (other == this) continue;
+
+            Vector2 diff = (Vector2)(transform.position - other.transform.position);
+            float distance = diff.magnitude;
+
+            if (distance < enemyData.avoidDistance && distance > 0.01f)
+            {
+                avoid += diff.normalized / (distance * distance);
+            }
+        }
+
+        return avoid;
+    }
     protected bool IsArrivedTargetPosition()
     {
         distToPlayer = Vector3.Distance(transform.position, GetStopPosition());
