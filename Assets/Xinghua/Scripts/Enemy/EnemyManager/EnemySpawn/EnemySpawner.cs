@@ -42,8 +42,8 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject enemy = Instantiate(data.enemyPrefab, position, Quaternion.identity);
         enemy.transform.SetParent(EnemyTriggerManager.Instance.enemyParent, true);
-        //EnemyAttackManager.Instance.potentialAttackers.Add(enemy);
-        EnemyAttackManager.Instance.SetCurrentAttacker();
+        EnemyAttackManager.Instance.potentialAttackers.Add(enemy);
+
         if (data.canMove == false)//camper
         {
             float randomX = Random.Range(-6f, 0f);
@@ -55,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
             spawnPos = position + spawnOffset;
         }
         enemy.transform.position = spawnPos;
-        EnemyTriggerManager.Instance.taskEnemies.Add(enemy);
+      
         EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(true, false);
 
         EnemyBaseController controller = enemy.GetComponent<EnemyBaseController>();
@@ -70,12 +70,7 @@ public class EnemySpawner : MonoBehaviour
             isTrigger = true;
             int triggeredSpawner = currentActiveTrigger.activeTriggersCount;
             triggeredSpawner++;
-            // Debug.Log("currentActiveTrigger.activeTriggersCount" + currentActiveTrigger.activeTriggersCount);
             int totalSpawner = currentActiveTrigger.transform.childCount;// the totalspawner is 1 
-
-            // EnemyTriggerManager.Instance.HandleCameraWhenTriggered(triggeredSpawner, totalSpawner);
-
-
             this.gameObject.SetActive(false);
         }
     }

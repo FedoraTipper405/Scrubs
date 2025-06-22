@@ -15,7 +15,6 @@ public class EnemyCorporateTrash : EnemyBaseController
     protected override void Start()
     {
         base.Start();
-        transform.position += new Vector3(-1, 1, 0);
         enemyData.canDrop = true;
         currentHealth = enemyData.maxHealth;
         SetPacingLocation();
@@ -39,8 +38,8 @@ public class EnemyCorporateTrash : EnemyBaseController
         {
             pacingTimer = 0f;
             //EnemyAttackManager.Instance.SetCurrentAttacker();
-            enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
-            animator.SetTrigger("isAttack");
+           // enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
+         
         }
     }
     protected override void AttackPlayer()

@@ -18433,17 +18433,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: d565048e41900e942a4e53af037036ab, type: 3}
   m_PrefabInstance: {fileID: 1473086668}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1476031670 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2153865848692236540, guid: 06d6fcc99ec83fa4597279f2b659932f, type: 3}
-  m_PrefabInstance: {fileID: 5111209055295050039}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1476379645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24753,7 +24742,6 @@ MonoBehaviour:
   winMenu: {fileID: 1233512260}
   dropTextCanves: {fileID: 1395987294}
   goCanves: {fileID: 2127285898}
-  moneyText: {fileID: 1476031670}
   PlayerWin:
     m_PersistentCalls:
       m_Calls:

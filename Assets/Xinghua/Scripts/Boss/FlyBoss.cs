@@ -35,15 +35,18 @@ public class FlyBoss : BaseBoss
     [HideInInspector] public Transform player;
     private Shooter shooter;
     private Animator anim;
+
+    [Header("Health")]
     private float damageAmount;
     [SerializeField] private float bonusDamage;
     private Health health;
+    public GameObject healthHPBar;
 
     private void Awake()
     {
         shooter = GetComponent<Shooter>();
         player = FindAnyObjectByType<PlayerMovement>().transform;
-        health = GetComponentInChildren<Health>();
+       
         anim = GetComponent<Animator>();
     }
     private void Start()
@@ -51,10 +54,18 @@ public class FlyBoss : BaseBoss
         currentHealth = maxHealth;
         SetCurrentState(FlyBossState.Flying);
         isFinalBoss = false;
+        StartCoroutine(ShowHP());
     }
     public void SetCurrentState(FlyBossState state)
     {
         currentState = state;
+    }
+    private IEnumerator ShowHP()
+    {
+        yield return new WaitForSeconds(4f);
+        healthHPBar.SetActive(true);
+        health = GetComponentInChildren<Health>();
+       
     }
 
     private void Update()
@@ -190,8 +201,15 @@ public class FlyBoss : BaseBoss
             currentHealth = 0;
             HandleDie();
         }
+        if (health != null)
+        {
+            health.UpdateHealthUI(currentHealth, maxHealth);
+        }
+        else
+        {
+            Debug.Log(this.name + "health null");
+        }
 
-        health.UpdateHealthUI(currentHealth, maxHealth);
     }
     private void HandleDie()
     {

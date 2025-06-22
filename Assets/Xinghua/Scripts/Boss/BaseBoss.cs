@@ -12,6 +12,7 @@ public class BaseBoss : MonoBehaviour
     public float damage;
     public event Action OnDeath;
     protected bool isFinalBoss =false;
+   
     public virtual void TakeDamage(float amount)
     {
 

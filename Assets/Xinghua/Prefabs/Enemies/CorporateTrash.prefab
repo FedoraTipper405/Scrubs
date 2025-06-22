@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4605660993687797873}
   - component: {fileID: 5194520279620712728}
+  - component: {fileID: 7257153428523871003}
   - component: {fileID: -4468961594611943070}
   - component: {fileID: -2674651157588606334}
   - component: {fileID: -4026642997884261606}
   - component: {fileID: -9142553742267731316}
   - component: {fileID: 6674752565431828053}
-  - component: {fileID: 7257153428523871003}
   - component: {fileID: -4651156432920058012}
   m_Layer: 6
   m_Name: CorporateTrash
@@ -96,6 +96,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &7257153428523871003
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277788722177717595}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.18006763, y: 0.24155378}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: -0.03636364}
+    oldSize: {x: 1.5, y: 1.71875}
+    newSize: {x: 1.5, y: 1.71875}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.49268073, y: 0.35810745}
+  m_EdgeRadius: 0
 --- !u!114 &-4468961594611943070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,10 +168,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 058c68492092fc54d9dfb8a45b466c44, type: 2}
-  dropChance: 1
+  avoidDistance: 3
   dropItemPrefab: {fileID: 1266614169567263728, guid: 82106d7e68d17b544b65689e40afeab8, type: 3}
-  dropMoneyChance: 0.8
   dropMoneyPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
+  avoidPlayerWeight: 2
 --- !u!114 &-4026642997884261606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,9 +184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4462477201cd442938867fb8cf4099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linearDampingApplied: 0
-  strength: 1
-  delay: 0.2
+  linearDampingApplied: 1
+  strength: 10
+  delayFreezeAll: 0.2
   OnBegin:
     m_PersistentCalls:
       m_Calls:
@@ -208,52 +254,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!61 &7257153428523871003
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277788722177717595}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.18006763, y: 0.24155378}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: -0.03636364}
-    oldSize: {x: 1.5, y: 1.71875}
-    newSize: {x: 1.5, y: 1.71875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.49268073, y: 0.35810745}
-  m_EdgeRadius: 0
 --- !u!114 &-4651156432920058012
 MonoBehaviour:
   m_ObjectHideFlags: 0

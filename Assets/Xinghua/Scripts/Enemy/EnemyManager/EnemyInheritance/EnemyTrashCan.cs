@@ -37,7 +37,7 @@ public class EnemyTrashCan : EnemyBaseController
             pacingTimer = 0f;
             /*enemyAI.SetEnemyState(EnemyState.Attack);
             animator.SetBool("isAttack", true);*/
-            EnemyAttackManager.Instance.SetCurrentAttacker();
+           // EnemyAttackManager.Instance.HandleAttack();
         }
     }
 

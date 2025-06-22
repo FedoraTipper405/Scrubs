@@ -202,6 +202,7 @@ MonoBehaviour:
   bulletPerfab: {fileID: 403691674074021551, guid: 3b9bfb0d56288054ca267c4495467be8, type: 3}
   bulletStartPoint: {fileID: 7889402917176927349}
   maxBulletNum: 6
+  shootCooldown: 5
   damageAmount: 6
   bulletPool: []
   shootSpeed: 16

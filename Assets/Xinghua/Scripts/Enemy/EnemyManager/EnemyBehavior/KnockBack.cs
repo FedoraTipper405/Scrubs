@@ -8,7 +8,7 @@ public class KnockBack : MonoBehaviour
     private float originalDrag;
     [SerializeField] private float linearDampingApplied;
     [SerializeField] private float strength = 1.0f;
-    [SerializeField] private float delay = 0.2f;
+    [SerializeField] private float delayFreezeAll = 0.2f;
     public UnityEvent OnBegin, OnDone;
     EnemyBaseController enemyBaseController;
     EnemyAI enemyAI;
@@ -24,13 +24,7 @@ public class KnockBack : MonoBehaviour
         rb.gravityScale = 0;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
-    private void Update()
-    {
-        if (enemyAI.currentState == EnemyAI.EnemyState.Attack)
-        {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        }
-    }
+
     private void OnEnable()
     {
         enemyBaseController.OnKnockBack += PlayKnockBackFeedBack;
@@ -43,34 +37,23 @@ public class KnockBack : MonoBehaviour
     public void PlayKnockBackFeedBack(GameObject sender,float value)
     {
         StopAllCoroutines();
-
-        //play the anima ：get knock back
-       // Debug.Log("play knock back sender:" + sender.name + value);
         Vector2 dir = (transform.position - sender.transform.position);
         dir.y = 0f;
+     
         dir = dir.normalized;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.AddForce(dir * strength * value, ForceMode2D.Impulse);
-      
+       // Debug.Log("rb force:"+ dir * strength * value);
         originalDrag = rb.linearDamping;
-        rb.linearDamping = 8f;
+        rb.linearDamping = linearDampingApplied;
         StartCoroutine(FreezPosition());
     }
+
     private IEnumerator FreezPosition()
     {
-        yield return new WaitForSeconds(0.4f);
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        StartCoroutine(Reset());
-
-    }
-
-    private IEnumerator Reset()
-    {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(delayFreezeAll);
         rb.linearVelocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        //reset the animation
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        
     }
-
 }

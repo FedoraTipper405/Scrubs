@@ -25,7 +25,7 @@ public class Brute : BaseBoss
     private Vector3 attackPosition;
     [SerializeField] GameObject healthHPBar;
     private Health health;
-   
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -36,14 +36,21 @@ public class Brute : BaseBoss
     {
         currentHealth = maxHealth;
         SetCurrentState(BruteState.Attack);
-        health = GetComponentInChildren<Health>();
-        healthHPBar.SetActive(true);
+       
+        StartCoroutine(ShowHP());
         player = FindAnyObjectByType<PlayerMovement>().transform;
         bossRenderer = GetComponent<SpriteRenderer>();
 
         isFinalBoss = true;
     }
 
+
+    private IEnumerator ShowHP()
+    {
+        yield return new WaitForSeconds(4f);
+        healthHPBar.SetActive(true);
+        health = GetComponentInChildren<Health>();
+    }
     private void Update()
     {
         switch (currentState)
@@ -64,7 +71,7 @@ public class Brute : BaseBoss
     }
     protected override void FlipTowardsPlayer()
     {
-        if (player == null ||currentState == BruteState.Recovering) return;
+        if (player == null || currentState == BruteState.Recovering) return;
 
         if (player.position.x < transform.position.x)
         {
@@ -136,8 +143,8 @@ public class Brute : BaseBoss
 
     public override void TakeDamage(float amount)
     {
-       // SetCurrentState(BruteState.Recovering);
-
+        // SetCurrentState(BruteState.Recovering);
+    
         if (currentState == BruteState.Recovering)
         {
             damageAmount = bonusDamage * amount;
@@ -160,11 +167,21 @@ public class Brute : BaseBoss
             HandDieAnim();
 
         }
-        health.UpdateHealthUI(currentHealth, maxHealth);
+
+        if (health != null)
+        {
+            health.UpdateHealthUI(currentHealth, maxHealth);
+        }
+        else
+        {
+            Debug.Log(this.name+ "health null");
+        }
+       
     }
+
     private void HandDieAnim()
     {
-        Debug.Log("handle die");
+       
         anim.SetTrigger("isDeath");
     }
 
@@ -179,7 +196,7 @@ public class Brute : BaseBoss
         anim.SetBool("isAttack", false);
         anim.SetBool("isMoving", false);
     }
- 
+
     public void OnRecoveringLoop()//anim event
     {
         StartCoroutine(OnRecovering());

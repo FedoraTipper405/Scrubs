@@ -83,6 +83,7 @@ public class EnemyTriggerManager : MonoBehaviour
         taskEnemieCount = 0;
         taskEnemies.Clear();
         EnemyAttackManager.Instance.currentAttackers.Clear();
+        EnemyAttackManager.Instance.ResetAttacterPercent();
         currentIndex++;
         if (currentIndex < enemyTriggers.Count)
         {

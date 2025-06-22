@@ -38,8 +38,8 @@ public class EnemyBaseController : MonoBehaviour
     private float takeDamageCooldown = 0.2f;
     private float lastDamageTime = -Mathf.Infinity;
     protected SpriteRenderer enemyRenderer;
-
-    public event Action<GameObject,float> OnKnockBack;
+    private Vector3 personalOffset;
+    public event Action<GameObject, float> OnKnockBack;
     private void Awake()
     {
         enemyRenderer = GetComponent<SpriteRenderer>();
@@ -50,8 +50,9 @@ public class EnemyBaseController : MonoBehaviour
         animator = GetComponent<Animator>();
         knockBack = GetComponentInChildren<KnockBack>();
         SetEnemyValue();
-   
+
         isDead = false;
+        personalOffset = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, 0);
     }
 
     protected virtual void SetEnemyValue()
@@ -81,6 +82,34 @@ public class EnemyBaseController : MonoBehaviour
         FlipTowardsPlayer();
 
     }
+    public float avoidStrength = 2f;
+    void FixedUpdate()
+    {
+        if (player == null) return;
+        MoveToPlayer();
+
+    }
+
+    private Vector2 CalculateAvoidance()
+    {
+        Vector2 avoid = Vector2.zero;
+
+        foreach (var other in EnemyAttackManager.Instance.potentialAttackers)
+        {
+            if (other == this) continue;
+
+            Vector2 diff = (Vector2)(transform.position - other.transform.position);
+            float distance = diff.magnitude;
+
+            if (distance < enemyData.avoidDistance && distance > 0.01f)
+            {
+                avoid += diff.normalized / (distance * distance);
+            }
+        }
+
+        return avoid;
+    }
+
     protected virtual void SetPacingLocation()
     {
         patrolOffsets = new Vector3[]
@@ -131,11 +160,11 @@ public class EnemyBaseController : MonoBehaviour
         {
             stopOffset = new Vector3(-stopDistance, 0, 0);
         }
-        return player.position + stopOffset;
+        return player.position + stopOffset +personalOffset;
     }
-    protected  void Idle()
+    protected void Idle()
     {
-       // animator.SetBool("isIdle",true);
+        // animator.SetBool("isIdle",true);
         StartCoroutine(EndIdle());
     }
 
@@ -162,16 +191,43 @@ public class EnemyBaseController : MonoBehaviour
 
     protected void MoveToPlayer()
     {
-        if (animator != null)
+        if (enemyAI.currentState == EnemyState.Attack || enemyAI.currentState == EnemyState.Pacing)
         {
-            animator.SetBool("isMoving", true);
-           
-        }
-        Vector3 dir = (player.position - transform.position).normalized;
+            /*  if (animator != null)
+              {
+                  animator.SetBool("isMoving", true);
 
-        if (IsArrivedTargetPosition() == false)
-        {
-            transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
+              }
+              Vector3 dir = (player.position - transform.position).normalized;
+
+              if (IsArrivedTargetPosition() == false)
+              {
+                  transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
+              }*/
+            if (animator != null)
+            {
+                animator.SetBool("isMoving", true);
+
+            }
+            Vector3 dir = (player.position - transform.position).normalized;
+
+            if (IsArrivedTargetPosition() == false)
+            {
+                transform.position += dir * enemyData.moveSpeed * Time.deltaTime;
+
+                Vector2 moveDir = (player.position - transform.position).normalized;
+                Vector2 avoidDir = CalculateAvoidance();
+
+                Vector2 finalDir = (moveDir + avoidDir * avoidStrength).normalized;
+                Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    // transform.position += (Vector3)(finalDir * enemyData.moveSpeed * Time.deltaTime);
+                    rb.constraints = RigidbodyConstraints2D.None;
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                    rb.MovePosition(rb.position + finalDir * enemyData.moveSpeed * Time.fixedDeltaTime);
+                }
+            }
         }
     }
 
@@ -187,10 +243,10 @@ public class EnemyBaseController : MonoBehaviour
 
     protected virtual void AttackPlayer()
     {
-        
+
     }
 
-    public virtual void TakeDamage(int amount, float knockBack ,GameObject sender)
+    public virtual void TakeDamage(int amount, float knockBack, GameObject sender)
     {
 
         OnKnockBack?.Invoke(player.gameObject, knockBack);
@@ -201,7 +257,7 @@ public class EnemyBaseController : MonoBehaviour
         if (currentHealth > amount)
         {
             currentHealth -= amount;
-            enemyAI.SetEnemyState(EnemyState.Attack);
+
             if (SoundManager.Instance != null)
             {
                 SoundManager.Instance.PlaySFX("PlayerKick", 1f);
@@ -216,7 +272,7 @@ public class EnemyBaseController : MonoBehaviour
             currentHealth = 0;
             Die();
         }
-     
+
         Health visuakHealth = GetComponentInChildren<Health>();
         if (visuakHealth != null)
         {
@@ -241,18 +297,21 @@ public class EnemyBaseController : MonoBehaviour
     {
         animator.SetTrigger("isDeath");
         isDead = true;
+        EnemyAttackManager.Instance.RemoveAttacker(gameObject);
+        EnemyAttackManager.Instance.potentialAttackers.Remove(gameObject);
     }
 
     protected virtual void OnDeath()
     {
-        EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(false,true);
+        EnemyTriggerManager.Instance.HandleEnemyChangeWithCamera(false, true);
+       
         Destroy(gameObject);
-        EnemyAttackManager.Instance.currentAttackNumber--;
+        
 
         if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropHealItemChance)
         {
             GameObject item = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);
-            
+
 
             item.SetActive(true);
             if (item != null)
@@ -261,9 +320,9 @@ public class EnemyBaseController : MonoBehaviour
             };
         }
         float offsetX = 0.6f;
-        if(enemyData.canDrop && UnityEngine.Random.value < enemyData.dropMoneyChance)
+        if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropMoneyChance)
         {
-            GameObject money = Instantiate(dropMoneyPrefab, transform.position + new Vector3(offsetX ,0,0), Quaternion.identity);
+            GameObject money = Instantiate(dropMoneyPrefab, transform.position + new Vector3(offsetX, 0, 0), Quaternion.identity);
 
             money.SetActive(true);
             if (money != null)

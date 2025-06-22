@@ -10,7 +10,6 @@ public class HandleLayerOrder : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
     void LateUpdate()
     {
         spriteRenderer.sortingOrder = sortingOffset - Mathf.RoundToInt(transform.position.y * precision);

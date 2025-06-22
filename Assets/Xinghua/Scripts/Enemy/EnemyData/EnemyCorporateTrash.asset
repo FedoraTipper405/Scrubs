@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: EnemyCorporateTrash
   m_EditorClassIdentifier: 
   enemyName: CorporateTrash
-  canMove: 1
-  damage: 3
-  maxHealth: 12
-  moveSpeed: 1
-  attackRange: 0.8
-  pacingRadius: 1.2
-  stopDistance: 1
   enemyPrefab: {fileID: 277788722177717595, guid: d716909d5ab88394b9c4a506d916d370, type: 3}
+  canMove: 1
+  maxHealth: 12
+  avoidDistance: 0
+  damage: 3
+  moveSpeed: 2
+  paceSpeed: 1.3
+  attackRange: 1.2
   attackCooldown: 5
+  pacingRadius: 1.2
+  maxPacingTime: 8
+  canDrop: 1
   dropHealItemChance: 0.6
   dropMoneyChance: 0.8
-  canDrop: 1

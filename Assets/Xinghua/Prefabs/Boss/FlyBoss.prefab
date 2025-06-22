@@ -66,6 +66,7 @@ MonoBehaviour:
   floatSpeed: 1
   player: {fileID: 0}
   bonusDamage: 1.2
+  healthHPBar: {fileID: 366405914345211124}
 --- !u!114 &4905288924896541643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,9 +79,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb53c4d5a04f872478d46c54485b6fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPerfab: {fileID: 403691674074021551, guid: 3b9bfb0d56288054ca267c4495467be8, type: 3}
+  bulletPerfab: {fileID: 403691674074021551, guid: 611cecafc4219824a9932c6b8e8c8eef, type: 3}
   bulletStartPoint: {fileID: 2792982953892602245}
   maxBulletNum: 5
+  shootCooldown: 1.5
   damageAmount: 20
   bulletPool: []
   shootSpeed: 20
@@ -336,7 +338,7 @@ PrefabInstance:
     - target: {fileID: 2056963675448944119, guid: 29249d98f47c43b4da667f37e8b068be, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -902086654454736923, guid: 426d34d5ae71dea44a66078296ee7999, type: 3}
+      objectReference: {fileID: 21300000, guid: 426d34d5ae71dea44a66078296ee7999, type: 3}
     - target: {fileID: 2056963675448944119, guid: 29249d98f47c43b4da667f37e8b068be, type: 3}
       propertyPath: m_FillAmount
       value: 1
@@ -429,6 +431,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4205496455542023182, guid: 29249d98f47c43b4da667f37e8b068be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5039264331938879680, guid: 29249d98f47c43b4da667f37e8b068be, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -442,6 +448,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29249d98f47c43b4da667f37e8b068be, type: 3}
+--- !u!1 &366405914345211124 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4205496455542023182, guid: 29249d98f47c43b4da667f37e8b068be, type: 3}
+  m_PrefabInstance: {fileID: 4560264618049085690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &516473454846217982 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4063286300409474564, guid: 29249d98f47c43b4da667f37e8b068be, type: 3}
