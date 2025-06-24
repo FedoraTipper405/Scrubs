@@ -1,5 +1,5 @@
+using System.Collections;
 using UnityEngine;
-
 public class Brute : BaseBoss
 {
     public enum BruteState
@@ -8,7 +8,7 @@ public class Brute : BaseBoss
         Attack,
         Recovering,
     }
-    private BruteState currentState;
+    public BruteState currentState;
 
     [HideInInspector] private Transform player;
     private float distToPlayer;
@@ -18,12 +18,12 @@ public class Brute : BaseBoss
     private Animator anim;
 
     [Header("Attack")]
-    private bool canAttack = false;
     private float damageAmount;
-    [SerializeField]private float bonusDamage;
+    [SerializeField] private float bonusDamage;
     private Vector3 attackPosition;
     [SerializeField] GameObject healthHPBar;
     private Health health;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -37,7 +37,7 @@ public class Brute : BaseBoss
         health = GetComponentInChildren<Health>();
         healthHPBar.SetActive(true);
         player = FindAnyObjectByType<PlayerMovement>().transform;
-        renderer = GetComponent<SpriteRenderer>();
+        bossRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -47,11 +47,10 @@ public class Brute : BaseBoss
             case BruteState.Idle:
                 break;
             case BruteState.Attack:
-                MovingToPlayer();
-                Attack();
+                TryAttack();
                 break;
             case BruteState.Recovering:
-                Recovering();
+                RecoveringBegin();
                 break;
         }
     }
@@ -66,11 +65,11 @@ public class Brute : BaseBoss
 
         if (player.position.x < transform.position.x)
         {
-            renderer.flipX = false;
+            bossRenderer.flipX = false;
         }
         else
         {
-            renderer.flipX = true;
+            bossRenderer.flipX = true;
         }
     }
 
@@ -79,14 +78,21 @@ public class Brute : BaseBoss
         currentState = state;
     }
 
-    private void Attack()
+    private void TryAttack()
     {
-        MovingToPlayer(); 
+        if (IsArrivedAttackPosition() == true)
+        {
+            HandleAttackAction();
+        }
+        else
+        {
+            MovingToPlayer();
+        }
+
     }
 
     protected Vector3 GetStopPosition()
     {
-       
 
         if (player.position.x < transform.position.x)
         {
@@ -103,40 +109,39 @@ public class Brute : BaseBoss
 
     protected bool IsArrivedAttackPosition()
     {
-        Debug.Log("detect distance");
+        //Debug.Log("detect distance");
         distToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         if (distToPlayer > stopDistance)
         {
             return false;
         }
-        Debug.Log(distToPlayer + stopDistance);
         return true;
     }
 
     private void MovingToPlayer()
     {
-      
-        canAttack = Vector3.Distance(transform.position, player.transform.position) <= stopDistance;
-        if (!canAttack)
-        {
-            Vector3 dir = (player.transform.position - transform.position).normalized;
-            transform.position += dir * speed * Time.deltaTime;
-            //anim.SetBool("isMoving", true);
-        }
-    
-        else
-        {
-            Debug.Log("boss arrive attack position");
-            //anim.SetBool("isAttack",true);
-        } 
+        Vector3 dir = (player.transform.position - transform.position).normalized;
+        transform.position += dir * speed * Time.deltaTime;
+        anim.SetBool("isMoving", true);
+        anim.SetBool("isRecoverBegin", false);
+        anim.SetBool("isRecovering", false);
+
     }
 
-    private void Recovering()
+    private void HandleAttackAction()
     {
-        Debug.Log("boss recovering now");
-       // anim.SetBool("isRecovering",true); 
-       //maybe when recovering can spawn some enemy
+        anim.SetTrigger("isAttack");
+        anim.SetBool("isRecovering", false);
+        anim.SetBool("isRecoveLoop", false);
+        anim.SetBool("isMoving", false);
+
+    }
+    private void RecoveringBegin()
+    {
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverLoop", false);
+        anim.SetBool("isMoving", false);
     }
 
     public override void TakeDamage(float amount)
@@ -155,19 +160,52 @@ public class Brute : BaseBoss
         if (currentHealth >= damageAmount)
         {
             currentHealth -= damageAmount;
-             SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
+            SoundManager.Instance.PlaySFX("PlayerKick", 0.9f);
+            bossRenderer.color = new Color(1f, 0f, 0f, 1f);//red
+            StartCoroutine(EndFlash());
         }
         else
         {
             currentHealth = 0;
-            Destroy(gameObject);
+            Die();
+
         }
         health.UpdateHealthUI(currentHealth, maxHealth);
     }
 
-    private void OnAttackEnd()
+    private IEnumerator EndFlash()
     {
+        yield return new WaitForSeconds(0.25f);
+
+        bossRenderer.color = new Color(1f, 1f, 1f, 1f);
+    }
+
+    private void BossAttackEnd()//this event attach to the attack animation
+    {
+        SetCurrentState(BruteState.Recovering);
+    }
+
+    public void OnRecoverEnd()//set up in animation recover end
+    {
+       
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverLoop", false);
+        anim.SetBool("isMoving", false);
         SetCurrentState(BruteState.Attack);
+    }
+    public void OnRecoveringLoop()
+    {
+        StartCoroutine(OnRecovering());
+    }
+
+    public IEnumerator OnRecovering()
+    {
+        anim.SetBool("isRecovering", true);
+        anim.SetBool("isRecoverLoop", true);
+        anim.SetBool("isMoving", false);
+        float random = Random.Range(3, 10);
+        yield return new WaitForSeconds(random);
+      OnRecoverEnd();
     }
 
 }

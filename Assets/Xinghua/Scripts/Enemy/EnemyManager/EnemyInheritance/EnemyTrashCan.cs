@@ -3,10 +3,11 @@ using static EnemyAI;
 
 public class EnemyTrashCan : EnemyBaseController
 {
-    private float pacingTimer = 0f;
-    private float maxPacingTime = 8f;
+    //private float pacingTimer = 0f;
+    //private float maxPacingTime = 8f;
     protected void Awake()
     {
+        enemyRenderer = GetComponent<SpriteRenderer>();
         player = FindAnyObjectByType<PlayerMovement>().transform;
     }
 
@@ -21,19 +22,31 @@ public class EnemyTrashCan : EnemyBaseController
     protected override void Pacing()
     {
         if (player == null) return;
-        animator.SetBool("isMoving", true);
-        MoveToPlayer();
+      
+       
         if (IsArrivedTargetPosition() == true)
         {
-            PatrolAround();
+            MoveToPlayer();
+            animator.SetBool("isMoving", true);
+            animator.SetBool("isIdle", false);
+            // PatrolAround();
         }
-        pacingTimer += Time.deltaTime;
-      // Debug.Log("pacingTimer"+ pacingTimer + "maxPacingTime" + maxPacingTime);
+        else
+        {
+            HandleAttackAction();
+        }
+      /*  pacingTimer += Time.deltaTime;
         if (pacingTimer >= maxPacingTime)
         {
             pacingTimer = 0f;
             enemyAI.SetEnemyState(EnemyState.Attack);
-        }
+        }*/
+    }
+
+    private void HandleAttackAction()
+    {
+        animator.SetTrigger("isAttack");
+        SoundManager.Instance.PlaySFX("TrashcanAttk", 1f);
     }
     protected override void SetPacingLocation()
     {
@@ -49,17 +62,23 @@ public class EnemyTrashCan : EnemyBaseController
     {
         if (player == null) return;
         base.AttackPlayer();
-        animator.SetBool("isMoving", true);
-        if (Time.time - lastAttackTime >= enemyData.attackCooldown && IsArrivedTargetPosition() == true && enemyAI.currentState == EnemyState.Attack)
+        if (IsArrivedTargetPosition() != true)
+        {
+            MoveToPlayer();
+            animator.SetBool("isMoving", true);
+            animator.SetBool("isIdle", false);
+            // PatrolAround();
+        }
+        else if (Time.time - lastAttackTime >= enemyData.attackCooldown && IsArrivedTargetPosition() == true)
         {
 
-            animator.SetBool("isAttack", true);
-            SoundManager.Instance.PlaySFX("TrashcanAttk",1f);
+            HandleAttackAction();
+           
             lastAttackTime = Time.time;
         }
         //even within the range still move to player if player location changed
-        Vector3 dir = (GetStopPosition() - transform.position).normalized;
-        transform.position += dir * (enemyData.moveSpeed * 0.5f) * Time.deltaTime;
+      /*  Vector3 dir = (GetStopPosition() - transform.position).normalized;
+        transform.position += dir * (enemyData.moveSpeed * 0.5f) * Time.deltaTime;*/
 
         // keep attack
         if (Time.time - lastAttackTime >= enemyData.attackCooldown)

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SOCharged
   m_EditorClassIdentifier: 
   damage: 50
-  knockback: 7.5
+  knockback: 3

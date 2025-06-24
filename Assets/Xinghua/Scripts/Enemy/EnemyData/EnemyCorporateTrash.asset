@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: CorporateTrash
   damage: 3
-  maxHealth: 20
+  maxHealth: 12
   moveSpeed: 1
-  attackRange: 1.2
+  attackRange: 0.8
   pacingRadius: 2
   stopDistance: 1
   enemyPrefab: {fileID: 277788722177717595, guid: d716909d5ab88394b9c4a506d916d370, type: 3}

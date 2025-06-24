@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAttackManager : MonoBehaviour
 {
     public static EnemyAttackManager Instance;
-    public int maxAttackers = 3;
+    //public int maxAttackers = 3;
     [HideInInspector]
     public List<GameObject>currentAttackers = new List<GameObject>();
    // private EnemySpawner triggerController;
@@ -25,7 +25,7 @@ public class EnemyAttackManager : MonoBehaviour
         }
     }
 
-    public void SetAttacker()
+  /*  public void SetAttacker()
     {
         var result = GetRandonAttackerIndex(EnemyTriggerManager.Instance.enemiesLeft.Count, maxAttackers);
 
@@ -40,8 +40,8 @@ public class EnemyAttackManager : MonoBehaviour
                 SetCurrentAttacker(obj);
             }
         }
-    }
-    public void SetCurrentAttacker(GameObject obj)
+    }*/
+/*    public void SetCurrentAttacker(GameObject obj)
     {
         var enemyAI = obj.GetComponent<EnemyAI>();
 
@@ -49,9 +49,9 @@ public class EnemyAttackManager : MonoBehaviour
         {
             enemyAI.SetEnemyState(EnemyAI.EnemyState.Attack);
         }
-    }
+    }*/
 
-    public List<int> GetRandonAttackerIndex(int length, int number)
+/*    public List<int> GetRandonAttackerIndex(int length, int number)
     {
         List<int> result = new List<int>();
         for (int i = 0; i < length; i++)
@@ -68,13 +68,13 @@ public class EnemyAttackManager : MonoBehaviour
             }
         }
         return result;
-    }
+    }*/
 
-    public void StopAttack(GameObject enemy)
+    /*public void StopAttack(GameObject enemy)
     {
         if (currentAttackers.Contains(enemy))
         {
             currentAttackers.Remove(enemy);
         }
-    }
+    }*/
 }
