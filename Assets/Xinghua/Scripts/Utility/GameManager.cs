@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
     public int dropItemCount;
     public int moneyCount;
     public int moneyValue = 0;
-
+    public MoneyData moneyData;
 
     public bool isWin = false;
     public bool isBossDied = false;
@@ -28,12 +29,25 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         dropItemCount = 0;
-        moneyCount = 0;
-        if (MenuManager.Instance != null)
+       if(moneyData.hasPlayed == false)
         {
-            MenuManager.Instance.DisplayMoneytText("0");
+            moneyData.playerMoney = 0;
+            moneyData.hasPlayed = true;
         }
+        moneyCount = moneyData.playerMoney;
+        Debug.Log("gamemanager  start with money:"+ moneyCount);
+        Debug.Log("gamemanager  start with money:" + moneyData.playerMoney);
+        UpdateMoneyText();
+   
 
+    }
+    public void ResetPlayerMoneyWhenRestart()
+    {
+        if(SceneManager.GetActiveScene().name =="XHGym")
+        {
+            moneyData.playerMoney = 0;
+        }
+       
     }
     //public void UpdateDropItem(int value)
     //{
@@ -42,16 +56,17 @@ public class GameManager : MonoBehaviour
     //}
 
     public void UpdateMoneyText()
-
     {
-
+        Debug.Log("gamemanager  UpdateMoneyText:" + moneyCount);
+        moneyData.playerMoney = moneyCount;
         MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
 
     }
     public void UpdatePlayerMoney(int value)
     {
         moneyCount += value;
-       // Debug.Log("moneyCount" + moneyCount);
+      
+        // Debug.Log("moneyCount" + moneyCount);
         MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
     }
     public void ResetPlayerPosition()
@@ -69,6 +84,8 @@ public class GameManager : MonoBehaviour
         if (isBossDied && SceneLoader.Instance != null)
         {
             SceneLoader.Instance.LoadSceneWhenLevelEnd();
+            moneyData.playerMoney = moneyCount;
+            Debug.Log("money count when level end:" + moneyCount);
         }
         else
         {
