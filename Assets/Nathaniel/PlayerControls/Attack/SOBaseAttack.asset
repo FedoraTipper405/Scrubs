@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3978d9304e6f1934a918246170bdaeb5, type: 3}
-  m_Name: SOUnlockedCOmbos
+  m_Script: {fileID: 11500000, guid: 3303d0de07f1e384f9d26e37ccdac28f, type: 3}
+  m_Name: SOBaseAttack
   m_EditorClassIdentifier: 
-  hasComboArray: 000100010100
+  damage: 10
+  knockback: 0

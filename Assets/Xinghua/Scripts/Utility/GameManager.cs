@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
     //}
 
     public void UpdatePlayerMoney(int value)
+    public void UpdateMoneyText()
+    {
+        MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
+    }
+    public void UpdatePlayerMoney()
     {
         moneyCount += value;
        // Debug.Log("moneyCount" + moneyCount);

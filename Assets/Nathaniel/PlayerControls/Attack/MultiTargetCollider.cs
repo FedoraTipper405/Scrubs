@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class RifleFistCollider : BaseAtkCollider
+public class MultiTargetCollider : BaseAtkCollider
 {
     bool hasHit = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void LateUpdate()
     {
@@ -27,17 +27,18 @@ public class RifleFistCollider : BaseAtkCollider
         if (canHit)
         {
             hasHit = false;
-          //  Debug.Log("1");
+            //  Debug.Log("1");
             if (hitEnemy.layer == 6)
             {
-             //   Debug.Log("2");
+                //   Debug.Log("2");
                 if (hitEnemy.GetComponent<EnemyBaseController>() != null)
                 {
 
                     //    Debug.Log("3");
-                    hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), currentKnockback,playerGameobject);//xh add the currentKockBack 
+                    hitEnemy.GetComponent<EnemyBaseController>().TakeDamage((int)Mathf.Ceil(currentDamage), currentKnockback, playerGameobject);//xh add the currentKockBack 
                     hasHit = true;
-                }//xh add
+                }
+                //xh add
                 if (hitEnemy.GetComponent<BaseBoss>() != null)
                 {
 
@@ -50,4 +51,3 @@ public class RifleFistCollider : BaseAtkCollider
         }
     }
 }
-
