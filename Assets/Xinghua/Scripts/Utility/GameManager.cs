@@ -41,12 +41,14 @@ public class GameManager : MonoBehaviour
     //    Debug.Log("game manager UpdateDropItem:" + dropItemCount);
     //}
 
-    public void UpdatePlayerMoney(int value)
-    public void UpdateMoneyText()
-    {
-        MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
+    public void UpdateMoneyText()
+
+    {
+
+        MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
+
     }
-    public void UpdatePlayerMoney()
+    public void UpdatePlayerMoney(int value)
     {
         moneyCount += value;
        // Debug.Log("moneyCount" + moneyCount);
