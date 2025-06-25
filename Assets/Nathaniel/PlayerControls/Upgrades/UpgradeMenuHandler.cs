@@ -26,7 +26,7 @@ public class UpgradeMenuHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canUpgrade && Input.GetKeyDown(KeyCode.Space))
+        if (canUpgrade && Input.GetKeyDown(KeyCode.E))
         {
             OpenUpgradeMenu();
         }

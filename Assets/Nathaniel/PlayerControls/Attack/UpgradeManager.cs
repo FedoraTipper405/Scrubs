@@ -14,17 +14,21 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] GameManager gameManager;
     void Start()
     {
-        //for(int i = 0;  i < GreyOutOptions.Length; ++i)
-        //{
-        //    if (unlockedCombos.hasComboArray[i])
-        //    {
-        //        GreyOutOptions[i].SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        GreyOutOptions[i].SetActive(false);
-        //    }
-        //}
+        GrayOut();
+    }
+    public void GrayOut()
+    {
+        for (int i = 0; i < GreyOutOptions.Length; ++i)
+        {
+            if (unlockedCombos.hasComboArray[i])
+            {
+                GreyOutOptions[i].SetActive(true);
+            }
+            else
+            {
+                GreyOutOptions[i].SetActive(false);
+            }
+        }
     }
     public void UnlockCombo(int index)
     {
@@ -33,8 +37,8 @@ public class UpgradeManager : MonoBehaviour
             unlockedCombos.hasComboArray[index] = true;
             gameManager.moneyCount -= comboPrices[index];
             gameManager.UpdateMoneyText();
-         //   GreyOutOptions[index].SetActive(true);
-            
+        //    GreyOutOptions[index].SetActive(true);
+            GrayOut();
         }
     }
     public void UpVitality()
