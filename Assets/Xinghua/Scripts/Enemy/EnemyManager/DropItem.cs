@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class DropItem : MonoBehaviour
 {
-    public float healValue;
+   private int  healValue;
+    [SerializeField]private float healPercent = 0.1f;
     private void Start()
     {
-        healValue = 10f;
+       
+        PlayerHealth playerHealth = FindAnyObjectByType<PlayerHealth>();
+        healValue = (int)(playerHealth.maxPlayerHealth * healPercent);
+       
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

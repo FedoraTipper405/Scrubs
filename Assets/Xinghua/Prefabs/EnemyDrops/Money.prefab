@@ -147,3 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c79b57fa18a3448abd656bdd29fa765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyValue50: {fileID: -2253911629886400664, guid: d82a8ebbe390027418f6cd757d922485, type: 3}
+  moneyValue40: {fileID: -2253911629886400664, guid: 053ed5cca62f5484ebfbb1285d041a8b, type: 3}
+  moneyValue10: {fileID: -2253911629886400664, guid: 04fe9b28ee4383242b0ca1aa2b6da594, type: 3}
+  moneyValue50Percent: 10
+  moneyValue40Percent: 20
+  moneyValue10Percent: 50

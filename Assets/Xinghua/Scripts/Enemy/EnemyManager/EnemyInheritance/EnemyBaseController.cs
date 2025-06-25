@@ -29,7 +29,7 @@ public class EnemyBaseController : MonoBehaviour
     [SerializeField] protected float dropHealItemChance = 0.8f;
     [SerializeField] protected GameObject dropItemPrefab;
     [SerializeField] protected float dropMoneyChance = 0.8f;
-    [SerializeField] protected GameObject dropMoneyPrefab;
+
 
     protected bool isDead;
     protected Animator animator;
@@ -289,9 +289,8 @@ public class EnemyBaseController : MonoBehaviour
         if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropHealItemChance)
         {
             GameObject item = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);
-
-
             item.SetActive(true);
+            Debug.Log("healkit spawn");
             if (item != null)
             {
                 Destroy(item, 8f);
@@ -300,7 +299,7 @@ public class EnemyBaseController : MonoBehaviour
         float offsetX = 0.6f;
         if (enemyData.canDrop && UnityEngine.Random.value < enemyData.dropMoneyChance)
         {
-            GameObject money = Instantiate(dropMoneyPrefab, transform.position + new Vector3(offsetX, 0, 0), Quaternion.identity);
+            GameObject money = Instantiate(enemyData.coinPrefab, transform.position + new Vector3(offsetX, 0, 0), Quaternion.identity);
 
             money.SetActive(true);
             if (money != null)

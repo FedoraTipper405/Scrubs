@@ -26,5 +26,7 @@ MonoBehaviour:
   maxPacingTime: 8
   knockBackStrength: 5
   canDrop: 1
+  coinPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
+  healthPrefab: {fileID: -2253911629886400664, guid: 4eafb5357296f4246a524055e383b1c0, type: 3}
   dropHealItemChance: 0.6
   dropMoneyChance: 0.8

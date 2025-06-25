@@ -1,10 +1,12 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] float maxPlayerHealth;
+   // [SerializeField] float maxPlayerHealth;
+    public float maxPlayerHealth;//xh change this for access in dropItem
     float currentPlayerHealth;
 
     public float FullSpecial;

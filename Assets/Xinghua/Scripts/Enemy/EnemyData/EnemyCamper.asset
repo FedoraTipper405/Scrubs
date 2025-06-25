@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: EnemyCamper
   m_EditorClassIdentifier: 
   enemyName: Camper
-  damage: 5
-  maxHealth: 35
-  moveSpeed: 0
-  attackRange: 10
-  pacingRadius: 200
-  stopDistance: 0
   enemyPrefab: {fileID: 6966470631647450342, guid: 4f5a84dc22408424faddcc3ffed51066, type: 3}
+  canMove: 0
+  maxHealth: 35
+  avoidDistance: 0
+  damage: 5
+  moveSpeed: 0
+  paceSpeed: 0
+  attackRange: 10
   attackCooldown: 1
+  pacingRadius: 200
+  maxPacingTime: 0
+  knockBackStrength: 0
+  canDrop: 1
+  coinPrefab: {fileID: 1266614169567263728, guid: feaa39ddd907d49ddb813e595ddf929c, type: 3}
+  healthPrefab: {fileID: -2253911629886400664, guid: 4eafb5357296f4246a524055e383b1c0, type: 3}
   dropHealItemChance: 0.6
   dropMoneyChance: 0
-  canDrop: 1

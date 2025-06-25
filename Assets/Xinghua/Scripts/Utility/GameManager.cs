@@ -8,9 +8,7 @@ public class GameManager : MonoBehaviour
     public int dropItemCount;
     public int moneyCount;
     public int moneyValue = 0;
-    public int moneyValue50Percent;
-    public int moneyValue40Percent;
-    public int moneyValue10Percent;
+
 
     public bool isWin = false;
     public bool isBossDied = false;
@@ -43,24 +41,10 @@ public class GameManager : MonoBehaviour
     //    Debug.Log("game manager UpdateDropItem:" + dropItemCount);
     //}
 
-    public void UpdatePlayerMoney()
+    public void UpdatePlayerMoney(int value)
     {
-        int random = UnityEngine.Random.Range(1, 100);
-
-        if (random >= 1 && random < 50)
-        {
-            moneyValue = moneyValue10Percent;
-        }
-        else if (random >= 50 && random < 90)
-        {
-            moneyValue = moneyValue40Percent;
-        }
-        else
-        {
-            moneyValue = moneyValue50Percent;
-        }
-
-        moneyCount += moneyValue;
+        moneyCount += value;
+       // Debug.Log("moneyCount" + moneyCount);
         MenuManager.Instance.DisplayMoneytText(moneyCount.ToString());
     }
     public void ResetPlayerPosition()

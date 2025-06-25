@@ -19,6 +19,8 @@ public class EnemyData : ScriptableObject
     public float knockBackStrength;
     [Header("drop")]
     public bool canDrop;
+    public GameObject coinPrefab;
+    public GameObject healthPrefab;
     public float dropHealItemChance;
     public float dropMoneyChance;
     
