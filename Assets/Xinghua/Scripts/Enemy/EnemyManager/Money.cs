@@ -51,6 +51,7 @@ public class Money : MonoBehaviour
          GameManager.Instance.UpdatePlayerMoney(moneyValue);
         if (other.gameObject.GetComponentInChildren<PlayerHealth>() != null)
         {
+            SoundManager.Instance.PlaySFX("CoinCollect",1f);
             Destroy(gameObject);
         }
     }

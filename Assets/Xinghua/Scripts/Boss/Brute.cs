@@ -221,4 +221,14 @@ public class Brute : BaseBoss
         anim.SetBool("isRecoverFinish", false);
         SetCurrentState(BruteState.Attack);
     }
+    public void OnHit()
+    {
+        SoundManager.Instance.PlaySFX("BruteSlamAttackSound",1f);
+        
+    }
+    public void OnWalk()
+    {
+        SoundManager.Instance.PlaySFX("BruteFootStepSound", 1f);
+
+    }
 }

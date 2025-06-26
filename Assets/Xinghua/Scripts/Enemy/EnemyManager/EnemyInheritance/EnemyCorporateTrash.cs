@@ -72,7 +72,10 @@ public class EnemyCorporateTrash : EnemyBaseController
         if(animator != null)
         {
             animator.SetTrigger("isAttack");
+            
             animator.SetBool("isMoving",false);
+            SoundManager.Instance.PlaySFX("CorporateAttackSound", 1f);
+            
         }
     }
 
