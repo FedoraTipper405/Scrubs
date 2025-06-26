@@ -47,8 +47,6 @@ MonoBehaviour:
   dropItemCount: 0
   moneyCount: 0
   moneyValue: 0
-  moneyValue50Percent: 10
-  moneyValue40Percent: 50
-  moneyValue10Percent: 100
+  moneyData: {fileID: 11400000, guid: 210898480e302ed42b764dea4f255a45, type: 2}
   isWin: 0
   isBossDied: 0
