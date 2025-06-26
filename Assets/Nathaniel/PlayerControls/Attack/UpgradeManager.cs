@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
@@ -9,6 +10,10 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] int vitPrice;
     [SerializeField] int STRPrice;
     [SerializeField] int ExpPrice;
+
+    [SerializeField] TMP_Text strText;
+    [SerializeField] TMP_Text vitText;
+    [SerializeField] TMP_Text expText;
 
     [SerializeField] GameObject[] GreyOutOptions;
     [SerializeField] GameManager gameManager;
@@ -30,6 +35,13 @@ public class UpgradeManager : MonoBehaviour
             }
         }
     }
+    public void UpdateLevelsText()
+    {
+        strText.SetText(stats.strengthLevel.ToString());
+        vitText.SetText(stats.vitalityLevel.ToString());
+        expText.SetText(stats.expertiseLevel.ToString());
+
+    }
     public void UnlockCombo(int index)
     {
         if (unlockedCombos.hasComboArray[index] == false  && comboPrices[index] <= gameManager.moneyCount)
@@ -47,6 +59,7 @@ public class UpgradeManager : MonoBehaviour
         stats.vitalityLevel++;
         gameManager.moneyCount-= vitPrice;
             gameManager.UpdateMoneyText();
+            vitText.SetText(stats.vitalityLevel.ToString());
         }
     }
     public void UpStrength()
@@ -55,6 +68,7 @@ public class UpgradeManager : MonoBehaviour
         stats.strengthLevel++;
         gameManager.moneyCount-= STRPrice;
             gameManager.UpdateMoneyText();
+            strText.SetText(stats.strengthLevel.ToString());
         }
     }
     public void UpExpertise()
@@ -63,6 +77,7 @@ public class UpgradeManager : MonoBehaviour
         stats.expertiseLevel++;
         gameManager.moneyCount-=ExpPrice;
             gameManager.UpdateMoneyText();
+            expText.SetText(stats.expertiseLevel.ToString());
         }
     }
     // Update is called once per frame
