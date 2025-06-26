@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Camper
   enemyPrefab: {fileID: 6966470631647450342, guid: 4f5a84dc22408424faddcc3ffed51066, type: 3}
   canMove: 0
-  maxHealth: 35
+  maxHealth: 30
   avoidDistance: 0
   damage: 5
   moveSpeed: 0
