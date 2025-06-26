@@ -163,6 +163,8 @@ public class FlyBoss : BaseBoss
         yield return new WaitForSeconds(0.1f);
         transform.position = landPosition;
         anim.SetBool("isRecover", true);
+        SoundManager.Instance.PlaySFX("FlyerRegenerateSound", 1f);
+        
     }
 
     protected void Attack()
@@ -215,5 +217,10 @@ public class FlyBoss : BaseBoss
     {
         anim.SetTrigger("isDeath");
     }
+    public void OnFly()
+    {
+        SoundManager.Instance.PlaySFX("FlyerWingFlapSound", 1f);
 
+    }
+ 
 }

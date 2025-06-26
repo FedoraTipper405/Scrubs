@@ -26,9 +26,19 @@ public class BaseBoss : MonoBehaviour
     
     protected void Die()
     {
-        
+
+        if (this.gameObject.GetComponent<Brute>() != null)
+        {
+            SoundManager.Instance.PlaySFX("BruteDeathSound", 1f);
+        }
+        else if(this.gameObject.GetComponent<FlyBoss>() != null)
+        {
+            SoundManager.Instance.PlaySFX("BruteSlamAttackSound", 1f);
+        }
         Destroy(gameObject);
         //sound
+    
+      
       
         GameManager.Instance.LoadSceneWhenLevelEnd();
         OnDeath?.Invoke();
