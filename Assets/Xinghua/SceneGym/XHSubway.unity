@@ -29673,6 +29673,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2985506813937945627, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
+      propertyPath: bgm.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 24f201469452b4648830587753d23ff2, type: 3}
     - target: {fileID: 4150747281837922359, guid: 1d0e188506901ad43981e0178884cb5a, type: 3}
       propertyPath: m_Name
       value: SoundManager (2)
