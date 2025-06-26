@@ -78,11 +78,20 @@ public class PlayerHealth : MonoBehaviour
     }
     public void GainHealth(float healthVal)
     {
+        
         currentPlayerHealth += healthVal;
-        healthBlackBar.transform.localScale = new Vector3(1 - (currentPlayerHealth / maxPlayerHealth), healthBlackBar.transform.localScale.y, healthBlackBar.transform.localScale.z);
-        if (currentPlayerHealth >  maxPlayerHealth)
+        //xh add code this check shoule before update the UI
+        if (currentPlayerHealth > maxPlayerHealth)
+        {
+           // Debug.Log("currentPlayerHealth > maxPlayerHealth");
+            currentPlayerHealth = maxPlayerHealth;
+        }
+        else 
+            //xh code end 
+            healthBlackBar.transform.localScale = new Vector3(1 - (currentPlayerHealth / maxPlayerHealth), healthBlackBar.transform.localScale.y, healthBlackBar.transform.localScale.z);
+       /* if (currentPlayerHealth >  maxPlayerHealth)
         {
             currentPlayerHealth=maxPlayerHealth;
-        }
+        }*/
     }
 }
