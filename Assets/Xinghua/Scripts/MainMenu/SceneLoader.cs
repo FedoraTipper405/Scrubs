@@ -27,7 +27,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "XHGym")
         {
-            SceneLoader.Instance.LoadScene("LevelSelectionMenu");
+            SceneLoader.Instance.LoadScene("XHSubway");
             
             GameManager.Instance.ResetPlayerPosition();
         }
