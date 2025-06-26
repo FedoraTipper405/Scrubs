@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: CorporateTrash
   enemyPrefab: {fileID: 277788722177717595, guid: d716909d5ab88394b9c4a506d916d370, type: 3}
   canMove: 1
-  maxHealth: 12
+  maxHealth: 45
   avoidDistance: 0
   damage: 3
   moveSpeed: 1.2

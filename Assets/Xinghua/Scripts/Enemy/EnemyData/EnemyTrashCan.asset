@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: TrashCan
   enemyPrefab: {fileID: 8834637972409278391, guid: 6a1bb0d7448109d4aacd7afe3ea0729a, type: 3}
   canMove: 1
-  maxHealth: 16
+  maxHealth: 60
   avoidDistance: 0
   damage: 4
   moveSpeed: 1
