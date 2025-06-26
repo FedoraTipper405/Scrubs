@@ -37,7 +37,11 @@ public class GameManager : MonoBehaviour
         moneyCount = moneyData.playerMoney;
         Debug.Log("gamemanager  start with money:"+ moneyCount);
         Debug.Log("gamemanager  start with money:" + moneyData.playerMoney);
-      //  UpdateMoneyText();
+        if(SceneManager.GetActiveScene().name == "XHSubway")
+        {
+            UpdateMoneyText();
+        }
+       
    
 
     }
