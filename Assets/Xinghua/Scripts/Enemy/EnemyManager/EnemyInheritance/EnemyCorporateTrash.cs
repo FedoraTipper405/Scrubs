@@ -74,9 +74,17 @@ public class EnemyCorporateTrash : EnemyBaseController
             animator.SetTrigger("isAttack");
             
             animator.SetBool("isMoving",false);
-            SoundManager.Instance.PlaySFX("CorporateAttackSound", 1f);
+            
             
         }
+    }
+    public void OnAttackSound()
+    {
+        SoundManager.Instance.PlaySFX("CorporateAttackSound", 1f);
+    }
+    public void OnDieSound()
+    {
+        SoundManager.Instance.PlaySFX("CorporateDeath", 1f);
     }
 
     protected override void Die()

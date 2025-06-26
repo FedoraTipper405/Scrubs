@@ -183,6 +183,8 @@ public class Brute : BaseBoss
     {
        
         anim.SetTrigger("isDeath");
+        SoundManager.Instance.PlaySFX("BruteDeathSound", 1f);
+        
     }
 
     private void BossAttackEnd()//anim event
