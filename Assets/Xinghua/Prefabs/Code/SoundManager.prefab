@@ -192,6 +192,22 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: ec062c658fb10ee4597e4dc41d383420, type: 3}
   - name: PlayerKick
     clip: {fileID: 8300000, guid: 5f80e4321382fad478fb912e81fec891, type: 3}
+  - name: BruteDeathSound
+    clip: {fileID: 8300000, guid: f13c813a7e484584b82bc736f194a70e, type: 3}
+  - name: BruteFootStepSound
+    clip: {fileID: 8300000, guid: 3c73025e69831e640800a65427d56448, type: 3}
+  - name: BruteSlamAttackSound
+    clip: {fileID: 8300000, guid: 570abb7a9f642bb4cbffcfb44e796bdb, type: 3}
+  - name: FlyerWingFlapSound
+    clip: {fileID: 8300000, guid: 39abe78436328404fa7cd602aa2718dd, type: 3}
+  - name: FlyerDeathSound
+    clip: {fileID: 8300000, guid: d06e1ac5b047079449884e524497eb7d, type: 3}
+  - name: FlyerRegenerateSound
+    clip: {fileID: 8300000, guid: 73abd4dd8c716cd43b8b224b14703d89, type: 3}
+  - name: CorporateAttackSound
+    clip: {fileID: 8300000, guid: 2a0c15533b747f94eb101372f959ef64, type: 3}
+  - name: CoinCollect
+    clip: {fileID: 8300000, guid: 91b8171710ecd084193b21053e408995, type: 3}
   bgmSource: {fileID: 818538422168585073}
   sfxSource: {fileID: 3161759855647047515}
   bgmVolume: 0.262
